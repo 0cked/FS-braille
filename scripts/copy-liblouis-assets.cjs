@@ -88,12 +88,33 @@ const requiredTables = ["en-us-g1.ctb", "en-us-g2.ctb"];
 const visited = new Set();
 requiredTables.forEach((table) => collectTables(table, visited));
 
+// liblouis-build's `chardefs.cti` includes `latinLetterDef8Dots.uti`, which
+// defines capitals using dot 7 (e.g. `uplow Aa 17,1`). In the browser build we
+// use for 6-dot signage output, that can result in "Character 'a' is not
+// defined" cascades when compiling `en-us-g1/en-us-g2`.
+//
+// We patch the copied `chardefs.cti` to include the 6-dot Latin definitions
+// instead, and ensure that file is available for include resolution.
+visited.add("latinLetterDef6Dots.uti");
+
 visited.forEach((table) => {
   const src = path.join(tablesSource, table);
   const dest = path.join(tablesRoot, table);
   ensureDir(path.dirname(dest));
-  fs.copyFileSync(src, dest);
   const rootDest = path.join(publicRoot, table);
+
+  if (table === "chardefs.cti") {
+    const content = fs.readFileSync(src, "utf8");
+    const patched = content.replace(
+      "include latinLetterDef8Dots.uti",
+      "include latinLetterDef6Dots.uti"
+    );
+    fs.writeFileSync(dest, patched);
+    fs.writeFileSync(rootDest, patched);
+    return;
+  }
+
+  fs.copyFileSync(src, dest);
   fs.copyFileSync(src, rootDest);
 });
 
