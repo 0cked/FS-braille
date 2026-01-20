@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Build artifacts
+*.log
+npm-debug.log*
+
+# Generated liblouis assets (regenerated via postinstall)
+public/liblouis/*.js
+public/liblouis/*.ctb
+public/liblouis/*.cti
+public/liblouis/*.uti
+public/liblouis/tables/
+
+# Lock file
+package-lock.json

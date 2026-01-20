@@ -6,9 +6,11 @@ export type LouisEngine = {
 type SyncApi = {
   translateString: (tables: string, text: string) => string;
   version: () => string;
+  enableOnDemandTableLoading?: (path: string | null) => void;
 };
 
 let cachedEngine: Promise<LouisEngine> | null = null;
+let tableLoadingEnabled = false;
 
 export const loadLiblouis = async (): Promise<LouisEngine> => {
   if (cachedEngine) {
@@ -18,6 +20,19 @@ export const loadLiblouis = async (): Promise<LouisEngine> => {
   cachedEngine = (async () => {
     const mod: any = await import("liblouis");
     const instance: SyncApi = mod?.default ?? mod;
+
+    // Configure the table path to liblouis-build/tables
+    // Passing null makes it automatically resolve to liblouis-build/tables
+    // Only enable once to avoid double-mounting issues
+    if (instance.enableOnDemandTableLoading && !tableLoadingEnabled) {
+      try {
+        instance.enableOnDemandTableLoading(null);
+        tableLoadingEnabled = true;
+      } catch (e) {
+        console.error("[liblouis] Failed to enable table loading:", e);
+      }
+    }
+
     return {
       translateString: async (tables, text) =>
         instance.translateString(tables, text),

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(npm install:*)",
+      "Bash(npm view:*)",
+      "Bash(npm test)",
+      "Bash(npm run update-golden:*)",
+      "Bash(test:*)",
+      "Bash(LOUIS_TABLEPATH=node_modules/liblouis-build/tables npm run update-golden:*)",
+      "Bash(node -e:*)",
+      "Bash(timeout 10 npm run dev:*)"
+    ]
+  }
+}

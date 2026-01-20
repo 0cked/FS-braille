@@ -1,13 +1,48 @@
 {
   "profile_id": "en-us-g2",
-  "liblouis_version": "__GENERATE__",
+  "liblouis_version": "3.2.0",
   "cases": [
-    { "input": "EXIT", "unicode_braille": "__GENERATE__", "cells": [], "dots": "" },
-    { "input": "RESTROOM", "unicode_braille": "__GENERATE__", "cells": [], "dots": "" },
-    { "input": "ROOM 101", "unicode_braille": "__GENERATE__", "cells": [], "dots": "" },
-    { "input": "SUITE 200", "unicode_braille": "__GENERATE__", "cells": [], "dots": "" },
-    { "input": "2ND FLOOR", "unicode_braille": "__GENERATE__", "cells": [], "dots": "" },
-    { "input": "NO SMOKING", "unicode_braille": "__GENERATE__", "cells": [], "dots": "" },
-    { "input": "Conference Room A", "unicode_braille": "__GENERATE__", "cells": [], "dots": "" }
+    {
+      "input": "EXIT",
+      "unicode_braille": "",
+      "cells": [],
+      "dots": ""
+    },
+    {
+      "input": "RESTROOM",
+      "unicode_braille": "",
+      "cells": [],
+      "dots": ""
+    },
+    {
+      "input": "ROOM 101",
+      "unicode_braille": "",
+      "cells": [],
+      "dots": ""
+    },
+    {
+      "input": "SUITE 200",
+      "unicode_braille": "",
+      "cells": [],
+      "dots": ""
+    },
+    {
+      "input": "2ND FLOOR",
+      "unicode_braille": "",
+      "cells": [],
+      "dots": ""
+    },
+    {
+      "input": "NO SMOKING",
+      "unicode_braille": "",
+      "cells": [],
+      "dots": ""
+    },
+    {
+      "input": "Conference Room A",
+      "unicode_braille": "",
+      "cells": [],
+      "dots": ""
+    }
   ]
 }
