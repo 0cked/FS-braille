@@ -96,6 +96,7 @@
   - Fixed runtime table resolution and guarded translation errors
   - Duplicated tables to root to satisfy include lookups
   - Realigned table paths to `/liblouis/tables/` with `tables/...` table names
+  - Switched profile table names back to bare filenames for on-demand loading
 - Files created/modified:
   - /home/jacob/wslprojects/braille-app/tests/golden.en-us-g1.json
   - /home/jacob/wslprojects/braille-app/tests/golden.en-us-g2.json
@@ -142,6 +143,7 @@
 | 2025-02-14 14:05 | Runtime error: tables not found in browser | 1 | Remove tables/ prefix and guard null translation |
 | 2025-02-14 14:15 | Runtime error: characters not defined | 1 | Serve tables from /liblouis/ and /liblouis/tables/ |
 | 2025-02-14 14:25 | Runtime error: characters not defined | 2 | Align table base path to /liblouis/tables/ |
+| 2025-02-14 14:35 | Runtime error: tables not found | 2 | Use bare table names with base path /liblouis/tables/ |
 
 ## 5-Question Reboot Check
 <!-- 
