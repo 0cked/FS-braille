@@ -1,0 +1,1992 @@
+/favicon.ico:1  Failed to load resource: the server responded with a status of 404 ()
+build-no-tables-utf16.js:179 pre-main prep time: 1 ms
+printErr @ build-no-tables-utf16.js:179
+doRun @ build-no-tables-utf16.js:60572
+run @ build-no-tables-utf16.js:60591
+liblouisBuild @ build-no-tables-utf16.js:60668
+(anonymous) @ build-no-tables-utf16.js:60697
+easy-api.js:522 [40000] en-us-g2.ctb:31: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:32: error: Character 'A' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:33: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:33: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:33: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:34: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:34: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:35: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:35: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:35: error: Character 'o' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:35: error: Character 'u' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:35: error: Character 't' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:35: error: Dot pattern \12/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:36: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:36: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:36: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:36: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:36: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:36: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:36: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:36: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:36: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:36: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:36: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:36: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:37: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:37: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:37: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:37: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:37: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:37: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:37: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:37: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:37: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:37: error: Dot pattern \136/ is not defined.
+ [40000] en-us-g2.ctb:37: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:37: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:38: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:38: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:39: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:39: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:39: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:39: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:39: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:39: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:39: error: Dot pattern \1236/ is not defined.
+ [40000] en-us-g2.ctb:40: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:40: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:40: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:41: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:41: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:41: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:41: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:41: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:41: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:41: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:41: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:41: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:41: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:42: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:42: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:43: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:43: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:43: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:43: error: Dot pattern \13456/ is not defined.
+ [40000] en-us-g2.ctb:44: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:44: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:44: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:44: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:45: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:45: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:45: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:45: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:45: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:45: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:45: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:45: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:46: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:46: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:46: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:47: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:47: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:47: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:48: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:48: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:48: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:49: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:49: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:49: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:49: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:49: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:49: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:49: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:49: error: Dot pattern \134/ is not defined.
+ [40000] en-us-g2.ctb:50: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:50: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:50: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:50: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:50: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:50: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:50: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:50: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:50: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:50: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:50: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:51: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:51: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:51: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:51: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:51: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:52: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:52: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:52: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:52: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:52: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:52: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:52: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:52: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:52: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:52: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:53: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:53: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:53: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:53: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:53: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:53: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:54: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:54: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:54: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:54: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:54: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:54: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:54: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:54: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:54: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:54: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:55: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:55: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:55: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:55: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:55: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:55: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:55: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:55: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:55: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:55: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:55: error: Dot pattern \136/ is not defined.
+ [40000] en-us-g2.ctb:55: error: Dot pattern \134/ is not defined.
+ [40000] en-us-g2.ctb:56: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:56: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:57: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:57: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:57: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:57: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:57: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:57: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:57: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:57: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:57: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:57: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:57: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:58: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:58: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:58: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:58: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:58: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:58: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:58: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:58: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:58: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:58: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:58: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:58: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:59: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:59: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:59: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:59: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:59: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:59: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:59: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:59: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:59: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:59: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:59: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:59: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:60: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:60: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:60: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:61: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:61: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:61: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:61: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:61: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:61: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:61: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:61: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:61: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:61: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:61: error: Dot pattern \2456/ is not defined.
+ [40000] en-us-g2.ctb:62: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:62: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:62: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:63: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:63: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:63: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:63: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:63: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:63: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:64: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:64: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:65: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:65: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:65: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:65: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:65: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:65: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:65: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:65: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:66: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:66: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:66: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:66: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:66: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:67: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:67: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:67: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:67: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:67: error: Dot pattern \13456/ is not defined.
+ [40000] en-us-g2.ctb:68: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:68: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:68: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:68: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:68: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:68: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:68: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:68: error: Dot pattern \134/ is not defined.
+ [40000] en-us-g2.ctb:69: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:69: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:69: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:70: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:70: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:70: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:70: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:70: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:70: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:70: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:70: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:70: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:71: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:71: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:71: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:72: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:72: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:72: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:72: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:72: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:73: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:73: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:74: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:74: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:74: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:74: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:74: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:74: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:74: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:74: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:74: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:75: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:75: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:75: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:75: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:75: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:75: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:75: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:75: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:75: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:75: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:75: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:75: error: Dot pattern \2345/ is not defined.
+ [40000] en-us-g2.ctb:76: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:76: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:76: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:77: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:77: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:77: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:77: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:77: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:77: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:77: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:77: error: Dot pattern \2456/ is not defined.
+ [40000] en-us-g2.ctb:78: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:78: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:78: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:79: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:79: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:79: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:79: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:79: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:80: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:80: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:80: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:81: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:81: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:81: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:81: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:81: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:81: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:81: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:81: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:81: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:82: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:82: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:82: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:82: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:82: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:82: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:82: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:82: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:82: error: Dot pattern \2345/ is not defined.
+ [40000] en-us-g2.ctb:82: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:83: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:83: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:83: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:83: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:83: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:83: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:83: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:83: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:83: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:83: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:83: error: Dot pattern \136/ is not defined.
+ [40000] en-us-g2.ctb:83: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:84: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:84: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:84: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:84: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:84: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:84: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:84: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:84: error: Dot pattern \134/ is not defined.
+ [40000] en-us-g2.ctb:84: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:85: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:85: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:85: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:85: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:85: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:86: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:86: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:86: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:86: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:88: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:88: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:88: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:88: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:89: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:89: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:89: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:89: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:89: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:90: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:90: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:90: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:90: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:90: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:90: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:90: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:90: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:90: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:90: error: Dot pattern \2345/ is not defined.
+ [40000] en-us-g2.ctb:90: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:90: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:90: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:91: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:91: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:91: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:91: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:91: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:92: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:92: error: Character 'q' is not defined
+ [40000] en-us-g2.ctb:92: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:92: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:92: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:93: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:93: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:94: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:94: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:94: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:94: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:94: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:94: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:94: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:95: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:95: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:95: error: Dot pattern \1356/ is not defined.
+ [40000] en-us-g2.ctb:96: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:96: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:97: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:97: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:97: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:97: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:98: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:98: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:98: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:98: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:98: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:98: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:99: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:99: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:99: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:99: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:99: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:99: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:99: error: Dot pattern \136/ is not defined.
+ [40000] en-us-g2.ctb:99: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:99: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:100: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:100: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:100: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:100: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:101: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:101: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:101: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:101: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:104: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:104: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:105: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:105: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:105: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:105: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:105: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:106: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:106: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:107: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:107: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:108: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:108: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:108: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:108: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:109: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:109: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:109: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:110: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:110: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:110: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:110: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:110: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:110: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:111: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:111: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:111: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:111: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:111: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:111: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:111: error: Dot pattern \2345/ is not defined.
+ [40000] en-us-g2.ctb:111: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:111: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:112: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:112: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:112: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:112: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:112: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:112: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:112: error: Dot pattern \2345/ is not defined.
+ [40000] en-us-g2.ctb:112: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:112: error: Dot pattern \2345/ is not defined.
+ [40000] en-us-g2.ctb:113: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:113: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:113: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:113: error: Character 't' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:113: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:113: error: Dot pattern \2345/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:113: error: Dot pattern \1235/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:114: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:114: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:114: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:114: error: Character 'k' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:114: error: Dot pattern \12/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:114: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:114: error: Dot pattern \14/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:114: error: Dot pattern \13/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:115: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:115: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:115: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:115: error: Dot pattern \12/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:116: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:116: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:116: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:116: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:116: error: Dot pattern \145/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:117: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:117: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:117: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:117: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:117: error: Dot pattern \145/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:117: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:118: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:118: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:118: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:118: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:118: error: Dot pattern \12/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:118: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:119: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:119: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:119: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:119: error: Character 'i' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:119: error: Dot pattern \145/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:119: error: Dot pattern \24/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:120: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:120: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:120: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:120: error: Dot pattern \12/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:120: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:120: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:121: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:121: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:121: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:121: error: Dot pattern \12/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:121: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:121: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:122: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:122: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:122: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:122: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:122: error: Dot pattern \12/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:122: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:123: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:123: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:123: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:123: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:123: error: Dot pattern \12/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:123: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:124: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:124: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:124: error: Character 'g' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:125: error: Character 'b' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:125: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:125: error: Character 'g' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:125: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:125: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:125: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:126: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:126: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:126: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:126: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:127: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:127: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:127: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:128: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:128: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:128: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:128: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:128: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:129: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:129: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:129: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:129: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:129: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:129: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:129: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:129: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:130: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:130: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:130: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:130: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:131: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:131: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:131: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:131: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:132: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:132: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:132: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:132: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:133: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:133: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:133: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:133: error: Character 'k' is not defined
+ [40000] en-us-g2.ctb:134: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:134: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:134: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:134: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:135: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:135: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:135: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:135: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:136: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:136: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:136: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:136: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:137: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:137: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:137: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:137: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:138: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:138: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:138: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:138: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:139: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:139: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:139: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:139: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:139: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:139: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:140: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:140: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:140: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:140: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:140: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:140: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:140: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:140: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:141: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:141: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:141: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:141: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:141: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:141: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:141: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:141: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:141: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:141: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:142: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:142: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:142: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:142: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:142: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:142: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:142: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:142: error: Dot pattern \1236/ is not defined.
+ [40000] en-us-g2.ctb:143: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:143: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:143: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:143: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:143: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:143: error: Dot pattern \136/ is not defined.
+ [40000] en-us-g2.ctb:144: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:144: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:144: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:144: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:145: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:145: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:145: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:145: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:145: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:146: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:146: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:146: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:146: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:146: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:146: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:147: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:147: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:147: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:147: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:147: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:147: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:148: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:148: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:148: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:148: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:148: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:148: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:148: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:148: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:148: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:148: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:148: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:148: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:149: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:149: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:149: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:149: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:149: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:149: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:150: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:150: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:150: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:150: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:150: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:150: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:151: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:151: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:151: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:151: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:151: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:151: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:152: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:152: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:152: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:152: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:152: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:152: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:153: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:153: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:153: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:153: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:153: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:153: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:153: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:154: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:154: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:154: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:154: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:155: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:155: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:155: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:155: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:156: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:156: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:156: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:157: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:157: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:157: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:157: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:157: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:157: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:157: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:158: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:158: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:158: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:159: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:159: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:159: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:159: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:159: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:159: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:159: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:160: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:160: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:160: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:160: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:160: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:160: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:160: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:161: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:161: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:162: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:162: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:162: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:162: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:162: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:162: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:162: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:162: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:163: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:163: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:163: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:164: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:164: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:164: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:164: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:164: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:164: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:164: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:165: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:165: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:165: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:165: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:165: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:165: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:165: error: Dot pattern \125/ is not defined.
+ [40000] en-us-g2.ctb:166: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:166: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:166: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:166: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:166: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:166: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:166: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:166: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:166: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:166: error: Dot pattern \125/ is not defined.
+ [40000] en-us-g2.ctb:166: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:167: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:167: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:167: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:168: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:168: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:168: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:168: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:169: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:169: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:169: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:169: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:169: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:169: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:170: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:170: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:170: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:170: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:170: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:170: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:170: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:170: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:171: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:171: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:171: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:171: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:171: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:171: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:172: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:172: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:172: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:172: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:173: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:173: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:173: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:173: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:173: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:173: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:173: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:173: error: Dot pattern \2345/ is not defined.
+ [40000] en-us-g2.ctb:174: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:174: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:174: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:175: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:175: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:175: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:175: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:175: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:175: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:175: error: Dot pattern \13456/ is not defined.
+ [40000] en-us-g2.ctb:176: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:176: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:176: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:177: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:177: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:177: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:177: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:178: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:178: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:178: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:179: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:179: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:179: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:179: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:179: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:179: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:179: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:179: error: Dot pattern \136/ is not defined.
+ [40000] en-us-g2.ctb:180: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:180: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:180: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:180: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:180: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:180: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:180: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:180: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:181: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:181: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:181: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:181: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:181: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:181: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:182: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:182: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:182: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:182: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:182: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:182: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:182: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:183: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:183: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:184: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:184: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:184: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:184: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:184: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:184: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:184: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:184: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:184: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:185: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:185: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:185: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:185: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:185: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:185: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:185: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:185: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:185: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:185: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:185: error: Dot pattern \13456/ is not defined.
+ [40000] en-us-g2.ctb:186: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:186: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:186: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:186: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:186: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:186: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:186: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:186: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:186: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:186: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:186: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:187: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:187: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:187: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:187: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:187: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:187: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:187: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:187: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:188: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:188: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:188: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:188: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:189: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:189: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:189: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:189: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:189: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:189: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:189: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:189: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:189: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:189: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:190: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:190: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:190: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:191: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:191: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:191: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:191: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:194: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:194: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:194: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:194: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:195: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:195: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:195: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:196: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:196: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:196: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:196: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:196: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:196: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:196: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:196: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:196: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:196: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:197: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:197: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:197: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:197: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:197: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:198: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:198: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:198: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:198: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:198: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:198: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:198: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:198: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:198: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:198: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:198: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:199: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:199: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:199: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:200: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:200: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:200: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:200: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:200: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:200: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:200: error: Dot pattern \134/ is not defined.
+ [40000] en-us-g2.ctb:200: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:200: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:201: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:201: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:201: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:202: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:202: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:202: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:202: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:202: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:202: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:202: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:202: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:202: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:202: error: Dot pattern \1236/ is not defined.
+ [40000] en-us-g2.ctb:203: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:203: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:203: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:203: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:203: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:203: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:203: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:203: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:203: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:203: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:203: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:203: error: Dot pattern \1236/ is not defined.
+ [40000] en-us-g2.ctb:203: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:204: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:204: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:204: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:204: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:204: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:204: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:204: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:204: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:205: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:205: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:205: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:205: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:205: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:205: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:206: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:206: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:206: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:206: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:206: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:206: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:206: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:207: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:207: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:207: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:207: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:207: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:207: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:207: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:207: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:207: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:208: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:208: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:208: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:208: error: Character 'l' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:208: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:208: error: Dot pattern \14/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:208: error: Dot pattern \145/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Character 'o' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Character 'u' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Character 'l' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Character 'v' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Dot pattern \14/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Dot pattern \145/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Dot pattern \1236/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:209: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:210: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:210: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:211: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:211: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:211: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:211: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:211: error: Dot pattern \14/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:211: error: Dot pattern \1235/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:212: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:212: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:213: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:213: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:213: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:213: error: Dot pattern \14/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:214: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:214: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:214: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:214: error: Character 't' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:214: error: Dot pattern \14/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:214: error: Dot pattern \2345/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:215: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:215: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:215: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:215: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:215: error: Character 'o' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:215: error: Character 't' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:215: error: Dot pattern \14/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:216: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:216: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:217: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:217: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:217: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:217: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:217: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:218: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:218: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:218: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:218: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:218: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:218: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:218: error: Character 't' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:218: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:218: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:219: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:219: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:219: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:219: error: Character 'm' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:219: error: Character 'o' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:219: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:219: error: Dot pattern \134/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:219: error: Dot pattern \135/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:220: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:220: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:220: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:220: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:220: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:221: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:221: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:221: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:221: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:221: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:221: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:221: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:221: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:221: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:222: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:222: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:222: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:222: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:222: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:222: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:222: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:222: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:222: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:225: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:225: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:225: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:225: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:225: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:225: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:225: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:225: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:225: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:225: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:225: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:225: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:225: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:225: error: Dot pattern \1236/ is not defined.
+ [40000] en-us-g2.ctb:225: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:225: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:226: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:226: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:226: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:226: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:227: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:227: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:227: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:227: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:227: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:227: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:228: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:228: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:228: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:228: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:228: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:229: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:229: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:229: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:229: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:229: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:230: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:230: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:230: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:230: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:230: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:230: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:230: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:230: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:230: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:230: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:231: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:231: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:231: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:231: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:231: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:231: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:231: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:231: error: Dot pattern \145/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:231: error: Dot pattern \14/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:231: error: Dot pattern \1236/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:232: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:232: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:232: error: Character 'v' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:233: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:233: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:233: error: Character 'v' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:233: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:234: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:234: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:234: error: Character 'v' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:234: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:235: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:235: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:235: error: Character 'v' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:235: error: Character 's' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Character 'i' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Character 'v' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Character 'i' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Character 'g' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Dot pattern \145/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Dot pattern \14/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Dot pattern \1236/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:236: error: Dot pattern \1245/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:237: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:237: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:237: error: Character 'v' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:237: error: Character 'g' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:238: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:238: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:238: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:238: error: Character 'l' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:238: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:238: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:238: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:238: error: Dot pattern \145/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:238: error: Dot pattern \14/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:238: error: Dot pattern \123/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:239: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:239: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:239: error: Character 'l' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:240: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:240: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:240: error: Character 'l' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:240: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:241: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:241: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:241: error: Character 'l' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:241: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:242: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:242: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:242: error: Character 'l' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:242: error: Character 's' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:243: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:243: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:243: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:243: error: Character 'l' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:243: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:243: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:243: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:243: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:243: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:243: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:243: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:243: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:243: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:244: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:244: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:244: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:244: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:245: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:245: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:245: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:245: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:245: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:246: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:246: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:246: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:246: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:246: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:247: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:247: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:248: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:248: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:248: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:248: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:248: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:248: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:248: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:248: error: Dot pattern \14/ is not defined.
+ [40000] en-us-g2.ctb:249: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:249: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:249: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:249: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:250: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:250: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:250: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:250: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:251: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:251: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:251: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:251: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:251: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:252: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:252: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:252: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:252: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:252: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:252: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:252: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:252: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:253: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:253: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:253: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:253: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:254: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:254: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:254: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:254: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:255: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:255: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:255: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:255: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:255: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:255: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:255: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:255: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:256: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:256: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:256: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:256: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:257: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:257: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:257: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:257: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:257: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:257: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:258: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:258: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:258: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:259: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:259: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:259: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:259: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:260: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:260: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:260: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:260: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:260: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:261: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:261: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:261: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:261: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:261: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:261: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:262: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:262: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:262: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:262: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:262: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:262: error: Dot pattern \125/ is not defined.
+ [40000] en-us-g2.ctb:263: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:263: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:263: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:263: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:263: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:263: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:263: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:263: error: Dot pattern \125/ is not defined.
+ [40000] en-us-g2.ctb:263: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:264: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:264: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:264: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:264: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:264: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:264: error: Dot pattern \125/ is not defined.
+ [40000] en-us-g2.ctb:264: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:265: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:265: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:265: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:265: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:265: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:265: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:265: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:265: error: Dot pattern \125/ is not defined.
+ [40000] en-us-g2.ctb:265: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:266: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:266: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:266: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:266: error: Character 'k' is not defined
+ [40000] en-us-g2.ctb:267: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:267: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:267: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:267: error: Character 'p' is not defined
+ [40000] en-us-g2.ctb:267: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:267: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:267: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:267: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:267: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:267: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:268: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:268: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:268: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:268: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:268: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:269: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:269: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:269: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:270: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:270: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:270: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:270: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:270: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:270: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:271: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:271: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:271: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:271: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:271: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:271: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:272: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:272: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:272: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:272: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:273: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:273: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:273: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:273: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:274: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:274: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:274: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:274: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:274: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:275: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:275: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:275: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:275: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:275: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:279: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:279: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:280: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:280: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:280: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:280: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:280: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:281: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:281: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:281: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:281: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:281: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:281: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:282: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:282: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:282: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:282: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:282: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:283: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:283: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:283: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:283: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:284: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:284: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:284: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:284: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:284: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:284: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:285: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:285: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:285: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:285: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:285: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:285: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:285: error: Dot pattern \13456/ is not defined.
+ [40000] en-us-g2.ctb:286: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:286: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:286: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:286: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:286: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:286: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:286: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:287: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:287: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:287: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:287: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:287: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:288: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:288: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:288: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:288: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:288: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:288: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:288: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:288: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:289: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:289: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:289: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:289: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:290: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:290: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:291: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:291: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:291: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:291: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:292: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:292: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:292: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:292: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:292: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:292: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:292: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:292: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:292: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:292: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:292: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:293: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:293: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:293: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:293: error: Character 'w' is not defined
+ [40000] en-us-g2.ctb:294: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:294: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:294: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:294: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:294: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:294: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:294: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:294: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:295: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:295: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:296: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:296: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:297: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:297: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:298: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:298: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:298: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:298: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:298: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:298: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:298: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:299: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:299: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:299: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:299: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:299: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:299: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:299: error: Dot pattern \134/ is not defined.
+ [40000] en-us-g2.ctb:299: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:299: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:300: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:300: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:300: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:300: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:300: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:301: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:301: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:301: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:301: error: Character 'k' is not defined
+ [40000] en-us-g2.ctb:302: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:302: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:302: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:302: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:302: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:302: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:303: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:303: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:303: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:303: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:304: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:304: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:304: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:304: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:304: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:304: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:305: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:305: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:305: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:305: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:305: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:305: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:306: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:306: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:306: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:306: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:306: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:306: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:307: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:307: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:307: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:307: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:307: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:307: error: Dot pattern \136/ is not defined.
+ [40000] en-us-g2.ctb:308: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:308: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:309: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:309: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:309: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:310: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:310: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:310: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:310: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:311: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:311: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:311: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:311: error: Character 'c' is not defined
+ [40000] en-us-g2.ctb:312: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:312: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:312: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:312: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:312: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:312: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:313: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:313: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:313: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:313: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:314: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:314: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:314: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:315: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:315: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:315: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:315: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:315: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:315: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:315: error: Dot pattern \1236/ is not defined.
+ [40000] en-us-g2.ctb:315: error: Dot pattern \2345/ is not defined.
+ [40000] en-us-g2.ctb:316: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:316: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:316: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:316: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:317: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:317: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:317: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:317: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:317: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:318: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:318: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:318: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:318: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:318: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:318: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:318: error: Dot pattern \1236/ is not defined.
+ [40000] en-us-g2.ctb:318: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:319: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:319: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:319: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:319: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:319: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:319: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:319: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:319: error: Dot pattern \1236/ is not defined.
+ [40000] en-us-g2.ctb:320: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:320: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:320: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:320: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:320: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:320: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:323: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:323: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:324: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:324: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:324: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:324: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:324: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:324: error: Dot pattern \135/ is not defined.
+ [40000] en-us-g2.ctb:324: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:324: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:325: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:325: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:325: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:325: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:325: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:325: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:325: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:326: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:326: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:326: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:326: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:326: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:326: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:327: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:327: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:327: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:327: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:327: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:327: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:328: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:328: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:328: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:328: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:328: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:328: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:328: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:328: error: Dot pattern \1236/ is not defined.
+ [40000] en-us-g2.ctb:329: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:329: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:329: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:329: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:329: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:330: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:330: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:330: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:331: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:331: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:331: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:331: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:332: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:332: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:332: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:332: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:332: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:333: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:333: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:333: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:333: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:333: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:333: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:334: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:334: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:334: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:334: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:334: error: Character 'v' is not defined
+ [40000] en-us-g2.ctb:334: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:334: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:334: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:335: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:335: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:335: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:335: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:336: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:336: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:336: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:336: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:337: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:337: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:337: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:337: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:337: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:338: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:338: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:338: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:338: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:338: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:338: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:338: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:338: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:339: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:339: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:339: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:339: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:339: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:339: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:339: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:339: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:339: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:340: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:340: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:340: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:340: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:340: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:340: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:340: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:340: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:340: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:340: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:340: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:340: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:341: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:341: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:341: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:341: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:341: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:341: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:341: error: Character 's' is not defined
+ [40000] en-us-g2.ctb:341: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:341: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:341: error: Character 'p' is not defined
+ [40000] en-us-g2.ctb:341: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:341: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:341: error: Dot pattern \24/ is not defined.
+ [40000] en-us-g2.ctb:341: error: Dot pattern \1234/ is not defined.
+ [40000] en-us-g2.ctb:342: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:342: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:342: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:342: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:342: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:342: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:342: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:342: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:342: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:342: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:343: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:343: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:344: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:344: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:344: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:344: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:344: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:344: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:345: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:345: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:345: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:345: error: Dot pattern \123/ is not defined.
+ [40000] en-us-g2.ctb:346: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:346: error: Character 'u' is not defined
+ [40000] en-us-g2.ctb:346: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:346: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:346: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:346: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:346: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:346: error: Dot pattern \136/ is not defined.
+ [40000] en-us-g2.ctb:346: error: Dot pattern \1345/ is not defined.
+ [40000] en-us-g2.ctb:346: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:349: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:349: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:349: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:350: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:350: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:350: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:350: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:350: error: Character 'f' is not defined
+ [40000] en-us-g2.ctb:350: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:350: error: Dot pattern \15/ is not defined.
+ [40000] en-us-g2.ctb:350: error: Dot pattern \124/ is not defined.
+ [40000] en-us-g2.ctb:351: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:351: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:352: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:352: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:353: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:353: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:353: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:353: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:354: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:354: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:354: error: Character 'i' is not defined
+ [40000] en-us-g2.ctb:354: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:354: error: Character 'l' is not defined
+ [40000] en-us-g2.ctb:355: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:355: error: Character 'h' is not defined
+ [40000] en-us-g2.ctb:355: error: Character 'z' is not defined
+ [40000] en-us-g2.ctb:356: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:356: error: Character 'n' is not defined
+ [40000] en-us-g2.ctb:356: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:356: error: Character 'm' is not defined
+ [40000] en-us-g2.ctb:356: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:357: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:357: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:357: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:358: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:358: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:358: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:358: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:358: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:358: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:359: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:359: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:360: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:360: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:360: error: Character 'o' is not defined
+ [40000] en-us-g2.ctb:360: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:360: error: Character 'b' is not defined
+ [40000] en-us-g2.ctb:360: error: Character 'y' is not defined
+ [40000] en-us-g2.ctb:360: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:360: error: Dot pattern \145/ is not defined.
+ [40000] en-us-g2.ctb:360: error: Dot pattern \12/ is not defined.
+ [40000] en-us-g2.ctb:360: error: Dot pattern \13456/ is not defined.
+ [40000] en-us-g2.ctb:361: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:361: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:361: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:361: error: Character 'd' is not defined
+ [40000] en-us-g2.ctb:362: error: Character 'g' is not defined
+ [40000] en-us-g2.ctb:362: error: Character 'r' is not defined
+ [40000] en-us-g2.ctb:362: error: Character 'e' is not defined
+ [40000] en-us-g2.ctb:362: error: Character 'a' is not defined
+ [40000] en-us-g2.ctb:362: error: Character 't' is not defined
+ [40000] en-us-g2.ctb:362: error: Dot pattern \1245/ is not defined.
+ [40000] en-us-g2.ctb:362: error: Dot pattern \1235/ is not defined.
+ [40000] en-us-g2.ctb:362: error: Dot pattern \2345/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:363: error: Character 'g' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:363: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:363: error: Character 't' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:366: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:366: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:366: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:366: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:367: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:367: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:367: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:367: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:367: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:368: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:368: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:368: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:368: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:369: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:369: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:369: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:369: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:369: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:370: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:370: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:370: error: Character 'v' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:370: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:370: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:371: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:371: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:371: error: Character 'w' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:371: error: Character 'k' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Character 'w' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Character 't' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Character 'o' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Dot pattern \2456/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Dot pattern \135/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Dot pattern \1235/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:372: error: Dot pattern \1345/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:373: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:373: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:373: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:373: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:373: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:373: error: Dot pattern \145/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:374: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:374: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:374: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:374: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:374: error: Character 't' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:374: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:374: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:374: error: Dot pattern \2345/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Character 'g' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Character 'o' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Character 'w' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Dot pattern \1245/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:375: error: Dot pattern \1235/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:376: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:376: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:376: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:376: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:376: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:376: error: Dot pattern \145/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:377: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:377: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:377: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:377: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:377: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Character 'a' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Character 'f' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Character 't' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:378: error: Dot pattern \124/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:379: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:379: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:379: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:379: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:379: error: Character 'd' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:379: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:380: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:380: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:380: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:380: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:380: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:380: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:381: error: Character 'h' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:381: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:381: error: Character 'r' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:381: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:381: error: Character 'n' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:381: error: Character 'c' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:381: error: Character 'e' is not defined
+easy-api.js:522 [40000] en-us-g2.ctb:381: error: Dot pattern \125/ is not defined.
+easy-api.js:522 [40000] en-us-g2.ctb:381: error: Dot pattern \15/ is not defined.
+easy-api.js:522 [40000] 1983 errors found.
+easy-api.js:522 [40000] en-us-g2.ctb could not be found

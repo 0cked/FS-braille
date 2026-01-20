@@ -14,21 +14,22 @@ export type LouisEngine = {
 };
 
 const ASSET_BASE = "liblouis";
-const CAPI_PATH = `${ASSET_BASE}/build-no-tables-utf16.js`;
-const EASY_API_PATH = `${ASSET_BASE}/easy-api.js`;
-const TABLES_PATH = `${ASSET_BASE}/tables/`;
+const CAPI_PATH = `/${ASSET_BASE}/build-no-tables-utf16.js`;
+const EASY_API_PATH = `/${ASSET_BASE}/easy-api.js`;
+const TABLES_PATH = `/${ASSET_BASE}/tables/`;
 
 let cachedEngine: Promise<LouisEngine> | null = null;
 
 const loadScript = (src: string) =>
   new Promise<void>((resolve, reject) => {
-    const existing = document.querySelector(`script[src="${src}"]`);
+    const normalizedSrc = src.startsWith("/") ? src : `/${src}`;
+    const existing = document.querySelector(`script[src="${normalizedSrc}"]`);
     if (existing) {
       resolve();
       return;
     }
     const script = document.createElement("script");
-    script.src = `/${src}`;
+    script.src = normalizedSrc;
     script.async = true;
     script.onload = () => resolve();
     script.onerror = () => reject(new Error(`Failed to load ${src}`));
@@ -49,9 +50,12 @@ const loadBrowserEngine = async (): Promise<LouisEngine> => {
     easyapi: EASY_API_PATH
   });
 
-  await new Promise<void>((resolve) => {
-    instance.enableOnDemandTableLoading(TABLES_PATH, resolve);
-  });
+  const enableTables = (path: string) =>
+    new Promise<void>((resolve) => {
+      instance.enableOnDemandTableLoading(path, resolve);
+    });
+
+  await enableTables(TABLES_PATH);
 
   return {
     translateString: (tables, text) =>

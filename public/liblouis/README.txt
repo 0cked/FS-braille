@@ -7,4 +7,4 @@ liblouis browser assets and required table files from npm packages into:
 - public/liblouis/tables/*
 - public/liblouis/*.ctb (duplicated for liblouis include resolution)
 
-If assets are missing, re-run `npm install` or `npm run postinstall`.
+If assets are missing, run `npm run prebuild` (or `npm run postinstall` / `npm install`).
