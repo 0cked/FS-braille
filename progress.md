@@ -94,6 +94,7 @@
   - Swapped to `liblouis` + `liblouis-build` and updated asset copy + loader
   - Fixed Next.js client bundle by loading liblouis assets via script tags
   - Fixed runtime table resolution and guarded translation errors
+  - Duplicated tables to root to satisfy include lookups
 - Files created/modified:
   - /home/jacob/wslprojects/braille-app/tests/golden.en-us-g1.json
   - /home/jacob/wslprojects/braille-app/tests/golden.en-us-g2.json
@@ -108,6 +109,7 @@
   - /home/jacob/wslprojects/braille-app/lib/translation.ts
   - /home/jacob/wslprojects/braille-app/lib/louis.ts
   - /home/jacob/wslprojects/braille-app/config/profiles.ts
+  - /home/jacob/wslprojects/braille-app/scripts/copy-liblouis-assets.cjs
 
 ## Test Results
 <!-- 
@@ -137,6 +139,7 @@
 | 2025-02-14 13:17 | npm E404 liblouis-wasm on Vercel | 1 | Switched to liblouis + liblouis-build packages |
 | 2025-02-14 13:51 | Next.js build error: fs not found in browser bundle | 1 | Load liblouis assets via script tags; remove npm import from client |
 | 2025-02-14 14:05 | Runtime error: tables not found in browser | 1 | Remove tables/ prefix and guard null translation |
+| 2025-02-14 14:15 | Runtime error: characters not defined | 1 | Serve tables from /liblouis/ and /liblouis/tables/ |
 
 ## 5-Question Reboot Check
 <!-- 

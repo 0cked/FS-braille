@@ -29,7 +29,7 @@ This project uses the `liblouis` and `liblouis-build` packages. On install, `scr
 
 - `build-no-tables-utf16.js` → `public/liblouis/build-no-tables-utf16.js`
 - `easy-api.js` → `public/liblouis/easy-api.js`
-- required table files → `public/liblouis/tables/*`
+- required table files → `public/liblouis/tables/*` and `public/liblouis/*.ctb`
 
 If those files are missing, re-run:
 

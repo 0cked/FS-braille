@@ -93,6 +93,8 @@ visited.forEach((table) => {
   const dest = path.join(tablesRoot, table);
   ensureDir(path.dirname(dest));
   fs.copyFileSync(src, dest);
+  const rootDest = path.join(publicRoot, table);
+  fs.copyFileSync(src, rootDest);
 });
 
 console.log(`Copied ${visited.size} table files to ${tablesRoot}`);

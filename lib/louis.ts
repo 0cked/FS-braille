@@ -16,7 +16,7 @@ export type LouisEngine = {
 const ASSET_BASE = "liblouis";
 const CAPI_PATH = `${ASSET_BASE}/build-no-tables-utf16.js`;
 const EASY_API_PATH = `${ASSET_BASE}/easy-api.js`;
-const TABLES_PATH = `${ASSET_BASE}/tables/`;
+const TABLES_PATH = `${ASSET_BASE}/`;
 
 let cachedEngine: Promise<LouisEngine> | null = null;
 

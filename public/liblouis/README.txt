@@ -5,5 +5,6 @@ liblouis browser assets and required table files from npm packages into:
 - public/liblouis/build-no-tables-utf16.js
 - public/liblouis/easy-api.js
 - public/liblouis/tables/*
+- public/liblouis/*.ctb (duplicated for liblouis include resolution)
 
 If assets are missing, re-run `npm install` or `npm run postinstall`.
