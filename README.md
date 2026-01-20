@@ -12,9 +12,9 @@ Deterministic braille translation for signage teams, powered by liblouis tables.
 2. Click the button above and connect the repo in Vercel.
 3. Deploy (no extra configuration required).
 
-## Why WASM (and not serverless native)
+## Why Browser Build (and not serverless native)
 
-Vercel serverless functions don’t reliably support native liblouis binaries without custom build steps. To keep deploys frictionless and deterministic, liblouis is compiled to WebAssembly and runs fully in the browser. This avoids native build failures and keeps runtime fast and self-contained.
+Vercel serverless functions don’t reliably support native liblouis binaries without custom build steps. To keep deploys frictionless and deterministic, liblouis runs fully in the browser using the official Emscripten build (from the `liblouis` / `liblouis-build` packages). This avoids native build failures and keeps runtime self-contained.
 
 ## Local Development
 
@@ -25,10 +25,11 @@ npm run dev
 
 ## Liblouis Assets
 
-This project uses the `liblouis-wasm` package. On install, `scripts/copy-liblouis-assets.cjs` copies:
+This project uses the `liblouis` and `liblouis-build` packages. On install, `scripts/copy-liblouis-assets.cjs` copies:
 
-- `liblouis.wasm` → `public/liblouis/liblouis.wasm`
-- table files → `public/liblouis/tables/*.ctb`
+- `build-no-tables-utf16.js` → `public/liblouis/build-no-tables-utf16.js`
+- `easy-api.js` → `public/liblouis/easy-api.js`
+- required table files → `public/liblouis/tables/*`
 
 If those files are missing, re-run:
 
@@ -90,7 +91,7 @@ Golden outputs are stored in:
 app/                 Next.js UI (App Router)
 config/              Profile configuration
 lib/                 Translation, normalization, SVG renderer, assist rules
-public/liblouis/      WASM + tables (copied on install)
+public/liblouis/      Browser build + tables (copied on install)
 tests/               Normalization + golden tests
 scripts/             Asset copy + golden generation
 ```

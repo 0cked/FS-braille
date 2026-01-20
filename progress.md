@@ -90,10 +90,17 @@
 ### Phase 4: Testing & Verification
 - **Status:** in_progress
 - Actions taken:
-  - Tests not run yet (liblouis WASM assets require install)
+  - Identified Vercel npm E404 for liblouis-wasm dependency
+  - Swapped to `liblouis` + `liblouis-build` and updated asset copy + loader
 - Files created/modified:
   - /home/jacob/wslprojects/braille-app/tests/golden.en-us-g1.json
   - /home/jacob/wslprojects/braille-app/tests/golden.en-us-g2.json
+  - /home/jacob/wslprojects/braille-app/lib/louis.ts
+  - /home/jacob/wslprojects/braille-app/scripts/copy-liblouis-assets.cjs
+  - /home/jacob/wslprojects/braille-app/package.json
+  - /home/jacob/wslprojects/braille-app/README.md
+  - /home/jacob/wslprojects/braille-app/config/profiles.ts
+  - /home/jacob/wslprojects/braille-app/public/liblouis/README.txt
 
 ## Test Results
 <!-- 
@@ -120,7 +127,7 @@
 <!-- Keep ALL errors - they help avoid repetition -->
 | Timestamp | Error | Attempt | Resolution |
 |-----------|-------|---------|------------|
-|           |       | 1       |            |
+| 2025-02-14 13:17 | npm E404 liblouis-wasm on Vercel | 1 | Switched to liblouis + liblouis-build packages |
 
 ## 5-Question Reboot Check
 <!-- 

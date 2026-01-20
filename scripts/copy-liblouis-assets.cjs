@@ -2,33 +2,16 @@ const fs = require("fs");
 const path = require("path");
 
 const projectRoot = process.cwd();
-const packageRoot = path.join(projectRoot, "node_modules", "liblouis-wasm");
+const liblouisRoot = path.join(projectRoot, "node_modules", "liblouis");
+const buildRoot = path.join(projectRoot, "node_modules", "liblouis-build");
 const publicRoot = path.join(projectRoot, "public", "liblouis");
 const tablesRoot = path.join(publicRoot, "tables");
+const tablesSource = path.join(buildRoot, "tables");
 
 const ensureDir = (dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
   }
-};
-
-const findFirst = (dir, predicate) => {
-  if (!fs.existsSync(dir)) {
-    return null;
-  }
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      const found = findFirst(fullPath, predicate);
-      if (found) {
-        return found;
-      }
-    } else if (predicate(fullPath)) {
-      return fullPath;
-    }
-  }
-  return null;
 };
 
 const copyDir = (source, dest) => {
@@ -44,28 +27,72 @@ const copyDir = (source, dest) => {
   }
 };
 
-if (!fs.existsSync(packageRoot)) {
-  console.warn("liblouis-wasm not installed yet; skipping asset copy.");
+const parseIncludes = (content) => {
+  const includes = [];
+  const lines = content.split(/\r?\n/);
+  lines.forEach((line) => {
+    const stripped = line.split("#")[0].trim();
+    if (!stripped) {
+      return;
+    }
+    const match = stripped.match(/^include\s+(\S+)/);
+    if (match) {
+      includes.push(match[1]);
+    }
+  });
+  return includes;
+};
+
+const collectTables = (name, visited) => {
+  if (visited.has(name)) {
+    return;
+  }
+  const filePath = path.join(tablesSource, name);
+  if (!fs.existsSync(filePath)) {
+    console.warn(`Table not found: ${name}`);
+    return;
+  }
+  visited.add(name);
+  const content = fs.readFileSync(filePath, "utf8");
+  parseIncludes(content).forEach((includeName) =>
+    collectTables(includeName, visited)
+  );
+};
+
+if (!fs.existsSync(liblouisRoot) || !fs.existsSync(buildRoot)) {
+  console.warn("liblouis packages not installed yet; skipping asset copy.");
   process.exit(0);
 }
 
 ensureDir(publicRoot);
 ensureDir(tablesRoot);
 
-const wasmPath = findFirst(packageRoot, (filePath) => filePath.endsWith(".wasm"));
-if (wasmPath) {
-  fs.copyFileSync(wasmPath, path.join(publicRoot, "liblouis.wasm"));
-  console.log(`Copied WASM: ${wasmPath}`);
+const easyApiPath = path.join(liblouisRoot, "easy-api.js");
+const buildPath = path.join(buildRoot, "build-no-tables-utf16.js");
+
+if (fs.existsSync(easyApiPath)) {
+  fs.copyFileSync(easyApiPath, path.join(publicRoot, "easy-api.js"));
+  console.log(`Copied Easy API: ${easyApiPath}`);
 } else {
-  console.warn("No liblouis.wasm found in liblouis-wasm package.");
+  console.warn("easy-api.js not found in liblouis package.");
 }
 
-const tablesPath = findFirst(packageRoot, (filePath) =>
-  filePath.endsWith(`${path.sep}tables`)
-);
-if (tablesPath) {
-  copyDir(tablesPath, tablesRoot);
-  console.log(`Copied tables from: ${tablesPath}`);
+if (fs.existsSync(buildPath)) {
+  fs.copyFileSync(buildPath, path.join(publicRoot, "build-no-tables-utf16.js"));
+  console.log(`Copied build: ${buildPath}`);
 } else {
-  console.warn("No tables directory found in liblouis-wasm package.");
+  console.warn("build-no-tables-utf16.js not found in liblouis-build package.");
 }
+
+const requiredTables = ["en-us-g1.ctb", "en-us-g2.ctb"];
+const visited = new Set();
+requiredTables.forEach((table) => collectTables(table, visited));
+
+visited.forEach((table) => {
+  const src = path.join(tablesSource, table);
+  const dest = path.join(tablesRoot, table);
+  ensureDir(path.dirname(dest));
+  fs.copyFileSync(src, dest);
+});
+
+console.log(`Copied ${visited.size} table files to ${tablesRoot}`);

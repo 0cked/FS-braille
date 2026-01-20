@@ -13,7 +13,7 @@
     "postinstall": "node scripts/copy-liblouis-assets.cjs"
   },
   "dependencies": {
-    "liblouis-wasm": "^0.10.0",
+    "liblouis": "^0.4.0",
     "next": "14.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0"

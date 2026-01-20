@@ -107,7 +107,7 @@ Phase 4
 -->
 | Decision | Rationale |
 |----------|-----------|
-| Use liblouis via WASM in-browser | Avoids native binaries and Vercel build/runtime issues |
+| Use liblouis browser build (Emscripten) | Avoids native binaries and Vercel build/runtime issues |
 | Bundle only required en-us tables | Reduce size and keep deployment simple |
 
 ## Errors Encountered
@@ -121,7 +121,7 @@ Phase 4
 -->
 | Error | Attempt | Resolution |
 |-------|---------|------------|
-|       | 1       |            |
+| npm E404 for liblouis-wasm on Vercel | 1 | Swap to `liblouis` + `liblouis-build` packages and update loader |
 
 ## Notes
 <!-- 

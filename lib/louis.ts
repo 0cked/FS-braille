@@ -1,45 +1,62 @@
-export type LouisEngine = {
-  translate?: (tables: string | string[], text: string) => string;
-  lou_translate?: (tables: string, text: string) => string;
-  translateString?: (tables: string, text: string) => string;
-  getVersion?: () => string;
-  version?: string | (() => string);
-  setTables?: (tables: string[]) => void;
+type AsyncApi = {
+  translateString: (tables: string, text: string, cb: (value: string) => void) => void;
+  version: (cb: (value: string) => void) => void;
+  enableOnDemandTableLoading: (path: string, cb?: () => void) => void;
 };
 
-const WASM_PATH = "/liblouis/liblouis.wasm";
-const TABLE_ROOT = "/liblouis/tables";
+type SyncApi = {
+  translateString: (tables: string, text: string) => string;
+  version: () => string;
+};
+
+export type LouisEngine = {
+  translateString: (tables: string, text: string) => Promise<string>;
+  version: () => Promise<string>;
+};
+
+const ASSET_BASE = "liblouis";
+const CAPI_PATH = `${ASSET_BASE}/build-no-tables-utf16.js`;
+const EASY_API_PATH = `${ASSET_BASE}/easy-api.js`;
+const TABLES_PATH = `${ASSET_BASE}/tables/`;
 
 let cachedEngine: Promise<LouisEngine> | null = null;
 
 const isBrowser = typeof window !== "undefined";
 
-const resolveTableData = async (name: string) => {
-  if (isBrowser) {
-    const response = await fetch(`${TABLE_ROOT}/${name}`);
-    if (!response.ok) {
-      throw new Error(`Unable to load liblouis table: ${name}`);
-    }
-    return response.text();
+const loadBrowserEngine = async (): Promise<LouisEngine> => {
+  const mod: any = await import("liblouis/easy-api");
+  const AsyncApiCtor =
+    mod?.EasyApiAsync ?? mod?.LiblouisEasyApiAsync ?? mod?.default?.EasyApiAsync;
+
+  if (!AsyncApiCtor) {
+    throw new Error("Unable to load liblouis async API in the browser.");
   }
 
-  const { readFile } = await import("node:fs/promises");
-  const path = await import("node:path");
-  const tablePath = path.join(
-    process.cwd(),
-    "public",
-    "liblouis",
-    "tables",
-    name
-  );
-  return readFile(tablePath, "utf8");
+  const instance: AsyncApi = new AsyncApiCtor({
+    capi: CAPI_PATH,
+    easyapi: EASY_API_PATH
+  });
+
+  await new Promise<void>((resolve) => {
+    instance.enableOnDemandTableLoading(TABLES_PATH, resolve);
+  });
+
+  return {
+    translateString: (tables, text) =>
+      new Promise((resolve) => instance.translateString(tables, text, resolve)),
+    version: () => new Promise((resolve) => instance.version(resolve))
+  };
 };
 
-const locateFile = (file: string) => {
-  if (file.endsWith(".wasm")) {
-    return WASM_PATH;
-  }
-  return file;
+const loadNodeEngine = async (): Promise<LouisEngine> => {
+  const mod: any = await import("liblouis");
+  const instance: SyncApi = mod?.default ?? mod;
+
+  return {
+    translateString: async (tables, text) =>
+      instance.translateString(tables, text),
+    version: async () => instance.version()
+  };
 };
 
 export const loadLiblouis = async (): Promise<LouisEngine> => {
@@ -47,25 +64,7 @@ export const loadLiblouis = async (): Promise<LouisEngine> => {
     return cachedEngine;
   }
 
-  cachedEngine = (async () => {
-    const mod: any = await import("liblouis-wasm");
-    const lib = mod?.default ?? mod;
-
-    if (typeof lib.createLiblouis === "function") {
-      return lib.createLiblouis({ locateFile, tableResolver: resolveTableData });
-    }
-
-    if (typeof lib.load === "function") {
-      return lib.load({ locateFile, tableResolver: resolveTableData });
-    }
-
-    if (typeof lib.init === "function") {
-      return lib.init({ locateFile, tableResolver: resolveTableData });
-    }
-
-    return lib as LouisEngine;
-  })();
-
+  cachedEngine = isBrowser ? loadBrowserEngine() : loadNodeEngine();
   return cachedEngine;
 };
 
@@ -74,39 +73,10 @@ export const translateWithLiblouis = async (
   text: string
 ): Promise<string> => {
   const engine = await loadLiblouis();
-  if (engine.setTables) {
-    engine.setTables(tables);
-  }
-
-  if (engine.translate) {
-    try {
-      return engine.translate(tables, text);
-    } catch {
-      return engine.translate(tables.join(","), text);
-    }
-  }
-
-  if (engine.lou_translate) {
-    return engine.lou_translate(tables.join(","), text);
-  }
-
-  if (engine.translateString) {
-    return engine.translateString(tables.join(","), text);
-  }
-
-  throw new Error("Unsupported liblouis wasm API: no translate function found.");
+  return engine.translateString(tables.join(","), text);
 };
 
 export const getLiblouisVersion = async (): Promise<string> => {
   const engine = await loadLiblouis();
-  if (typeof engine.getVersion === "function") {
-    return engine.getVersion();
-  }
-  if (typeof engine.version === "function") {
-    return engine.version();
-  }
-  if (typeof engine.version === "string") {
-    return engine.version;
-  }
-  return "unknown";
+  return engine.version();
 };

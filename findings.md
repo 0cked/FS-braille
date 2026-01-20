@@ -37,7 +37,7 @@
 -->
 <!-- Key discoveries during exploration -->
 - Liblouis should be used as sole source of truth; avoid native binaries on Vercel by using WASM client-side
-- Liblouis WASM assets can be copied from `liblouis-wasm` into `public/liblouis` for client loading
+- Liblouis browser build is available via `liblouis` + `liblouis-build` npm packages; tables can be copied into `public/liblouis`
 
 ## Technical Decisions
 <!-- 
@@ -51,9 +51,10 @@
 <!-- Decisions made with rationale -->
 | Decision | Rationale |
 |----------|-----------|
-| Use liblouis via WASM in-browser | Avoids Vercel native binary issues; keeps deployment simple |
+| Use liblouis browser build (Emscripten) | Avoids Vercel native binary issues; keeps deployment simple |
 | Bundle only required en-us tables in repo | Reduces size and avoids external dependencies |
 | Provide golden tests + update script | Keeps outputs deterministic after generating with liblouis |
+| Use `liblouis` + `liblouis-build` browser build | Valid npm packages; avoids 404 dependency errors |
 
 ## Issues Encountered
 <!-- 
