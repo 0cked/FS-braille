@@ -11,14 +11,14 @@ export const BRAILLE_PROFILES: BrailleProfile[] = [
     id: "en-us-g2",
     label: "US English (Contracted / Grade 2)",
     description: "Standard contracted UEB for general signage.",
-    tables: ["en-us-g2.ctb"],
+    tables: ["tables/en-us-g2.ctb"],
     grade: "g2"
   },
   {
     id: "en-us-g1",
     label: "US English (Uncontracted / Grade 1)",
     description: "Literal spelling for part numbers, acronyms, and short labels.",
-    tables: ["en-us-g1.ctb"],
+    tables: ["tables/en-us-g1.ctb"],
     grade: "g1"
   }
 ];

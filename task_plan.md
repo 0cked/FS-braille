@@ -124,7 +124,7 @@ Phase 4
 | npm E404 for liblouis-wasm on Vercel | 1 | Swap to `liblouis` + `liblouis-build` packages and update loader |
 | Next.js build error: fs not found in liblouis-build | 1 | Load liblouis assets via script tags in browser, avoid bundling |
 | Runtime error: tables not found | 1 | Remove `tables/` prefix from table names and guard null translations |
-| Runtime error: characters not defined (missing includes) | 1 | Serve tables from `/liblouis/` and `/liblouis/tables/` to satisfy lookups |
+| Runtime error: characters not defined (missing includes) | 2 | Align TABLE_URL to `/liblouis/tables/` and use `tables/...` table names |
 
 ## Notes
 <!-- 
