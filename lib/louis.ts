@@ -40,6 +40,35 @@ const loadBrowserEngine = async (): Promise<LouisEngine> => {
   await loadScript(CAPI_PATH);
   await loadScript(EASY_API_PATH);
 
+  const debug =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).has("debugLiblouis");
+  if (debug) {
+    const required = [
+      "en-us-g2.ctb",
+      "en-us-g1.ctb",
+      "chardefs.cti",
+      "braille-patterns.cti",
+      "litdigits6Dots.uti"
+    ];
+
+    await Promise.all(
+      required.map(async (file) => {
+        const url = new URL(`${ASSET_BASE}/${file}`, window.location.origin);
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          // eslint-disable-next-line no-console
+          console.log(
+            `[liblouis] ${res.status} ${url.pathname} (${res.headers.get("content-type") ?? "unknown"})`
+          );
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(`[liblouis] fetch failed ${url.pathname}`, err);
+        }
+      })
+    );
+  }
+
   const AsyncApiCtor = (window as any).LiblouisEasyApiAsync;
   if (!AsyncApiCtor) {
     throw new Error("Unable to load liblouis async API in the browser.");
