@@ -96,6 +96,7 @@ requiredTables.forEach((table) => collectTables(table, visited));
 // We patch the copied `chardefs.cti` to include the 6-dot Latin definitions
 // instead, and ensure that file is available for include resolution.
 visited.add("latinLetterDef6Dots.uti");
+visited.add("braille-patterns.cti");
 
 visited.forEach((table) => {
   const src = path.join(tablesSource, table);
@@ -105,10 +106,48 @@ visited.forEach((table) => {
 
   if (table === "chardefs.cti") {
     const content = fs.readFileSync(src, "utf8");
-    const patched = content.replace(
+    let patched = content.replace(
       "include latinLetterDef8Dots.uti",
       "include latinLetterDef6Dots.uti"
     );
+
+    // The Emscripten "no tables" build needs a mapping from dot patterns to
+    // Unicode braille cells. `braille-patterns.cti` provides those `sign`
+    // definitions. If it's not loaded before `chardefs.cti` defines letters and
+    // punctuation, liblouis will emit cascades like:
+    //   "Character 'a' is not defined" / "Dot pattern \\12/ is not defined"
+    //
+    // We inject the include early (before any `space`/`punctuation` lines).
+    if (
+      !/(^|\r?\n)include\s+braille-patterns\.cti(\s|$)/.test(patched)
+    ) {
+      const markerRe = /(\r?\n)# Computer braille single-cell characters(\r?\n)/;
+      if (markerRe.test(patched)) {
+        patched = patched.replace(
+          markerRe,
+          `$1include braille-patterns.cti$2# Computer braille single-cell characters$2`
+        );
+      } else {
+        patched = `include braille-patterns.cti\n\n${patched}`;
+      }
+    }
+
+    fs.writeFileSync(dest, patched);
+    fs.writeFileSync(rootDest, patched);
+    return;
+  }
+
+  if (table === "en-us-g1.ctb") {
+    // `braille-patterns.cti` is injected into `chardefs.cti` above so it is
+    // loaded before any dot patterns are referenced. Remove the later include
+    // to avoid duplicate definitions.
+    const content = fs.readFileSync(src, "utf8");
+    const patched = content
+      .split(/\r?\n/)
+      .filter(
+        (line) => !/^\s*include\s+braille-patterns\.cti(\s|$)/.test(line)
+      )
+      .join("\n");
     fs.writeFileSync(dest, patched);
     fs.writeFileSync(rootDest, patched);
     return;

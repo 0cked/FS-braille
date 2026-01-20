@@ -124,7 +124,7 @@
 -->
 | Test | Input | Expected | Actual | Status |
 |------|-------|----------|--------|--------|
-|      |       |          |        |        |
+| Local prod: translate g2 | `EXIT` | Non-empty braille outputs; no liblouis compile errors | Outputs populated (`⠠⠠⠑⠭⠊⠞` etc); no `[40000]` spam | ✓ |
 
 ## Error Log
 <!-- 
@@ -144,6 +144,7 @@
 | 2025-02-14 14:15 | Runtime error: characters not defined | 1 | Serve tables from /liblouis/ and /liblouis/tables/ |
 | 2025-02-14 14:25 | Runtime error: characters not defined | 2 | Align table base path to /liblouis/tables/ |
 | 2025-02-14 14:35 | Runtime error: tables not found | 2 | Use bare table names with base path /liblouis/tables/ |
+| 2026-01-20 | Vercel: liblouis compile spam (`Character 'a' is not defined`) | 1 | Inject `braille-patterns.cti` early in copied `chardefs.cti`; remove duplicate include from copied `en-us-g1.ctb` |
 
 ## 5-Question Reboot Check
 <!-- 
@@ -175,3 +176,15 @@
   - Include timestamps for errors to track when issues occurred
 -->
 *Update after completing each phase or encountering errors*
+
+## Session: 2026-01-20
+
+### Phase 4: Testing & Verification
+- **Status:** in_progress
+- Actions taken:
+  - Reproduced production failure on `https://fs-braille.vercel.app/`: liblouis logs ~1983 compile errors (`Character 'a' is not defined`, `Dot pattern \\12/ is not defined`) and translation output stays empty.
+  - Traced failure to dot-pattern mappings (`braille-patterns.cti`) being loaded too late (after `chardefs.cti` already attempted to define letters/punctuation).
+  - Patched `scripts/copy-liblouis-assets.cjs` to:
+    - inject `include braille-patterns.cti` near the top of the copied `chardefs.cti`
+    - remove the later `include braille-patterns.cti` from copied `en-us-g1.ctb` to avoid duplicate definitions
+  - Verified fix with `npm run build` + `next start` and Playwright: translating `EXIT` produces unicode braille + dots with no liblouis `[40000]` error spam.

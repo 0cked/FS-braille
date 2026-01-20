@@ -38,6 +38,7 @@
 <!-- Key discoveries during exploration -->
 - Liblouis should be used as sole source of truth; avoid native binaries on Vercel by using WASM client-side
 - Liblouis browser build is available via `liblouis` + `liblouis-build` npm packages; tables can be copied into `public/liblouis`
+- The Emscripten “no tables” build needs `braille-patterns.cti` loaded *before* `chardefs.cti` defines letters/punctuation; otherwise liblouis emits cascades like `Character 'a' is not defined` and `Dot pattern \\12/ is not defined` and translation returns `null`.
 
 ## Technical Decisions
 <!-- 
@@ -67,7 +68,7 @@
 <!-- Errors and how they were resolved -->
 | Issue | Resolution |
 |-------|------------|
-|       |            |
+| Vercel deployment: liblouis prints ~1983 errors (`Character 'a' is not defined`, `Dot pattern \\12/ is not defined`) and translation fails | Patch copied `chardefs.cti` to `include braille-patterns.cti` early; remove later `include braille-patterns.cti` from copied `en-us-g1.ctb` to avoid duplicate definitions |
 
 ## Resources
 <!-- 
@@ -92,7 +93,8 @@
 -->
 <!-- CRITICAL: Update after every 2 view/browser operations -->
 <!-- Multimodal content must be captured as text immediately -->
--
+- 2026-01-20: On `https://fs-braille.vercel.app/`, clicking Translate triggers liblouis compilation spam like `[40000] en-us-g2.ctb:31: error: Character 'a' is not defined` and `[40000] ... Dot pattern \\12/ is not defined`, ending with ~1983 errors and missing output.
+- 2026-01-20: Network requests for `/liblouis/*.ctb|*.cti|*.uti` return 200/206 (Range) and files exist; compilation still fails until dot-pattern mappings are loaded first.
 
 ---
 <!-- 

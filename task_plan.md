@@ -125,6 +125,7 @@ Phase 4
 | Next.js build error: fs not found in liblouis-build | 1 | Load liblouis assets via script tags in browser, avoid bundling |
 | Runtime error: tables not found | 1 | Remove `tables/` prefix from table names and guard null translations |
 | Runtime error: characters not defined (missing includes) | 3 | Use TABLE_URL `/liblouis/tables/` with table names without `tables/` prefix |
+| Runtime error: `Character 'a' is not defined` / `Dot pattern \\12/ is not defined` (Vercel) | 1 | Patch copied `chardefs.cti` to include `braille-patterns.cti` early; remove duplicate `include braille-patterns.cti` from copied `en-us-g1.ctb` |
 
 ## Notes
 <!-- 
