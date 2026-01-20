@@ -61,12 +61,19 @@ export const translateText = async (
   options: NormalizationOptions
 ): Promise<TranslationResult> => {
   const normalization = normalizeInput(text, options);
-  const unicode_braille = await translateWithLiblouis(
+  const raw = await translateWithLiblouis(
     profile.tables,
     normalization.normalized
   );
 
+  const unicode_braille = raw ?? "";
   const warnings: Warning[] = [...normalization.warnings];
+  if (!raw && normalization.normalized.trim().length > 0) {
+    warnings.push({
+      type: "normalization",
+      message: "Translation failed. Tables may be missing or not loaded yet."
+    });
+  }
   const lines: BrailleCell[][] = [];
   const cells: BrailleCell[] = [];
 

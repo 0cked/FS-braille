@@ -2,14 +2,14 @@ type AsyncApi = {
   translateString: (
     tables: string,
     text: string,
-    cb: (value: string) => void
+    cb: (value: string | null) => void
   ) => void;
   version: (cb: (value: string) => void) => void;
   enableOnDemandTableLoading: (path: string, cb?: () => void) => void;
 };
 
 export type LouisEngine = {
-  translateString: (tables: string, text: string) => Promise<string>;
+  translateString: (tables: string, text: string) => Promise<string | null>;
   version: () => Promise<string>;
 };
 
@@ -71,7 +71,7 @@ export const loadLiblouis = async (): Promise<LouisEngine> => {
 export const translateWithLiblouis = async (
   tables: string[],
   text: string
-): Promise<string> => {
+): Promise<string | null> => {
   const engine = await loadLiblouis();
   return engine.translateString(tables.join(","), text);
 };
