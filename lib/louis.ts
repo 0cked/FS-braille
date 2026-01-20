@@ -1,12 +1,11 @@
 type AsyncApi = {
-  translateString: (tables: string, text: string, cb: (value: string) => void) => void;
+  translateString: (
+    tables: string,
+    text: string,
+    cb: (value: string) => void
+  ) => void;
   version: (cb: (value: string) => void) => void;
   enableOnDemandTableLoading: (path: string, cb?: () => void) => void;
-};
-
-type SyncApi = {
-  translateString: (tables: string, text: string) => string;
-  version: () => string;
 };
 
 export type LouisEngine = {
@@ -21,13 +20,26 @@ const TABLES_PATH = `${ASSET_BASE}/tables/`;
 
 let cachedEngine: Promise<LouisEngine> | null = null;
 
-const isBrowser = typeof window !== "undefined";
+const loadScript = (src: string) =>
+  new Promise<void>((resolve, reject) => {
+    const existing = document.querySelector(`script[src="${src}"]`);
+    if (existing) {
+      resolve();
+      return;
+    }
+    const script = document.createElement("script");
+    script.src = `/${src}`;
+    script.async = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error(`Failed to load ${src}`));
+    document.head.appendChild(script);
+  });
 
 const loadBrowserEngine = async (): Promise<LouisEngine> => {
-  const mod: any = await import("liblouis/easy-api");
-  const AsyncApiCtor =
-    mod?.EasyApiAsync ?? mod?.LiblouisEasyApiAsync ?? mod?.default?.EasyApiAsync;
+  await loadScript(CAPI_PATH);
+  await loadScript(EASY_API_PATH);
 
+  const AsyncApiCtor = (window as any).LiblouisEasyApiAsync;
   if (!AsyncApiCtor) {
     throw new Error("Unable to load liblouis async API in the browser.");
   }
@@ -48,23 +60,11 @@ const loadBrowserEngine = async (): Promise<LouisEngine> => {
   };
 };
 
-const loadNodeEngine = async (): Promise<LouisEngine> => {
-  const mod: any = await import("liblouis");
-  const instance: SyncApi = mod?.default ?? mod;
-
-  return {
-    translateString: async (tables, text) =>
-      instance.translateString(tables, text),
-    version: async () => instance.version()
-  };
-};
-
 export const loadLiblouis = async (): Promise<LouisEngine> => {
   if (cachedEngine) {
     return cachedEngine;
   }
-
-  cachedEngine = isBrowser ? loadBrowserEngine() : loadNodeEngine();
+  cachedEngine = loadBrowserEngine();
   return cachedEngine;
 };
 

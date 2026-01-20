@@ -122,6 +122,7 @@ Phase 4
 | Error | Attempt | Resolution |
 |-------|---------|------------|
 | npm E404 for liblouis-wasm on Vercel | 1 | Swap to `liblouis` + `liblouis-build` packages and update loader |
+| Next.js build error: fs not found in liblouis-build | 1 | Load liblouis assets via script tags in browser, avoid bundling |
 
 ## Notes
 <!-- 

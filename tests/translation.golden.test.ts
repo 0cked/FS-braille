@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { getProfileById } from "../config/profiles";
 import { DEFAULT_NORMALIZATION_OPTIONS } from "../lib/normalization";
-import { translateText } from "../lib/translation";
+import { translateText } from "../lib/translation.node";
 
 const loadGolden = (profileId: "en-us-g1" | "en-us-g2") => {
   const raw = readFileSync(

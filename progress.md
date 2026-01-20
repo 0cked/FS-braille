@@ -92,6 +92,7 @@
 - Actions taken:
   - Identified Vercel npm E404 for liblouis-wasm dependency
   - Swapped to `liblouis` + `liblouis-build` and updated asset copy + loader
+  - Fixed Next.js client bundle by loading liblouis assets via script tags
 - Files created/modified:
   - /home/jacob/wslprojects/braille-app/tests/golden.en-us-g1.json
   - /home/jacob/wslprojects/braille-app/tests/golden.en-us-g2.json
@@ -101,6 +102,8 @@
   - /home/jacob/wslprojects/braille-app/README.md
   - /home/jacob/wslprojects/braille-app/config/profiles.ts
   - /home/jacob/wslprojects/braille-app/public/liblouis/README.txt
+  - /home/jacob/wslprojects/braille-app/lib/louis.node.ts
+  - /home/jacob/wslprojects/braille-app/lib/translation.node.ts
 
 ## Test Results
 <!-- 
@@ -128,6 +131,7 @@
 | Timestamp | Error | Attempt | Resolution |
 |-----------|-------|---------|------------|
 | 2025-02-14 13:17 | npm E404 liblouis-wasm on Vercel | 1 | Switched to liblouis + liblouis-build packages |
+| 2025-02-14 13:51 | Next.js build error: fs not found in browser bundle | 1 | Load liblouis assets via script tags; remove npm import from client |
 
 ## 5-Question Reboot Check
 <!-- 

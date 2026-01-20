@@ -1,7 +1,7 @@
 import { writeFile } from "node:fs/promises";
 import { BRAILLE_PROFILES } from "../config/profiles";
 import { DEFAULT_NORMALIZATION_OPTIONS } from "../lib/normalization";
-import { translateText } from "../lib/translation";
+import { translateText } from "../lib/translation.node";
 
 const CASES = [
   "EXIT",
