@@ -99,6 +99,10 @@
 - `npm test` passes (liblouis emits table-resolution errors to stderr, but outputs remain deterministic and tests pass).
 - `npm run build` passes.
 
+### Runtime Stability (2026-01-21)
+- Observed browser crashes from liblouis (`Uncaught abort()` in `build-no-tables-utf16.js`) on some inputs (likely emoji/non-BMP characters).
+- Mitigation: block preview generation when Compliance Check is `BLOCK`, add explicit `non_bmp_character` BLOCK flag, and reset/reload the liblouis engine after errors/timeouts.
+
 ## 5-Question Reboot Check
 | Question | Answer |
 |----------|--------|

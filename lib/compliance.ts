@@ -104,6 +104,7 @@ export type ComplianceFlag = {
     | "unusual_symbol"
     | "non_ascii_letter"
     | "emoji_or_pictograph"
+    | "non_bmp_character"
     | "all_caps"
     | "numbers_present"
     | "abbreviation_detected"
@@ -150,6 +151,24 @@ export const complianceCheck = (input: ComplianceInput): ComplianceReport => {
       message:
         "Emoji/pictographs detected. Remove them before generating or exporting braille."
     });
+  }
+
+  // Some non-BMP characters (surrogate pairs) can be problematic in signage workflows
+  // and may not be supported by the current translation engine build.
+  try {
+    const hasNonBmp = Array.from(text).some(
+      (char) => (char.codePointAt(0) ?? 0) > 0xffff
+    );
+    if (hasNonBmp) {
+      flags.push({
+        code: "non_bmp_character",
+        level: "BLOCK",
+        message:
+          "Non-standard characters detected (e.g., emoji/flags). Remove them before generating or exporting braille."
+      });
+    }
+  } catch {
+    // Best-effort only.
   }
 
   if (/[\u2018\u2019\u201c\u201d]/.test(text)) {

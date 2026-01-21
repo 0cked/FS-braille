@@ -35,6 +35,10 @@ const REQUIRED_TABLE_FILES = [
 
 let cachedEngine: Promise<LouisEngine> | null = null;
 
+export const resetLiblouis = () => {
+  cachedEngine = null;
+};
+
 const loadScript = (src: string) =>
   new Promise<void>((resolve, reject) => {
     const normalizedSrc = src.startsWith("/") ? src : `/${src}`;
@@ -157,7 +161,22 @@ export const translateWithLiblouis = async (
   text: string
 ): Promise<string | null> => {
   const engine = await loadLiblouis();
-  return engine.translateString(tables.join(","), text);
+  const run = async () => engine.translateString(tables.join(","), text);
+  try {
+    const timeoutMs = 2500;
+    const timeout = new Promise<null>((resolve) =>
+      setTimeout(() => resolve(null), timeoutMs)
+    );
+    const result = await Promise.race([run(), timeout]);
+    if (result === null) {
+      // If the worker aborted or hung, reset so a future retry can recover.
+      resetLiblouis();
+    }
+    return result;
+  } catch {
+    resetLiblouis();
+    return null;
+  }
 };
 
 export const getLiblouisVersion = async (): Promise<string> => {

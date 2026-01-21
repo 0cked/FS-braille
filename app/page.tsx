@@ -12,6 +12,7 @@ import { DEFAULT_PHRASE_GROUPS } from "../lib/phraseLibrary";
 import { complianceCheck, decideGrade } from "../lib/compliance";
 import { fnv1a32 } from "../lib/hash";
 import { normalizeTypography } from "../lib/typography";
+import { resetLiblouis } from "../lib/louis";
 
 const UNDO_LIMIT = 10;
 const LOCAL_STORAGE_KEY = "fastsigns_braille_phrases";
@@ -41,6 +42,7 @@ export default function HomePage() {
   const [warnAcknowledged, setWarnAcknowledged] = useState(false);
   const [blockAcknowledged, setBlockAcknowledged] = useState(false);
   const [blockReason, setBlockReason] = useState("");
+  const [translateError, setTranslateError] = useState<string | null>(null);
 
   useEffect(() => {
     try {
@@ -113,6 +115,10 @@ export default function HomePage() {
   }, [inputHash]);
 
   useEffect(() => {
+    setTranslateError(null);
+  }, [input]);
+
+  useEffect(() => {
     const payload = JSON.stringify({
       inputHash,
       warnAcknowledged,
@@ -183,12 +189,26 @@ export default function HomePage() {
       setResult(null);
       return;
     }
+    if (compliance.level === "BLOCK") {
+      setTranslateError(
+        "Preview generation is blocked due to high-risk Compliance Check flags. Resolve the BLOCK items before generating braille."
+      );
+      setResult(null);
+      return;
+    }
     setIsTranslating(true);
     try {
       const translation = await translateText(input, profile);
       setResult(translation);
       setLastGeneratedAt(new Date().toISOString());
     } catch (error) {
+      // liblouis can abort on unsupported inputs (e.g., pictographs/emoji). Reset
+      // the engine so the user can recover after correcting text.
+      resetLiblouis();
+      setResult(null);
+      setTranslateError(
+        "Translation engine error. Remove unusual characters (especially emoji/pictographs) and try again."
+      );
       console.error(error);
     } finally {
       setIsTranslating(false);
@@ -429,6 +449,11 @@ export default function HomePage() {
                 </div>
                 <span className="muted">Preview updates only when you click Generate preview.</span>
               </div>
+              {translateError ? (
+                <div className="notice" role="alert">
+                  {translateError}
+                </div>
+              ) : null}
             </div>
 
             <div className="field">
