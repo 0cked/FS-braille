@@ -40,6 +40,7 @@
 |-------|------------|
 | session-catchup script path failed because `CLAUDE_PLUGIN_ROOT` is empty | Used known template path under `/home/jacob/.codex/skills/planning-with-files` |
 | Network blocked when fetching logo | Re-ran `curl` with escalated permissions to download the SVG |
+| Browser runtime crashes with `Uncaught abort()` in liblouis | Root cause likely unsafe buffer sizing/length units in upstream `easy-api.js` for UTF16 build; patched wrapper + added try/catch in worker |
 
 ## Resources
 - `thehub-designreference` (design files to inspect)

@@ -75,6 +75,82 @@ const patchEasyApi = (source) => {
     }
   }
 
+  // Harden the async worker wrapper so liblouis aborts don't crash the worker
+  // with "Uncaught abort()". Instead, failures resolve as `null` so the UI can
+  // surface a controlled error and reload the engine.
+  if (!patched.includes("SAFE_WORKER_TRY_CATCH")) {
+    const safeLogLine =
+      "try { self.postMessage({isLog: true, level: 'error', msg: '[liblouis] ' + (err && err.message ? err.message : String(err))}); } catch(e) {}";
+
+    // Insert try/catch inside the worker's `lou` command.
+    patched = patched.replace(
+      /^(\s*)\"return liblouis\[data\.fn\]\.apply\(liblouis, data\.args\);\",\s*$/m,
+      (_match, indent) =>
+        [
+          `${indent}"// SAFE_WORKER_TRY_CATCH",`,
+          `${indent}"try {",`,
+          `${indent}"return liblouis[data.fn].apply(liblouis, data.args);",`,
+          `${indent}"} catch (err) {",`,
+          `${indent}"${safeLogLine}",`,
+          `${indent}"return null;",`,
+          `${indent}"}",`
+        ].join("\n")
+    );
+
+    patched = patched.replace(
+      "\"var res = CMD[msg.cmd](msg.data);\",",
+      [
+        "\"var res = null;\",",
+        "\"try {\",",
+        "\t\"res = CMD[msg.cmd](msg.data);\",",
+        "\"} catch (err) {\",",
+        `\t\"${safeLogLine}\",`,
+        "\t\"res = null;\",",
+        "\"}\","
+      ].join("\n")
+    );
+  }
+
+  // Fix buffer sizing for the UTF16/UTF32 builds: liblouis expects lengths in
+  // code units, while this build's memory helpers deal in bytes. The upstream
+  // wrapper sets lengths incorrectly and can corrupt memory, causing aborts
+  // even for normal inputs.
+  if (!patched.includes("SAFE_UTF16_LENGTHS")) {
+    patched = patched.replace(
+      "var bufflen = this.mem.getBufferLength(inbuf);",
+      [
+        "var baseBufflen = this.mem.getBufferLength(inbuf); // bytes",
+        "var bytesPerChar = baseBufflen / (inbuf.length + 1);",
+        "var bufflen = baseBufflen * 8; // allocate extra headroom for expansion",
+        "var outlen_units = Math.floor(bufflen / bytesPerChar); // code units",
+        "// SAFE_UTF16_LENGTHS"
+      ].join("\n\t\t\t")
+    );
+
+    patched = patched.replace(
+      "this.capi.setValue(bufflen_ptr, bufflen, \"i32\");",
+      "this.capi.setValue(bufflen_ptr, outlen_units, \"i32\");"
+    );
+
+    patched = patched.replace(
+      "this.capi.setValue(strlen_ptr, bufflen, \"i32\");",
+      "this.capi.setValue(strlen_ptr, inbuf.length, \"i32\");"
+    );
+
+    patched = patched.replace(
+      /if\(!success\)\s*\{\s*return null;\s*\}/,
+      [
+        "if(!success) {",
+        "\t\t\t\tthis.capi._free(outbuff_ptr);",
+        "\t\t\t\tthis.capi._free(inbuff_ptr);",
+        "\t\t\t\tthis.capi._free(bufflen_ptr);",
+        "\t\t\t\tthis.capi._free(strlen_ptr);",
+        "\t\t\t\treturn null;",
+        "\t\t\t}"
+      ].join("\n")
+    );
+  }
+
   return patched;
 };
 

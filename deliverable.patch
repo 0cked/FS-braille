@@ -1,1701 +1,2270 @@
-diff --git a/app/page.tsx b/app/page.tsx
-index 6a5700c..94802a8 100644
---- a/app/page.tsx
-+++ b/app/page.tsx
-@@ -12,6 +12,7 @@ import { DEFAULT_PHRASE_GROUPS } from "../lib/phraseLibrary";
- import { complianceCheck, decideGrade } from "../lib/compliance";
- import { fnv1a32 } from "../lib/hash";
- import { normalizeTypography } from "../lib/typography";
-+import { resetLiblouis } from "../lib/louis";
- 
- const UNDO_LIMIT = 10;
- const LOCAL_STORAGE_KEY = "fastsigns_braille_phrases";
-@@ -41,6 +42,7 @@ export default function HomePage() {
-   const [warnAcknowledged, setWarnAcknowledged] = useState(false);
-   const [blockAcknowledged, setBlockAcknowledged] = useState(false);
-   const [blockReason, setBlockReason] = useState("");
-+  const [translateError, setTranslateError] = useState<string | null>(null);
- 
-   useEffect(() => {
-     try {
-@@ -112,6 +114,10 @@ export default function HomePage() {
-     }
-   }, [inputHash]);
- 
-+  useEffect(() => {
-+    setTranslateError(null);
-+  }, [input]);
-+
-   useEffect(() => {
-     const payload = JSON.stringify({
-       inputHash,
-@@ -183,12 +189,26 @@ export default function HomePage() {
-       setResult(null);
-       return;
-     }
-+    if (compliance.level === "BLOCK") {
-+      setTranslateError(
-+        "Preview generation is blocked due to high-risk Compliance Check flags. Resolve the BLOCK items before generating braille."
-+      );
-+      setResult(null);
-+      return;
-+    }
-     setIsTranslating(true);
-     try {
-       const translation = await translateText(input, profile);
-       setResult(translation);
-       setLastGeneratedAt(new Date().toISOString());
-     } catch (error) {
-+      // liblouis can abort on unsupported inputs (e.g., pictographs/emoji). Reset
-+      // the engine so the user can recover after correcting text.
-+      resetLiblouis();
-+      setResult(null);
-+      setTranslateError(
-+        "Translation engine error. Remove unusual characters (especially emoji/pictographs) and try again."
-+      );
-       console.error(error);
-     } finally {
-       setIsTranslating(false);
-@@ -429,6 +449,11 @@ export default function HomePage() {
-                 </div>
-                 <span className="muted">Preview updates only when you click Generate preview.</span>
-               </div>
-+              {translateError ? (
-+                <div className="notice" role="alert">
-+                  {translateError}
-+                </div>
-+              ) : null}
-             </div>
- 
-             <div className="field">
 diff --git a/deliverable.patch b/deliverable.patch
-index 0d25565..e69de29 100644
+index 9badaf6..e69de29 100644
 --- a/deliverable.patch
 +++ b/deliverable.patch
-@@ -1,2105 +0,0 @@
--diff --git a/app/globals.css b/app/globals.css
--index 364e3c6..574d6b7 100644
----- a/app/globals.css
--+++ b/app/globals.css
--@@ -164,26 +164,12 @@ label {
--   gap: var(--space-2);
-- }
-- 
---.brand {
---  display: flex;
---  align-items: center;
---  gap: var(--space-5);
---  flex-wrap: wrap;
---}
---
-- .brandLogo {
--   display: block;
---  width: clamp(160px, 22vw, 240px);
--+  width: clamp(180px, 18vw, 260px);
--   height: auto;
-- }
-- 
---.brandCopy {
---  display: flex;
---  flex-direction: column;
---  gap: var(--space-2);
---  min-width: min(520px, 100%);
---}
---
-- .title {
--   font-size: clamp(28px, 3vw, 40px);
--   font-weight: 700;
--@@ -241,6 +227,119 @@ label {
--   font-size: 20px;
-- }
-- 
--+.banner {
--+  border-radius: var(--radius-lg);
--+  border: 1px solid var(--card-border);
--+  padding: 12px 14px;
--+  background: rgba(0, 204, 255, 0.12);
--+  color: var(--text-primary);
--+  font-size: 14px;
--+  line-height: 1.55;
--+}
--+
--+.bannerWarning {
--+  border-color: rgba(0, 204, 255, 0.2);
--+}
--+
--+.linkButton {
--+  appearance: none;
--+  border: none;
--+  background: transparent;
--+  color: var(--primary);
--+  padding: 0;
--+  margin: 0;
--+  font: inherit;
--+  cursor: pointer;
--+  text-decoration: underline;
--+  text-underline-offset: 3px;
--+}
--+
--+.summary {
--+  border-radius: var(--radius-lg);
--+  border: 1px solid var(--card-border);
--+  padding: 12px 14px;
--+  background: var(--bg-surface);
--+}
--+
--+.summaryGrid {
--+  display: grid;
--+  grid-template-columns: repeat(2, minmax(0, 1fr));
--+  gap: var(--space-3);
--+  margin-top: var(--space-3);
--+}
--+
--+.summaryItem {
--+  min-width: 0;
--+  font-size: 14px;
--+}
--+
--+.status {
--+  display: inline-flex;
--+  align-items: center;
--+  gap: 6px;
--+  font-weight: 700;
--+}
--+
--+.status-pass {
--+  color: #0f766e;
--+}
--+
--+.status-warn {
--+  color: #b45309;
--+}
--+
--+.status-block {
--+  color: #b91c1c;
--+}
--+
--+.compliancePanel {
--+  border-radius: var(--radius-lg);
--+  border: 1px solid var(--card-border);
--+  padding: 12px 14px;
--+  background: var(--bg-surface);
--+}
--+
--+.compliance-pass {
--+  border-color: rgba(16, 185, 129, 0.22);
--+}
--+
--+.compliance-warn {
--+  border-color: rgba(245, 158, 11, 0.28);
--+}
--+
--+.compliance-block {
--+  border-color: rgba(239, 68, 68, 0.32);
--+}
--+
--+.modalBackdrop {
--+  position: fixed;
--+  inset: 0;
--+  background: rgba(15, 23, 42, 0.45);
--+  display: flex;
--+  align-items: center;
--+  justify-content: center;
--+  padding: clamp(16px, 3vw, 28px);
--+  z-index: 50;
--+}
--+
--+.modal {
--+  width: min(760px, 100%);
--+  max-height: min(80vh, 720px);
--+  overflow: auto;
--+  border-radius: var(--radius-xl);
--+  border: 1px solid var(--card-border);
--+  background: var(--bg-surface);
--+  box-shadow: var(--shadow-card-hover);
--+  padding: 16px;
--+}
--+
--+.modalBody {
--+  display: flex;
--+  flex-direction: column;
--+  gap: var(--space-4);
--+  margin-top: var(--space-4);
--+}
--+
-- .field {
--   display: flex;
--   flex-direction: column;
--@@ -274,7 +373,7 @@ label {
-- }
-- 
-- .textarea::placeholder {
---  white-space: pre-line;
--+  white-space: pre-wrap;
-- }
-- 
-- .row {
--@@ -394,24 +493,29 @@ details summary {
-- .chip {
--   padding: 8px 12px;
--   border-radius: 999px;
---  background: rgba(31, 60, 255, 0.08);
---  color: var(--primary);
--+  background: var(--bg-surface);
--+  color: var(--text-primary);
--   font-size: 13px;
--   font-weight: 600;
--   cursor: pointer;
---  border: 1px solid transparent;
---  transition: border-color var(--transition-fast), transform var(--transition-fast);
--+  border: 1px solid rgba(15, 23, 42, 0.1);
--+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
--+  transition:
--+    border-color var(--transition-fast),
--+    transform var(--transition-fast),
--+    box-shadow var(--transition-fast);
-- }
-- 
-- .chip.secondary {
---  background: rgba(0, 204, 255, 0.12);
---  color: var(--primary);
---  border-color: rgba(0, 204, 255, 0.22);
--+  background: var(--bg-surface);
--+  color: var(--text-primary);
--+  border-color: rgba(15, 23, 42, 0.12);
-- }
-- 
-- .chip:hover {
---  border-color: rgba(31, 60, 255, 0.3);
---  transform: translateY(-1px);
--+  border-color: rgba(31, 60, 255, 0.28);
--+  transform: translateY(-2px);
--+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
-- }
-- 
-- .notice {
--@@ -451,6 +555,10 @@ details summary {
--     grid-template-columns: 1fr;
--   }
-- 
--+  .summaryGrid {
--+    grid-template-columns: 1fr;
--+  }
--+
--   .panel {
--     padding: var(--space-4);
--   }
+@@ -1,2763 +0,0 @@
 -diff --git a/app/page.tsx b/app/page.tsx
--index 05fc89d..6a5700c 100644
+-index 6a5700c..94802a8 100644
 ---- a/app/page.tsx
 -+++ b/app/page.tsx
--@@ -6,27 +6,28 @@ import {
--   DEFAULT_PROFILE_ID,
--   getProfileById
-- } from "../config/profiles";
---import {
---  DEFAULT_NORMALIZATION_OPTIONS,
---  NormalizationOptions,
---} from "../lib/normalization";
-- import { translateText, TranslationResult } from "../lib/translation";
-- import { DEFAULT_SVG_LAYOUT, SvgLayout, renderBrailleSvg } from "../lib/svg";
-- import { DEFAULT_PHRASE_GROUPS } from "../lib/phraseLibrary";
--+import { complianceCheck, decideGrade } from "../lib/compliance";
--+import { fnv1a32 } from "../lib/hash";
--+import { normalizeTypography } from "../lib/typography";
+-@@ -12,6 +12,7 @@ import { DEFAULT_PHRASE_GROUPS } from "../lib/phraseLibrary";
+- import { complianceCheck, decideGrade } from "../lib/compliance";
+- import { fnv1a32 } from "../lib/hash";
+- import { normalizeTypography } from "../lib/typography";
+-+import { resetLiblouis } from "../lib/louis";
 - 
---const AUTO_TRANSLATE_DELAY = 350;
 - const UNDO_LIMIT = 10;
 - const LOCAL_STORAGE_KEY = "fastsigns_braille_phrases";
---const INPUT_PLACEHOLDER = ["RESTROOM", "ROOM 101", "EXIT", "SUITE 200"].join("\n");
--+const ACK_STORAGE_KEY = "fastsigns_braille_ack_v1";
--+const INPUT_PLACEHOLDER = `RESTROOM
--+ROOM 101
--+EXIT
--+SUITE 200`;
-- 
-- export default function HomePage() {
--   const [input, setInput] = useState("");
---  const [profileId, setProfileId] = useState(DEFAULT_PROFILE_ID);
---  const [options, setOptions] = useState<NormalizationOptions>(
---    DEFAULT_NORMALIZATION_OPTIONS
---  );
--+  const [manualProfileId, setManualProfileId] = useState(DEFAULT_PROFILE_ID);
--+  const [smartSelectEnabled, setSmartSelectEnabled] = useState(true);
--   const [result, setResult] = useState<TranslationResult | null>(null);
--   const [isTranslating, setIsTranslating] = useState(false);
--+  const [lastGeneratedAt, setLastGeneratedAt] = useState<string | null>(null);
--   const [undoStack, setUndoStack] = useState<string[]>([]);
--   const [phraseQuery, setPhraseQuery] = useState("");
--   const [phraseGroupId, setPhraseGroupId] = useState<string>("all");
--@@ -35,6 +36,11 @@ export default function HomePage() {
--   const [importJson, setImportJson] = useState("");
--   const [layout, setLayout] = useState<SvgLayout>(DEFAULT_SVG_LAYOUT);
--   const [copiedId, setCopiedId] = useState<string | null>(null);
--+  const [complianceModalOpen, setComplianceModalOpen] = useState(false);
--+  const [normalizeModalOpen, setNormalizeModalOpen] = useState(false);
--+  const [warnAcknowledged, setWarnAcknowledged] = useState(false);
--+  const [blockAcknowledged, setBlockAcknowledged] = useState(false);
--+  const [blockReason, setBlockReason] = useState("");
+-@@ -41,6 +42,7 @@ export default function HomePage() {
+-   const [warnAcknowledged, setWarnAcknowledged] = useState(false);
+-   const [blockAcknowledged, setBlockAcknowledged] = useState(false);
+-   const [blockReason, setBlockReason] = useState("");
+-+  const [translateError, setTranslateError] = useState<string | null>(null);
 - 
 -   useEffect(() => {
 -     try {
--@@ -51,7 +57,92 @@ export default function HomePage() {
--     window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(myPhrases));
--   }, [myPhrases]);
+-@@ -112,6 +114,10 @@ export default function HomePage() {
+-     }
+-   }, [inputHash]);
 - 
---  const profile = useMemo(() => getProfileById(profileId), [profileId]);
--+  const smartSelectDecision = useMemo(() => decideGrade(input), [input]);
--+  const effectiveProfileId = smartSelectEnabled
--+    ? smartSelectDecision.grade === "grade2"
--+      ? "en-us-g2"
--+      : "en-us-g1"
--+    : manualProfileId;
--+  const profile = useMemo(
--+    () => getProfileById(effectiveProfileId),
--+    [effectiveProfileId]
--+  );
--+
--+  const compliance = useMemo(
--+    () =>
--+      complianceCheck({
--+        text: input,
--+        profileId: effectiveProfileId,
--+        smartSelectEnabled,
--+        smartSelectDecision
--+      }),
--+    [effectiveProfileId, input, smartSelectDecision, smartSelectEnabled]
--+  );
--+
--+  const inputHash = useMemo(() => fnv1a32(input), [input]);
--+
 -+  useEffect(() => {
--+    try {
--+      const raw = window.localStorage.getItem(ACK_STORAGE_KEY);
--+      if (!raw) {
--+        setWarnAcknowledged(false);
--+        setBlockAcknowledged(false);
--+        setBlockReason("");
--+        return;
--+      }
--+      const parsed = JSON.parse(raw) as {
--+        inputHash?: string;
--+        warnAcknowledged?: boolean;
--+        blockAcknowledged?: boolean;
--+        blockReason?: string;
--+      };
--+      if (parsed.inputHash !== inputHash) {
--+        setWarnAcknowledged(false);
--+        setBlockAcknowledged(false);
--+        setBlockReason("");
--+        return;
--+      }
--+      setWarnAcknowledged(Boolean(parsed.warnAcknowledged));
--+      setBlockAcknowledged(Boolean(parsed.blockAcknowledged));
--+      setBlockReason(String(parsed.blockReason ?? ""));
--+    } catch {
--+      setWarnAcknowledged(false);
--+      setBlockAcknowledged(false);
--+      setBlockReason("");
--+    }
--+  }, [inputHash]);
+-+    setTranslateError(null);
+-+  }, [input]);
 -+
--+  useEffect(() => {
--+    const payload = JSON.stringify({
--+      inputHash,
--+      warnAcknowledged,
--+      blockAcknowledged,
--+      blockReason
--+    });
--+    window.localStorage.setItem(ACK_STORAGE_KEY, payload);
--+  }, [blockAcknowledged, blockReason, inputHash, warnAcknowledged]);
--+
--+  useEffect(() => {
--+    if (!complianceModalOpen && !normalizeModalOpen) {
+-   useEffect(() => {
+-     const payload = JSON.stringify({
+-       inputHash,
+-@@ -183,12 +189,26 @@ export default function HomePage() {
+-       setResult(null);
+-       return;
+-     }
+-+    if (compliance.level === "BLOCK") {
+-+      setTranslateError(
+-+        "Preview generation is blocked due to high-risk Compliance Check flags. Resolve the BLOCK items before generating braille."
+-+      );
+-+      setResult(null);
 -+      return;
 -+    }
--+    const handler = (event: KeyboardEvent) => {
--+      if (event.key === "Escape") {
--+        setComplianceModalOpen(false);
--+        setNormalizeModalOpen(false);
--+      }
--+    };
--+    window.addEventListener("keydown", handler);
--+    return () => window.removeEventListener("keydown", handler);
--+  }, [complianceModalOpen, normalizeModalOpen]);
--+
--+  const canExport = useMemo(() => {
--+    if (compliance.level === "PASS") return true;
--+    if (compliance.level === "WARN") return warnAcknowledged;
--+    return blockAcknowledged && blockReason.trim().length > 0;
--+  }, [blockAcknowledged, blockReason, compliance.level, warnAcknowledged]);
--+
--+  const typographyPreview = useMemo(() => normalizeTypography(input), [input]);
-- 
--   const visiblePhraseGroups = useMemo(() => {
--     const query = phraseQuery.trim().toLowerCase();
--@@ -94,8 +185,9 @@ export default function HomePage() {
--     }
 -     setIsTranslating(true);
 -     try {
---      const translation = await translateText(input, profile, options);
--+      const translation = await translateText(input, profile);
+-       const translation = await translateText(input, profile);
 -       setResult(translation);
--+      setLastGeneratedAt(new Date().toISOString());
+-       setLastGeneratedAt(new Date().toISOString());
 -     } catch (error) {
+-+      // liblouis can abort on unsupported inputs (e.g., pictographs/emoji). Reset
+-+      // the engine so the user can recover after correcting text.
+-+      resetLiblouis();
+-+      setResult(null);
+-+      setTranslateError(
+-+        "Translation engine error. Remove unusual characters (especially emoji/pictographs) and try again."
+-+      );
 -       console.error(error);
 -     } finally {
--@@ -103,14 +195,6 @@ export default function HomePage() {
--     }
--   };
-- 
---  useEffect(() => {
---    const handle = window.setTimeout(() => {
---      handleTranslate();
---    }, AUTO_TRANSLATE_DELAY);
---    return () => window.clearTimeout(handle);
---    // eslint-disable-next-line react-hooks/exhaustive-deps
---  }, [input, profileId, options]);
---
--   const bitPatternString = useMemo(() => {
--     if (!result) {
--       return "";
--@@ -127,9 +211,123 @@ export default function HomePage() {
--     return renderBrailleSvg(result.lines, layout);
--   }, [layout, result]);
-- 
---  const svgMarkup = svgPreview
---    ? `<?xml version="1.0" encoding="UTF-8"?>\n${svgPreview.svg}`
---    : "";
--+  const exportMetadata = useMemo(
--+    () => ({
--+      generated_at: lastGeneratedAt,
--+      input_hash: inputHash,
--+      profile_used: effectiveProfileId,
--+      smart_select: smartSelectEnabled
--+        ? {
--+            enabled: true,
--+            grade: smartSelectDecision.grade,
--+            rule_id: smartSelectDecision.ruleId,
--+            reason: smartSelectDecision.reason
--+          }
--+        : { enabled: false },
--+      compliance: {
--+        level: compliance.level,
--+        flags: compliance.flags.map((flag) => ({
--+          code: flag.code,
--+          level: flag.level
--+        })),
--+        acknowledgement: {
--+          warn_acknowledged: warnAcknowledged,
--+          block_acknowledged: blockAcknowledged,
--+          block_reason: blockReason || null
--+        }
--+      }
--+    }),
--+    [
--+      blockAcknowledged,
--+      blockReason,
--+      compliance.flags,
--+      compliance.level,
--+      effectiveProfileId,
--+      inputHash,
--+      lastGeneratedAt,
--+      smartSelectDecision.grade,
--+      smartSelectDecision.reason,
--+      smartSelectDecision.ruleId,
--+      smartSelectEnabled,
--+      warnAcknowledged
--+    ]
--+  );
--+
--+  const svgMarkup = useMemo(() => {
--+    if (!svgPreview) {
--+      return "";
--+    }
--+    const json = JSON.stringify(exportMetadata).replace("]]>", "]]\\>");
--+    const withMetadata = svgPreview.svg.replace(
--+      "</svg>",
--+      `<metadata><![CDATA[${json}]]></metadata>\n</svg>`
--+    );
--+    return `<?xml version="1.0" encoding="UTF-8"?>\n${withMetadata}`;
--+  }, [exportMetadata, svgPreview]);
--+
--+  const proofreadPacket = useMemo(() => {
--+    if (!result) {
--+      return "";
--+    }
--+    const lines: string[] = [];
--+    lines.push(
--+      "IMPORTANT: This tool is a translation aid. ADA/best-practice compliance depends on correct translation AND physical layout/fabrication requirements. Always verify before production."
--+    );
--+    lines.push(`Generated at: ${lastGeneratedAt ?? "—"}`);
--+    lines.push(`Input hash: ${inputHash}`);
--+    lines.push(
--+      `Profile used: ${profile.grade === "g1" ? "Grade 1 (Uncontracted)" : "Grade 2 (Contracted)"}`
--+    );
--+    lines.push(
--+      `Smart Select Grade (Conservative): ${smartSelectEnabled ? "ON" : "OFF"}`
--+    );
--+    if (smartSelectEnabled) {
--+      lines.push(`Smart Select rule: ${smartSelectDecision.ruleId}`);
--+      lines.push(`Smart Select reason: ${smartSelectDecision.reason}`);
--+    }
--+    lines.push(`Compliance Check: ${compliance.level}`);
--+    if (compliance.flags.length) {
--+      compliance.flags.forEach((flag) => {
--+        lines.push(`${flag.level} ${flag.code}: ${flag.message}`);
--+      });
--+    } else {
--+      lines.push("No common risk flags detected (still requires verification).");
--+    }
--+    lines.push(
--+      `Acknowledgement: WARN=${warnAcknowledged ? "yes" : "no"}, BLOCK=${blockAcknowledged ? "yes" : "no"}`
--+    );
--+    if (blockReason.trim()) {
--+      lines.push(`BLOCK reason: ${blockReason.trim()}`);
--+    }
--+    if (result.warnings.length) {
--+      lines.push("Engine warnings:");
--+      result.warnings.forEach((warning) => lines.push(`- ${warning.message}`));
--+    }
--+    lines.push("");
--+    lines.push("INPUT (exact):");
--+    lines.push(input);
--+    lines.push("");
--+    lines.push("UNICODE BRAILLE:");
--+    lines.push(result.unicode_braille || "—");
--+    lines.push("");
--+    lines.push("DOT-NUMBER NOTATION:");
--+    lines.push(result.plain_dots || "—");
--+    return lines.join("\n");
--+  }, [
--+    blockAcknowledged,
--+    blockReason,
--+    compliance.flags,
--+    compliance.level,
--+    input,
--+    inputHash,
--+    lastGeneratedAt,
--+    profile.grade,
--+    result,
--+    smartSelectDecision.reason,
--+    smartSelectDecision.ruleId,
--+    smartSelectEnabled,
--+    warnAcknowledged
--+  ]);
-- 
--   const copyToClipboard = async (id: string, value: string) => {
--     try {
--@@ -188,17 +386,12 @@ export default function HomePage() {
--   return (
--     <main className="page">
--       <header className="header">
---        <div className="brand">
---          <img className="brandLogo" src="/fastsigns-logo.svg" alt="FASTSIGNS" />
---          <div className="brandCopy">
---            <span className="badge">Braille Translator</span>
---            <h1 className="title">Deterministic braille translation</h1>
---            <p className="subtitle">
---              Enter sign text, choose a profile, then copy outputs for design and
---              production.
---            </p>
---          </div>
---        </div>
--+        <img className="brandLogo" src="/fastsigns-logo.svg" alt="FASTSIGNS" />
--+        <h1 className="title">Deterministic braille translation</h1>
--+        <p className="subtitle">
--+          Translation aid for signage teams. Always verify braille and physical
--+          layout requirements before production.
--+        </p>
--       </header>
-- 
--       <section className="layout">
--@@ -217,7 +410,7 @@ export default function HomePage() {
--               <div className="row space-between">
--                 <div className="row">
--                   <button className="button" onClick={handleTranslate}>
---                    {isTranslating ? "Translating..." : "Translate"}
--+                    {isTranslating ? "Generating..." : "Generate preview"}
--                   </button>
--                   <button
--                     className="button secondary"
--@@ -234,20 +427,45 @@ export default function HomePage() {
--                     Undo
--                   </button>
+-       setIsTranslating(false);
+-@@ -429,6 +449,11 @@ export default function HomePage() {
 -                 </div>
---                <span className="muted">Auto-translate with {AUTO_TRANSLATE_DELAY}ms delay</span>
--+                <span className="muted">Preview updates only when you click Generate preview.</span>
+-                 <span className="muted">Preview updates only when you click Generate preview.</span>
 -               </div>
--             </div>
-- 
--             <div className="field">
---              <label htmlFor="profile">Translation profile</label>
--+              <label htmlFor="profile">Grade selection</label>
--+              <div className="row space-between">
--+                <label className="toggle">
--+                  <input
--+                    type="checkbox"
--+                    checked={smartSelectEnabled}
--+                    onChange={(event) => setSmartSelectEnabled(event.target.checked)}
--+                  />
--+                  Smart Select Grade (Conservative)
--+                </label>
--+                <span className="badge">
--+                  Used: {profile.grade === "g1" ? "Grade 1" : "Grade 2"}
--+                </span>
--+              </div>
--+              <span className="muted">
--+                Chooses Grade 1 for short/technical labels; Grade 2 for sentence-like
--+                text. Always verify.
--+              </span>
--               <select
--                 id="profile"
--                 className="select"
---                value={profileId}
---                onChange={(event) =>
---                  setProfileId(event.target.value as typeof profileId)
---                }
--+                value={smartSelectEnabled ? "auto" : manualProfileId}
--+                disabled={smartSelectEnabled}
--+                onChange={(event) => {
--+                  const next = event.target.value;
--+                  if (next === "auto") {
--+                    setSmartSelectEnabled(true);
--+                    return;
--+                  }
--+                  setSmartSelectEnabled(false);
--+                  setManualProfileId(next as typeof manualProfileId);
--+                }}
--               >
--+                <option value="auto">Auto (Smart Select)</option>
--                 {BRAILLE_PROFILES.map((profileOption) => (
--                   <option key={profileOption.id} value={profileOption.id}>
--                     {profileOption.label}
--@@ -255,83 +473,32 @@ export default function HomePage() {
--                 ))}
--               </select>
--               <span className="muted">{profile.description}</span>
--+              {smartSelectEnabled ? (
--+                <details>
--+                  <summary>Why this grade?</summary>
--+                  <div className="output">
--+                    {smartSelectDecision.reason}
--+                    {"\n"}Rule: {smartSelectDecision.ruleId}
--+                  </div>
--+                </details>
+-+              {translateError ? (
+-+                <div className="notice" role="alert">
+-+                  {translateError}
+-+                </div>
 -+              ) : null}
 -             </div>
 - 
--             <details>
---              <summary>Options</summary>
--+              <summary>Tools</summary>
--               <div className="field">
---                <label>Normalization</label>
---                <div className="row">
---                  <label className="toggle">
---                    <input
---                      type="checkbox"
---                      checked={options.normalizeWhitespace}
---                      onChange={(event) =>
---                        setOptions((prev) => ({
---                          ...prev,
---                          normalizeWhitespace: event.target.checked
---                        }))
---                      }
---                    />
---                    Normalize whitespace
---                  </label>
---                  <label className="toggle">
---                    <input
---                      type="checkbox"
---                      checked={options.smartQuotes}
---                      onChange={(event) =>
---                        setOptions((prev) => ({
---                          ...prev,
---                          smartQuotes: event.target.checked
---                        }))
---                      }
---                    />
---                    Smart quotes to ASCII
---                  </label>
---                  <label className="toggle">
---                    <input
---                      type="checkbox"
---                      checked={options.preserveLineBreaks}
---                      onChange={(event) =>
---                        setOptions((prev) => ({
---                          ...prev,
---                          preserveLineBreaks: event.target.checked
---                        }))
---                      }
---                    />
---                    Preserve line breaks
---                  </label>
---                </div>
---                <div className="row">
---                  <label className="toggle">
---                    <input
---                      type="radio"
---                      name="unsupported"
---                      checked={options.unsupportedHandling === "replace"}
---                      onChange={() =>
---                        setOptions((prev) => ({
---                          ...prev,
---                          unsupportedHandling: "replace"
---                        }))
---                      }
---                    />
---                    Replace unsupported with ?
---                  </label>
---                  <label className="toggle">
---                    <input
---                      type="radio"
---                      name="unsupported"
---                      checked={options.unsupportedHandling === "remove"}
---                      onChange={() =>
---                        setOptions((prev) => ({
---                          ...prev,
---                          unsupportedHandling: "remove"
---                        }))
---                      }
---                    />
---                    Remove unsupported
---                  </label>
---                </div>
--+                <button
--+                  className="button secondary"
--+                  onClick={() => setNormalizeModalOpen(true)}
--+                  disabled={!input.length}
--+                >
--+                  Normalize typography…
--+                </button>
--+                <span className="muted">
--+                  No automatic corrections are applied. This previews and (only if
--+                  you confirm) converts smart quotes, en/em dashes, and ellipses to
--+                  ASCII.
--+                </span>
--               </div>
--             </details>
--           </div>
--@@ -443,36 +610,158 @@ export default function HomePage() {
--           </div>
--         </div>
-- 
---        <div className="layoutCol">
---          <div className="panel">
---            <h2>Outputs</h2>
--+	        <div className="layoutCol">
--+	          <div className="panel">
--+	            <h2>Outputs</h2>
-- 
---          <div className="field">
---            <div className="row space-between">
---              <label>Unicode braille</label>
---              <button
---                className="button secondary"
---                onClick={() =>
---                  copyToClipboard("unicode", result?.unicode_braille || "")
---                }
---                disabled={!result?.unicode_braille}
---              >
---                {copiedId === "unicode" ? "Copied" : "Copy"}
---              </button>
---            </div>
---            <div className="output">{result?.unicode_braille || "—"}</div>
---          </div>
--+	            <div className="banner bannerWarning" role="note">
--+	              <strong>Important:</strong> This tool is a translation aid.
--+	              ADA/best-practice compliance depends on correct braille translation{" "}
--+	              <em>and</em> physical layout/fabrication requirements. Always verify
--+	              translation and formatting before production.{" "}
--+	              <button
--+	                type="button"
--+	                className="linkButton"
--+	                onClick={() => setComplianceModalOpen(true)}
--+	              >
--+	                Learn what must be verified
--+	              </button>
--+	            </div>
--+
--+	            <div className="summary">
--+	              <div className="row space-between">
--+	                <strong>Translation Summary</strong>
--+	                <button
--+	                  className="button secondary"
--+	                  onClick={() => copyToClipboard("proofread", proofreadPacket)}
--+	                  disabled={!result || !canExport}
--+	                >
--+	                  {copiedId === "proofread" ? "Copied" : "Copy for proofread"}
--+	                </button>
--+	              </div>
--+	              <div className="summaryGrid">
--+	                <div className="summaryItem">
--+	                  <div className="muted">Profile used</div>
--+	                  <div>
--+	                    {profile.grade === "g1"
--+	                      ? "Grade 1 (Uncontracted)"
--+	                      : "Grade 2 (Contracted)"}
--+	                  </div>
--+	                </div>
--+	                <div className="summaryItem">
--+	                  <div className="muted">Smart Select</div>
--+	                  <div>
--+	                    {smartSelectEnabled
--+	                      ? `ON (${smartSelectDecision.ruleId})`
--+	                      : "OFF"}
--+	                  </div>
--+	                </div>
--+	                <div className="summaryItem">
--+	                  <div className="muted">Generated at</div>
--+	                  <div>{lastGeneratedAt ?? "—"}</div>
--+	                </div>
--+	                <div className="summaryItem">
--+	                  <div className="muted">Compliance Check</div>
--+	                  <div className={`status status-${compliance.level.toLowerCase()}`}>
--+	                    {compliance.level}
--+	                  </div>
--+	                </div>
--+	              </div>
--+	            </div>
--+
--+	            <div className={`compliancePanel compliance-${compliance.level.toLowerCase()}`}>
--+	              <div className="row space-between">
--+	                <strong>Compliance Check</strong>
--+	                <span className="muted">Does not certify compliance.</span>
--+	              </div>
--+
--+	              {compliance.flags.length ? (
--+	                <div className="field">
--+	                  <div className="output">
--+	                    {compliance.flags
--+	                      .map((flag) => `${flag.level} ${flag.code}: ${flag.message}`)
--+	                      .join("\n")}
--+	                  </div>
--+	                </div>
--+	              ) : (
--+	                <div className="notice success">
--+	                  No common risk flags detected (still requires verification).
--+	                </div>
--+	              )}
--+
--+	              {compliance.level === "WARN" ? (
--+	                <div className="field">
--+	                  <label className="toggle">
--+	                    <input
--+	                      type="checkbox"
--+	                      checked={warnAcknowledged}
--+	                      onChange={(event) => setWarnAcknowledged(event.target.checked)}
--+	                    />
--+	                    I will verify braille translation and physical layout requirements
--+	                    before production.
--+	                  </label>
--+	                  {!warnAcknowledged ? (
--+	                    <div className="notice">
--+	                      Exports are locked until you acknowledge.
--+	                    </div>
--+	                  ) : null}
--+	                </div>
--+	              ) : null}
--+
--+	              {compliance.level === "BLOCK" ? (
--+	                <div className="field">
--+	                  <label className="toggle">
--+	                    <input
--+	                      type="checkbox"
--+	                      checked={blockAcknowledged}
--+	                      onChange={(event) => setBlockAcknowledged(event.target.checked)}
--+	                    />
--+	                    I understand this is high-risk and I will verify before production.
--+	                  </label>
--+	                  <label>
--+	                    Reason (required to unlock exports)
--+	                    <input
--+	                      className="input"
--+	                      value={blockReason}
--+	                      onChange={(event) => setBlockReason(event.target.value)}
--+	                      placeholder="Why is export necessary despite BLOCK flags?"
--+	                    />
--+	                  </label>
--+	                  {!canExport ? (
--+	                    <div className="notice">
--+	                      Exports are locked until you acknowledge and provide a reason.
--+	                    </div>
--+	                  ) : null}
--+	                </div>
--+	              ) : null}
--+	            </div>
--+	
--+	          <div className="field">
--+	            <div className="row space-between">
--+	              <label>Unicode braille</label>
--+	              <button
--+	                className="button secondary"
--+	                onClick={() =>
--+	                  copyToClipboard("unicode", result?.unicode_braille || "")
--+	                }
--+	                disabled={!result?.unicode_braille || !canExport}
--+	              >
--+	                {copiedId === "unicode" ? "Copied" : "Copy"}
--+	              </button>
--+	            </div>
--+	            <div className="output">{result?.unicode_braille || "—"}</div>
--+	          </div>
-- 
--           <div className="field">
--             <div className="row space-between">
--               <label>Dot patterns per cell (bitstrings)</label>
---              <button
---                className="button secondary"
---                onClick={() => copyToClipboard("bits", bitPatternString)}
---                disabled={!bitPatternString}
---              >
---                {copiedId === "bits" ? "Copied" : "Copy"}
---              </button>
--+	              <button
--+	                className="button secondary"
--+	                onClick={() => copyToClipboard("bits", bitPatternString)}
--+	                disabled={!bitPatternString || !canExport}
--+	              >
--+	                {copiedId === "bits" ? "Copied" : "Copy"}
--+	              </button>
--             </div>
--             <div className="output">{bitPatternString || "—"}</div>
--           </div>
--@@ -480,15 +769,15 @@ export default function HomePage() {
--           <div className="field">
--             <div className="row space-between">
--               <label>Dot-number notation</label>
---              <button
---                className="button secondary"
---                onClick={() =>
---                  copyToClipboard("dots", result?.plain_dots || "")
---                }
---                disabled={!result?.plain_dots}
---              >
---                {copiedId === "dots" ? "Copied" : "Copy"}
---              </button>
--+	              <button
--+	                className="button secondary"
--+	                onClick={() =>
--+	                  copyToClipboard("dots", result?.plain_dots || "")
--+	                }
--+	                disabled={!result?.plain_dots || !canExport}
--+	              >
--+	                {copiedId === "dots" ? "Copied" : "Copy"}
--+	              </button>
--             </div>
--             <div className="output">{result?.plain_dots || "—"}</div>
--           </div>
--@@ -497,22 +786,22 @@ export default function HomePage() {
--             <div className="row space-between">
--               <label>SVG preview</label>
--               <div className="row">
---                <button
---                  className="button secondary"
---                  onClick={() =>
---                    svgPreview && copyToClipboard("svg", svgMarkup)
---                  }
---                  disabled={!svgPreview}
---                >
---                  {copiedId === "svg" ? "Copied" : "Copy SVG"}
---                </button>
---                <button
---                  className="button secondary"
---                  onClick={downloadSvg}
---                  disabled={!svgPreview}
---                >
---                  Download SVG
---                </button>
--+	                <button
--+	                  className="button secondary"
--+	                  onClick={() =>
--+	                    svgPreview && copyToClipboard("svg", svgMarkup)
--+	                  }
--+	                  disabled={!svgPreview || !canExport}
--+	                >
--+	                  {copiedId === "svg" ? "Copied" : "Copy SVG"}
--+	                </button>
--+	                <button
--+	                  className="button secondary"
--+	                  onClick={downloadSvg}
--+	                  disabled={!svgPreview || !canExport}
--+	                >
--+	                  Download SVG
--+	                </button>
--               </div>
--             </div>
--             <div className="output">
--@@ -534,16 +823,20 @@ export default function HomePage() {
 -             <div className="field">
--               <div className="row">
--                 <span className="badge">liblouis {result?.metadata.liblouis_version || "—"}</span>
---                <span className="badge">Profile {result?.metadata.profile_id || "—"}</span>
--+                <span className="badge">Profile used {result?.metadata.profile_id || "—"}</span>
--+                <span className="badge">Exports {canExport ? "unlocked" : "locked"}</span>
--               </div>
--               <div className="output">
--                 Tables: {result?.metadata.table_names.join(", ") || "—"}
---                {"\n"}Normalization: {result?.metadata.normalization_applied.join(", ") || "—"}
--+                {"\n"}Input hash: {inputHash}
--+                {"\n"}Smart Select: {smartSelectEnabled ? "ON" : "OFF"}
--+                {smartSelectEnabled ? `\nRule: ${smartSelectDecision.ruleId}` : ""}
--+                {"\n"}Compliance Check: {compliance.level}
--               </div>
--               {result?.warnings.length ? (
--                 <div className="notice">
---                  {result.warnings.map((warning, index) => (
---                    <div key={`${warning.type}-${index}`}>{warning.message}</div>
--+                  {result.warnings.map((warning) => (
--+                    <div key={warning.code}>{warning.message}</div>
--                   ))}
--                 </div>
--               ) : (
--@@ -688,6 +981,146 @@ export default function HomePage() {
--           </div>
--         </div>
--       </section>
--+
--+      {complianceModalOpen ? (
--+        <div
--+          className="modalBackdrop"
--+          role="presentation"
--+          onClick={() => setComplianceModalOpen(false)}
--+        >
--+          <div
--+            className="modal"
--+            role="dialog"
--+            aria-modal="true"
--+            aria-label="Learn what must be verified"
--+            onClick={(event) => event.stopPropagation()}
--+          >
--+            <div className="row space-between">
--+              <strong>Learn what must be verified</strong>
--+              <button
--+                type="button"
--+                className="button secondary"
--+                onClick={() => setComplianceModalOpen(false)}
--+              >
--+                Close
--+              </button>
--+            </div>
--+
--+            <div className="modalBody">
--+              <div className="field">
--+                <strong>1) Translation accuracy</strong>
--+                <div className="muted">
--+                  Verify contractions, capitalization, numbers, punctuation,
--+                  abbreviations, proper nouns, and intended meaning. This tool does
--+                  not certify correctness.
--+                </div>
--+              </div>
--+
--+              <div className="field">
--+                <strong>2) Grade selection (Grade 1 vs Grade 2)</strong>
--+                <div className="muted">
--+                  Grade choice depends on context. Short labels, codes, and
--+                  technical strings often require Grade 1. Sentence-like text may
--+                  be more readable in Grade 2. Smart Select is a conservative helper
--+                  and must be verified.
--+                </div>
--+              </div>
--+
--+              <div className="field">
--+                <strong>3) Layout & fabrication factors</strong>
--+                <div className="muted">
--+                  Even if the braille text is correct, physical specs can break
--+                  compliance: dot height/shape, dot spacing, cell spacing, line
--+                  spacing, placement relative to tactile text, margins, substrate
--+                  constraints, and printer/embosser calibration.
--+                </div>
--+              </div>
--+
--+              <div className="field">
--+                <strong>4) Job-context factors</strong>
--+                <div className="muted">
--+                  Building code requirements, local AHJ variations, customer-provided
--+                  text, multilingual needs, proofreading workflow, and sign type all
--+                  matter. Always follow your internal review process.
--+                </div>
--+              </div>
--+            </div>
--+          </div>
--+        </div>
--+      ) : null}
--+
--+      {normalizeModalOpen ? (
--+        <div
--+          className="modalBackdrop"
--+          role="presentation"
--+          onClick={() => setNormalizeModalOpen(false)}
--+        >
--+          <div
--+            className="modal"
--+            role="dialog"
--+            aria-modal="true"
--+            aria-label="Normalize typography"
--+            onClick={(event) => event.stopPropagation()}
--+          >
--+            <div className="row space-between">
--+              <strong>Normalize typography (explicit)</strong>
--+              <button
--+                type="button"
--+                className="button secondary"
--+                onClick={() => setNormalizeModalOpen(false)}
--+              >
--+                Close
--+              </button>
--+            </div>
--+
--+            {typographyPreview.changes.length ? (
--+              <div className="modalBody">
--+                <div className="notice">
--+                  This will change your input text. Review the preview and confirm
--+                  before applying.
--+                </div>
--+                <div className="field">
--+                  <strong>Changes</strong>
--+                  <div className="output">{typographyPreview.changes.join("\n")}</div>
--+                </div>
--+                <div className="field">
--+                  <strong>Before (exact)</strong>
--+                  <div className="output">{input || "—"}</div>
--+                </div>
--+                <div className="field">
--+                  <strong>After (proposed)</strong>
--+                  <div className="output">{typographyPreview.normalized || "—"}</div>
--+                </div>
--+                <div className="row">
--+                  <button
--+                    type="button"
--+                    className="button"
--+                    onClick={() => {
--+                      applyWithUndo(typographyPreview.normalized);
--+                      setNormalizeModalOpen(false);
--+                    }}
--+                  >
--+                    Apply changes
--+                  </button>
--+                  <button
--+                    type="button"
--+                    className="button secondary"
--+                    onClick={() => setNormalizeModalOpen(false)}
--+                  >
--+                    Cancel
--+                  </button>
--+                </div>
--+              </div>
--+            ) : (
--+              <div className="modalBody">
--+                <div className="notice success">
--+                  No smart quotes/dashes/ellipsis detected in the current input.
--+                </div>
--+              </div>
--+            )}
--+          </div>
--+        </div>
--+      ) : null}
--     </main>
--   );
-- }
--diff --git a/findings.md b/findings.md
--index d6b45c6..0bb1ef9 100644
----- a/findings.md
--+++ b/findings.md
--@@ -15,8 +15,8 @@
-- - SVG output should preserve input line breaks (one braille line per input line) for operator clarity.
-- 
-- ## Research Findings
---- "Assist" is implemented in `app/page.tsx` via `runAssist()` from `lib/assist.ts`, and the Phrase Library currently lives inside the Assist section.
---- Phrase Library defaults come from `COMMON_PHRASES` in `lib/assist.ts` (currently a short list of common signage phrases).
--+- Previously, "Assist" was implemented in `app/page.tsx` via `runAssist()` from `lib/assist.ts`, and the Phrase Library lived inside the Assist section.
--+- Phrase Library defaults now come from `DEFAULT_PHRASE_GROUPS` in `lib/phraseLibrary.ts` (categorized + searchable).
-- - Official FASTSIGNS logo SVG contains brand red `rgb(200,18,41)` and brand blue `rgb(0,46,151)` (from the downloaded SVG).
-- - `design-reference.html` uses a light background with radial blue/cyan highlights, plus a bottom skyline overlay image.
-- - `design-reference.html` tile styling uses `--tile-bg` and `--shadow-card` / `--shadow-card-hover` with `--card-radius: 0.875rem` and subtle borders.
--@@ -46,6 +46,7 @@
-- - `task_plan.md`, `findings.md`, `progress.md`
-- 
-- ## Visual/Browser Findings
--+- The deployed site at `fs-braille.vercel.app` (checked 2026-01-21) still reflects the pre-refresh UI (top “Braille Translator” pill + auto-translate label). Use it only as a baseline until the updated UI is deployed.
-- - `homepage-static.html` uses a light, airy background with a fixed body gradient overlay (radial blue/cyan highlights + soft linear gradient).
-- - Core palette tokens: brand blue `#1F3CFF`, accent cyan `#00CCFF`, base background `#FAFBFC`, surface white `#FFFFFF`, text primary `#1A202C`.
-- - Tile styles: gradient tile backgrounds (`--tile-bg`), subtle borders, rounded corners, glow shadows, hover lift (~3px) with brighter overlay and glow.
--diff --git a/lib/normalization.ts b/lib/normalization.ts
--index 480abe5..2453f9a 100644
----- a/lib/normalization.ts
--+++ b/lib/normalization.ts
--@@ -6,8 +6,8 @@ export type NormalizationOptions = {
-- };
-- 
-- export const DEFAULT_NORMALIZATION_OPTIONS: NormalizationOptions = {
---  normalizeWhitespace: true,
---  smartQuotes: true,
--+  normalizeWhitespace: false,
--+  smartQuotes: false,
--   preserveLineBreaks: true,
--   unsupportedHandling: "replace"
-- };
--diff --git a/lib/phraseLibrary.ts b/lib/phraseLibrary.ts
--index 0c25b88..de9d6eb 100644
----- a/lib/phraseLibrary.ts
--+++ b/lib/phraseLibrary.ts
--@@ -65,6 +65,27 @@ export const DEFAULT_PHRASE_GROUPS: PhraseGroup[] = [
--       "PLEASE CLOSE DOOR"
--     ]
--   },
--+  {
--+    id: "amenities",
--+    label: "Amenities",
--+    phrases: [
--+      "DRINKING FOUNTAIN",
--+      "WATER FOUNTAIN",
--+      "VENDING",
--+      "CAFETERIA",
--+      "LUNCHROOM",
--+      "LOCKER ROOM",
--+      "CHANGING ROOM",
--+      "FAMILY RESTROOM",
--+      "LACTATION ROOM",
--+      "MOTHER'S ROOM",
--+      "NURSING ROOM",
--+      "SERVER ROOM",
--+      "TELECOM",
--+      "SECURITY",
--+      "JANITOR CLOSET"
--+    ]
--+  },
--   {
--     id: "rules",
--     label: "Rules",
--diff --git a/lib/translation.node.ts b/lib/translation.node.ts
--index 25ca024..30a3fc9 100644
----- a/lib/translation.node.ts
--+++ b/lib/translation.node.ts
--@@ -1,11 +1,6 @@
-- import { BrailleProfile } from "../config/profiles";
-- import { getLiblouisVersion, translateWithLiblouis } from "./louis.node";
---import {
---  NormalizationOptions,
---  NormalizationResult,
---  Warning,
---  normalizeInput
---} from "./normalization";
--+import { TranslationWarning } from "./translation";
-- 
-- export type BrailleCell = {
--   bitstring: string;
--@@ -17,14 +12,12 @@ export type TranslationResult = {
--   unicode_braille: string;
--   cells: BrailleCell[];
--   plain_dots: string;
---  warnings: Warning[];
--+  warnings: TranslationWarning[];
--   metadata: {
--     liblouis_version: string;
--     profile_id: BrailleProfile["id"];
--     table_names: string[];
---    normalization_applied: string[];
--   };
---  normalization: NormalizationResult;
--   lines: BrailleCell[][];
-- };
-- 
--@@ -57,17 +50,14 @@ const isBrailleChar = (codepoint: number) =>
-- 
-- export const translateText = async (
--   text: string,
---  profile: BrailleProfile,
---  options: NormalizationOptions
--+  profile: BrailleProfile
-- ): Promise<TranslationResult> => {
---  const normalization = normalizeInput(text, options);
---  const warnings: Warning[] = [...normalization.warnings];
---  const segments = options.preserveLineBreaks
---    ? normalization.normalized.split("\n")
---    : [normalization.normalized];
--+  const warnings: TranslationWarning[] = [];
--+  const segments = text.split(/\r?\n/);
-- 
--   const translatedSegments: string[] = [];
---  for (const segment of segments) {
--+  for (let index = 0; index < segments.length; index += 1) {
--+    const segment = segments[index];
--     if (!segment.trim()) {
--       translatedSegments.push("");
--       continue;
--@@ -75,18 +65,16 @@ export const translateText = async (
--     const raw = await translateWithLiblouis(profile.tables, segment);
--     if (!raw) {
--       warnings.push({
---        type: "normalization",
---        message: "Translation failed. Tables may be missing or not loaded yet."
--+        code: "translation_failed",
--+        message: `Translation failed on line ${index + 1}. Tables may be missing or not loaded yet.`
--       });
--       translatedSegments.push("");
--       continue;
--     }
---    translatedSegments.push(raw.replace(/\n/g, " "));
--+    translatedSegments.push(raw.replace(/\n+/g, " "));
+-diff --git a/deliverable.patch b/deliverable.patch
+-index 0d25565..e69de29 100644
+---- a/deliverable.patch
+-+++ b/deliverable.patch
+-@@ -1,2105 +0,0 @@
+--diff --git a/app/globals.css b/app/globals.css
+--index 364e3c6..574d6b7 100644
+----- a/app/globals.css
+--+++ b/app/globals.css
+--@@ -164,26 +164,12 @@ label {
+--   gap: var(--space-2);
+-- }
+-- 
+---.brand {
+---  display: flex;
+---  align-items: center;
+---  gap: var(--space-5);
+---  flex-wrap: wrap;
+---}
+---
+-- .brandLogo {
+--   display: block;
+---  width: clamp(160px, 22vw, 240px);
+--+  width: clamp(180px, 18vw, 260px);
+--   height: auto;
+-- }
+-- 
+---.brandCopy {
+---  display: flex;
+---  flex-direction: column;
+---  gap: var(--space-2);
+---  min-width: min(520px, 100%);
+---}
+---
+-- .title {
+--   font-size: clamp(28px, 3vw, 40px);
+--   font-weight: 700;
+--@@ -241,6 +227,119 @@ label {
+--   font-size: 20px;
+-- }
+-- 
+--+.banner {
+--+  border-radius: var(--radius-lg);
+--+  border: 1px solid var(--card-border);
+--+  padding: 12px 14px;
+--+  background: rgba(0, 204, 255, 0.12);
+--+  color: var(--text-primary);
+--+  font-size: 14px;
+--+  line-height: 1.55;
+--+}
+--+
+--+.bannerWarning {
+--+  border-color: rgba(0, 204, 255, 0.2);
+--+}
+--+
+--+.linkButton {
+--+  appearance: none;
+--+  border: none;
+--+  background: transparent;
+--+  color: var(--primary);
+--+  padding: 0;
+--+  margin: 0;
+--+  font: inherit;
+--+  cursor: pointer;
+--+  text-decoration: underline;
+--+  text-underline-offset: 3px;
+--+}
+--+
+--+.summary {
+--+  border-radius: var(--radius-lg);
+--+  border: 1px solid var(--card-border);
+--+  padding: 12px 14px;
+--+  background: var(--bg-surface);
+--+}
+--+
+--+.summaryGrid {
+--+  display: grid;
+--+  grid-template-columns: repeat(2, minmax(0, 1fr));
+--+  gap: var(--space-3);
+--+  margin-top: var(--space-3);
+--+}
+--+
+--+.summaryItem {
+--+  min-width: 0;
+--+  font-size: 14px;
+--+}
+--+
+--+.status {
+--+  display: inline-flex;
+--+  align-items: center;
+--+  gap: 6px;
+--+  font-weight: 700;
+--+}
+--+
+--+.status-pass {
+--+  color: #0f766e;
+--+}
+--+
+--+.status-warn {
+--+  color: #b45309;
+--+}
+--+
+--+.status-block {
+--+  color: #b91c1c;
+--+}
+--+
+--+.compliancePanel {
+--+  border-radius: var(--radius-lg);
+--+  border: 1px solid var(--card-border);
+--+  padding: 12px 14px;
+--+  background: var(--bg-surface);
+--+}
+--+
+--+.compliance-pass {
+--+  border-color: rgba(16, 185, 129, 0.22);
+--+}
+--+
+--+.compliance-warn {
+--+  border-color: rgba(245, 158, 11, 0.28);
+--+}
+--+
+--+.compliance-block {
+--+  border-color: rgba(239, 68, 68, 0.32);
+--+}
+--+
+--+.modalBackdrop {
+--+  position: fixed;
+--+  inset: 0;
+--+  background: rgba(15, 23, 42, 0.45);
+--+  display: flex;
+--+  align-items: center;
+--+  justify-content: center;
+--+  padding: clamp(16px, 3vw, 28px);
+--+  z-index: 50;
+--+}
+--+
+--+.modal {
+--+  width: min(760px, 100%);
+--+  max-height: min(80vh, 720px);
+--+  overflow: auto;
+--+  border-radius: var(--radius-xl);
+--+  border: 1px solid var(--card-border);
+--+  background: var(--bg-surface);
+--+  box-shadow: var(--shadow-card-hover);
+--+  padding: 16px;
+--+}
+--+
+--+.modalBody {
+--+  display: flex;
+--+  flex-direction: column;
+--+  gap: var(--space-4);
+--+  margin-top: var(--space-4);
+--+}
+--+
+-- .field {
+--   display: flex;
+--   flex-direction: column;
+--@@ -274,7 +373,7 @@ label {
+-- }
+-- 
+-- .textarea::placeholder {
+---  white-space: pre-line;
+--+  white-space: pre-wrap;
+-- }
+-- 
+-- .row {
+--@@ -394,24 +493,29 @@ details summary {
+-- .chip {
+--   padding: 8px 12px;
+--   border-radius: 999px;
+---  background: rgba(31, 60, 255, 0.08);
+---  color: var(--primary);
+--+  background: var(--bg-surface);
+--+  color: var(--text-primary);
+--   font-size: 13px;
+--   font-weight: 600;
+--   cursor: pointer;
+---  border: 1px solid transparent;
+---  transition: border-color var(--transition-fast), transform var(--transition-fast);
+--+  border: 1px solid rgba(15, 23, 42, 0.1);
+--+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+--+  transition:
+--+    border-color var(--transition-fast),
+--+    transform var(--transition-fast),
+--+    box-shadow var(--transition-fast);
+-- }
+-- 
+-- .chip.secondary {
+---  background: rgba(0, 204, 255, 0.12);
+---  color: var(--primary);
+---  border-color: rgba(0, 204, 255, 0.22);
+--+  background: var(--bg-surface);
+--+  color: var(--text-primary);
+--+  border-color: rgba(15, 23, 42, 0.12);
+-- }
+-- 
+-- .chip:hover {
+---  border-color: rgba(31, 60, 255, 0.3);
+---  transform: translateY(-1px);
+--+  border-color: rgba(31, 60, 255, 0.28);
+--+  transform: translateY(-2px);
+--+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+-- }
+-- 
+-- .notice {
+--@@ -451,6 +555,10 @@ details summary {
+--     grid-template-columns: 1fr;
+--   }
+-- 
+--+  .summaryGrid {
+--+    grid-template-columns: 1fr;
+--+  }
+--+
+--   .panel {
+--     padding: var(--space-4);
+--   }
+--diff --git a/app/page.tsx b/app/page.tsx
+--index 05fc89d..6a5700c 100644
+----- a/app/page.tsx
+--+++ b/app/page.tsx
+--@@ -6,27 +6,28 @@ import {
+--   DEFAULT_PROFILE_ID,
+--   getProfileById
+-- } from "../config/profiles";
+---import {
+---  DEFAULT_NORMALIZATION_OPTIONS,
+---  NormalizationOptions,
+---} from "../lib/normalization";
+-- import { translateText, TranslationResult } from "../lib/translation";
+-- import { DEFAULT_SVG_LAYOUT, SvgLayout, renderBrailleSvg } from "../lib/svg";
+-- import { DEFAULT_PHRASE_GROUPS } from "../lib/phraseLibrary";
+--+import { complianceCheck, decideGrade } from "../lib/compliance";
+--+import { fnv1a32 } from "../lib/hash";
+--+import { normalizeTypography } from "../lib/typography";
+-- 
+---const AUTO_TRANSLATE_DELAY = 350;
+-- const UNDO_LIMIT = 10;
+-- const LOCAL_STORAGE_KEY = "fastsigns_braille_phrases";
+---const INPUT_PLACEHOLDER = ["RESTROOM", "ROOM 101", "EXIT", "SUITE 200"].join("\n");
+--+const ACK_STORAGE_KEY = "fastsigns_braille_ack_v1";
+--+const INPUT_PLACEHOLDER = `RESTROOM
+--+ROOM 101
+--+EXIT
+--+SUITE 200`;
+-- 
+-- export default function HomePage() {
+--   const [input, setInput] = useState("");
+---  const [profileId, setProfileId] = useState(DEFAULT_PROFILE_ID);
+---  const [options, setOptions] = useState<NormalizationOptions>(
+---    DEFAULT_NORMALIZATION_OPTIONS
+---  );
+--+  const [manualProfileId, setManualProfileId] = useState(DEFAULT_PROFILE_ID);
+--+  const [smartSelectEnabled, setSmartSelectEnabled] = useState(true);
+--   const [result, setResult] = useState<TranslationResult | null>(null);
+--   const [isTranslating, setIsTranslating] = useState(false);
+--+  const [lastGeneratedAt, setLastGeneratedAt] = useState<string | null>(null);
+--   const [undoStack, setUndoStack] = useState<string[]>([]);
+--   const [phraseQuery, setPhraseQuery] = useState("");
+--   const [phraseGroupId, setPhraseGroupId] = useState<string>("all");
+--@@ -35,6 +36,11 @@ export default function HomePage() {
+--   const [importJson, setImportJson] = useState("");
+--   const [layout, setLayout] = useState<SvgLayout>(DEFAULT_SVG_LAYOUT);
+--   const [copiedId, setCopiedId] = useState<string | null>(null);
+--+  const [complianceModalOpen, setComplianceModalOpen] = useState(false);
+--+  const [normalizeModalOpen, setNormalizeModalOpen] = useState(false);
+--+  const [warnAcknowledged, setWarnAcknowledged] = useState(false);
+--+  const [blockAcknowledged, setBlockAcknowledged] = useState(false);
+--+  const [blockReason, setBlockReason] = useState("");
+-- 
+--   useEffect(() => {
+--     try {
+--@@ -51,7 +57,92 @@ export default function HomePage() {
+--     window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(myPhrases));
+--   }, [myPhrases]);
+-- 
+---  const profile = useMemo(() => getProfileById(profileId), [profileId]);
+--+  const smartSelectDecision = useMemo(() => decideGrade(input), [input]);
+--+  const effectiveProfileId = smartSelectEnabled
+--+    ? smartSelectDecision.grade === "grade2"
+--+      ? "en-us-g2"
+--+      : "en-us-g1"
+--+    : manualProfileId;
+--+  const profile = useMemo(
+--+    () => getProfileById(effectiveProfileId),
+--+    [effectiveProfileId]
+--+  );
+--+
+--+  const compliance = useMemo(
+--+    () =>
+--+      complianceCheck({
+--+        text: input,
+--+        profileId: effectiveProfileId,
+--+        smartSelectEnabled,
+--+        smartSelectDecision
+--+      }),
+--+    [effectiveProfileId, input, smartSelectDecision, smartSelectEnabled]
+--+  );
+--+
+--+  const inputHash = useMemo(() => fnv1a32(input), [input]);
+--+
+--+  useEffect(() => {
+--+    try {
+--+      const raw = window.localStorage.getItem(ACK_STORAGE_KEY);
+--+      if (!raw) {
+--+        setWarnAcknowledged(false);
+--+        setBlockAcknowledged(false);
+--+        setBlockReason("");
+--+        return;
+--+      }
+--+      const parsed = JSON.parse(raw) as {
+--+        inputHash?: string;
+--+        warnAcknowledged?: boolean;
+--+        blockAcknowledged?: boolean;
+--+        blockReason?: string;
+--+      };
+--+      if (parsed.inputHash !== inputHash) {
+--+        setWarnAcknowledged(false);
+--+        setBlockAcknowledged(false);
+--+        setBlockReason("");
+--+        return;
+--+      }
+--+      setWarnAcknowledged(Boolean(parsed.warnAcknowledged));
+--+      setBlockAcknowledged(Boolean(parsed.blockAcknowledged));
+--+      setBlockReason(String(parsed.blockReason ?? ""));
+--+    } catch {
+--+      setWarnAcknowledged(false);
+--+      setBlockAcknowledged(false);
+--+      setBlockReason("");
+--+    }
+--+  }, [inputHash]);
+--+
+--+  useEffect(() => {
+--+    const payload = JSON.stringify({
+--+      inputHash,
+--+      warnAcknowledged,
+--+      blockAcknowledged,
+--+      blockReason
+--+    });
+--+    window.localStorage.setItem(ACK_STORAGE_KEY, payload);
+--+  }, [blockAcknowledged, blockReason, inputHash, warnAcknowledged]);
+--+
+--+  useEffect(() => {
+--+    if (!complianceModalOpen && !normalizeModalOpen) {
+--+      return;
+--+    }
+--+    const handler = (event: KeyboardEvent) => {
+--+      if (event.key === "Escape") {
+--+        setComplianceModalOpen(false);
+--+        setNormalizeModalOpen(false);
+--+      }
+--+    };
+--+    window.addEventListener("keydown", handler);
+--+    return () => window.removeEventListener("keydown", handler);
+--+  }, [complianceModalOpen, normalizeModalOpen]);
+--+
+--+  const canExport = useMemo(() => {
+--+    if (compliance.level === "PASS") return true;
+--+    if (compliance.level === "WARN") return warnAcknowledged;
+--+    return blockAcknowledged && blockReason.trim().length > 0;
+--+  }, [blockAcknowledged, blockReason, compliance.level, warnAcknowledged]);
+--+
+--+  const typographyPreview = useMemo(() => normalizeTypography(input), [input]);
+-- 
+--   const visiblePhraseGroups = useMemo(() => {
+--     const query = phraseQuery.trim().toLowerCase();
+--@@ -94,8 +185,9 @@ export default function HomePage() {
+--     }
+--     setIsTranslating(true);
+--     try {
+---      const translation = await translateText(input, profile, options);
+--+      const translation = await translateText(input, profile);
+--       setResult(translation);
+--+      setLastGeneratedAt(new Date().toISOString());
+--     } catch (error) {
+--       console.error(error);
+--     } finally {
+--@@ -103,14 +195,6 @@ export default function HomePage() {
+--     }
+--   };
+-- 
+---  useEffect(() => {
+---    const handle = window.setTimeout(() => {
+---      handleTranslate();
+---    }, AUTO_TRANSLATE_DELAY);
+---    return () => window.clearTimeout(handle);
+---    // eslint-disable-next-line react-hooks/exhaustive-deps
+---  }, [input, profileId, options]);
+---
+--   const bitPatternString = useMemo(() => {
+--     if (!result) {
+--       return "";
+--@@ -127,9 +211,123 @@ export default function HomePage() {
+--     return renderBrailleSvg(result.lines, layout);
+--   }, [layout, result]);
+-- 
+---  const svgMarkup = svgPreview
+---    ? `<?xml version="1.0" encoding="UTF-8"?>\n${svgPreview.svg}`
+---    : "";
+--+  const exportMetadata = useMemo(
+--+    () => ({
+--+      generated_at: lastGeneratedAt,
+--+      input_hash: inputHash,
+--+      profile_used: effectiveProfileId,
+--+      smart_select: smartSelectEnabled
+--+        ? {
+--+            enabled: true,
+--+            grade: smartSelectDecision.grade,
+--+            rule_id: smartSelectDecision.ruleId,
+--+            reason: smartSelectDecision.reason
+--+          }
+--+        : { enabled: false },
+--+      compliance: {
+--+        level: compliance.level,
+--+        flags: compliance.flags.map((flag) => ({
+--+          code: flag.code,
+--+          level: flag.level
+--+        })),
+--+        acknowledgement: {
+--+          warn_acknowledged: warnAcknowledged,
+--+          block_acknowledged: blockAcknowledged,
+--+          block_reason: blockReason || null
+--+        }
+--+      }
+--+    }),
+--+    [
+--+      blockAcknowledged,
+--+      blockReason,
+--+      compliance.flags,
+--+      compliance.level,
+--+      effectiveProfileId,
+--+      inputHash,
+--+      lastGeneratedAt,
+--+      smartSelectDecision.grade,
+--+      smartSelectDecision.reason,
+--+      smartSelectDecision.ruleId,
+--+      smartSelectEnabled,
+--+      warnAcknowledged
+--+    ]
+--+  );
+--+
+--+  const svgMarkup = useMemo(() => {
+--+    if (!svgPreview) {
+--+      return "";
+--+    }
+--+    const json = JSON.stringify(exportMetadata).replace("]]>", "]]\\>");
+--+    const withMetadata = svgPreview.svg.replace(
+--+      "</svg>",
+--+      `<metadata><![CDATA[${json}]]></metadata>\n</svg>`
+--+    );
+--+    return `<?xml version="1.0" encoding="UTF-8"?>\n${withMetadata}`;
+--+  }, [exportMetadata, svgPreview]);
+--+
+--+  const proofreadPacket = useMemo(() => {
+--+    if (!result) {
+--+      return "";
+--+    }
+--+    const lines: string[] = [];
+--+    lines.push(
+--+      "IMPORTANT: This tool is a translation aid. ADA/best-practice compliance depends on correct translation AND physical layout/fabrication requirements. Always verify before production."
+--+    );
+--+    lines.push(`Generated at: ${lastGeneratedAt ?? "—"}`);
+--+    lines.push(`Input hash: ${inputHash}`);
+--+    lines.push(
+--+      `Profile used: ${profile.grade === "g1" ? "Grade 1 (Uncontracted)" : "Grade 2 (Contracted)"}`
+--+    );
+--+    lines.push(
+--+      `Smart Select Grade (Conservative): ${smartSelectEnabled ? "ON" : "OFF"}`
+--+    );
+--+    if (smartSelectEnabled) {
+--+      lines.push(`Smart Select rule: ${smartSelectDecision.ruleId}`);
+--+      lines.push(`Smart Select reason: ${smartSelectDecision.reason}`);
+--+    }
+--+    lines.push(`Compliance Check: ${compliance.level}`);
+--+    if (compliance.flags.length) {
+--+      compliance.flags.forEach((flag) => {
+--+        lines.push(`${flag.level} ${flag.code}: ${flag.message}`);
+--+      });
+--+    } else {
+--+      lines.push("No common risk flags detected (still requires verification).");
+--+    }
+--+    lines.push(
+--+      `Acknowledgement: WARN=${warnAcknowledged ? "yes" : "no"}, BLOCK=${blockAcknowledged ? "yes" : "no"}`
+--+    );
+--+    if (blockReason.trim()) {
+--+      lines.push(`BLOCK reason: ${blockReason.trim()}`);
+--+    }
+--+    if (result.warnings.length) {
+--+      lines.push("Engine warnings:");
+--+      result.warnings.forEach((warning) => lines.push(`- ${warning.message}`));
+--+    }
+--+    lines.push("");
+--+    lines.push("INPUT (exact):");
+--+    lines.push(input);
+--+    lines.push("");
+--+    lines.push("UNICODE BRAILLE:");
+--+    lines.push(result.unicode_braille || "—");
+--+    lines.push("");
+--+    lines.push("DOT-NUMBER NOTATION:");
+--+    lines.push(result.plain_dots || "—");
+--+    return lines.join("\n");
+--+  }, [
+--+    blockAcknowledged,
+--+    blockReason,
+--+    compliance.flags,
+--+    compliance.level,
+--+    input,
+--+    inputHash,
+--+    lastGeneratedAt,
+--+    profile.grade,
+--+    result,
+--+    smartSelectDecision.reason,
+--+    smartSelectDecision.ruleId,
+--+    smartSelectEnabled,
+--+    warnAcknowledged
+--+  ]);
+-- 
+--   const copyToClipboard = async (id: string, value: string) => {
+--     try {
+--@@ -188,17 +386,12 @@ export default function HomePage() {
+--   return (
+--     <main className="page">
+--       <header className="header">
+---        <div className="brand">
+---          <img className="brandLogo" src="/fastsigns-logo.svg" alt="FASTSIGNS" />
+---          <div className="brandCopy">
+---            <span className="badge">Braille Translator</span>
+---            <h1 className="title">Deterministic braille translation</h1>
+---            <p className="subtitle">
+---              Enter sign text, choose a profile, then copy outputs for design and
+---              production.
+---            </p>
+---          </div>
+---        </div>
+--+        <img className="brandLogo" src="/fastsigns-logo.svg" alt="FASTSIGNS" />
+--+        <h1 className="title">Deterministic braille translation</h1>
+--+        <p className="subtitle">
+--+          Translation aid for signage teams. Always verify braille and physical
+--+          layout requirements before production.
+--+        </p>
+--       </header>
+-- 
+--       <section className="layout">
+--@@ -217,7 +410,7 @@ export default function HomePage() {
+--               <div className="row space-between">
+--                 <div className="row">
+--                   <button className="button" onClick={handleTranslate}>
+---                    {isTranslating ? "Translating..." : "Translate"}
+--+                    {isTranslating ? "Generating..." : "Generate preview"}
+--                   </button>
+--                   <button
+--                     className="button secondary"
+--@@ -234,20 +427,45 @@ export default function HomePage() {
+--                     Undo
+--                   </button>
+--                 </div>
+---                <span className="muted">Auto-translate with {AUTO_TRANSLATE_DELAY}ms delay</span>
+--+                <span className="muted">Preview updates only when you click Generate preview.</span>
+--               </div>
+--             </div>
+-- 
+--             <div className="field">
+---              <label htmlFor="profile">Translation profile</label>
+--+              <label htmlFor="profile">Grade selection</label>
+--+              <div className="row space-between">
+--+                <label className="toggle">
+--+                  <input
+--+                    type="checkbox"
+--+                    checked={smartSelectEnabled}
+--+                    onChange={(event) => setSmartSelectEnabled(event.target.checked)}
+--+                  />
+--+                  Smart Select Grade (Conservative)
+--+                </label>
+--+                <span className="badge">
+--+                  Used: {profile.grade === "g1" ? "Grade 1" : "Grade 2"}
+--+                </span>
+--+              </div>
+--+              <span className="muted">
+--+                Chooses Grade 1 for short/technical labels; Grade 2 for sentence-like
+--+                text. Always verify.
+--+              </span>
+--               <select
+--                 id="profile"
+--                 className="select"
+---                value={profileId}
+---                onChange={(event) =>
+---                  setProfileId(event.target.value as typeof profileId)
+---                }
+--+                value={smartSelectEnabled ? "auto" : manualProfileId}
+--+                disabled={smartSelectEnabled}
+--+                onChange={(event) => {
+--+                  const next = event.target.value;
+--+                  if (next === "auto") {
+--+                    setSmartSelectEnabled(true);
+--+                    return;
+--+                  }
+--+                  setSmartSelectEnabled(false);
+--+                  setManualProfileId(next as typeof manualProfileId);
+--+                }}
+--               >
+--+                <option value="auto">Auto (Smart Select)</option>
+--                 {BRAILLE_PROFILES.map((profileOption) => (
+--                   <option key={profileOption.id} value={profileOption.id}>
+--                     {profileOption.label}
+--@@ -255,83 +473,32 @@ export default function HomePage() {
+--                 ))}
+--               </select>
+--               <span className="muted">{profile.description}</span>
+--+              {smartSelectEnabled ? (
+--+                <details>
+--+                  <summary>Why this grade?</summary>
+--+                  <div className="output">
+--+                    {smartSelectDecision.reason}
+--+                    {"\n"}Rule: {smartSelectDecision.ruleId}
+--+                  </div>
+--+                </details>
+--+              ) : null}
+--             </div>
+-- 
+--             <details>
+---              <summary>Options</summary>
+--+              <summary>Tools</summary>
+--               <div className="field">
+---                <label>Normalization</label>
+---                <div className="row">
+---                  <label className="toggle">
+---                    <input
+---                      type="checkbox"
+---                      checked={options.normalizeWhitespace}
+---                      onChange={(event) =>
+---                        setOptions((prev) => ({
+---                          ...prev,
+---                          normalizeWhitespace: event.target.checked
+---                        }))
+---                      }
+---                    />
+---                    Normalize whitespace
+---                  </label>
+---                  <label className="toggle">
+---                    <input
+---                      type="checkbox"
+---                      checked={options.smartQuotes}
+---                      onChange={(event) =>
+---                        setOptions((prev) => ({
+---                          ...prev,
+---                          smartQuotes: event.target.checked
+---                        }))
+---                      }
+---                    />
+---                    Smart quotes to ASCII
+---                  </label>
+---                  <label className="toggle">
+---                    <input
+---                      type="checkbox"
+---                      checked={options.preserveLineBreaks}
+---                      onChange={(event) =>
+---                        setOptions((prev) => ({
+---                          ...prev,
+---                          preserveLineBreaks: event.target.checked
+---                        }))
+---                      }
+---                    />
+---                    Preserve line breaks
+---                  </label>
+---                </div>
+---                <div className="row">
+---                  <label className="toggle">
+---                    <input
+---                      type="radio"
+---                      name="unsupported"
+---                      checked={options.unsupportedHandling === "replace"}
+---                      onChange={() =>
+---                        setOptions((prev) => ({
+---                          ...prev,
+---                          unsupportedHandling: "replace"
+---                        }))
+---                      }
+---                    />
+---                    Replace unsupported with ?
+---                  </label>
+---                  <label className="toggle">
+---                    <input
+---                      type="radio"
+---                      name="unsupported"
+---                      checked={options.unsupportedHandling === "remove"}
+---                      onChange={() =>
+---                        setOptions((prev) => ({
+---                          ...prev,
+---                          unsupportedHandling: "remove"
+---                        }))
+---                      }
+---                    />
+---                    Remove unsupported
+---                  </label>
+---                </div>
+--+                <button
+--+                  className="button secondary"
+--+                  onClick={() => setNormalizeModalOpen(true)}
+--+                  disabled={!input.length}
+--+                >
+--+                  Normalize typography…
+--+                </button>
+--+                <span className="muted">
+--+                  No automatic corrections are applied. This previews and (only if
+--+                  you confirm) converts smart quotes, en/em dashes, and ellipses to
+--+                  ASCII.
+--+                </span>
+--               </div>
+--             </details>
+--           </div>
+--@@ -443,36 +610,158 @@ export default function HomePage() {
+--           </div>
+--         </div>
+-- 
+---        <div className="layoutCol">
+---          <div className="panel">
+---            <h2>Outputs</h2>
+--+	        <div className="layoutCol">
+--+	          <div className="panel">
+--+	            <h2>Outputs</h2>
+-- 
+---          <div className="field">
+---            <div className="row space-between">
+---              <label>Unicode braille</label>
+---              <button
+---                className="button secondary"
+---                onClick={() =>
+---                  copyToClipboard("unicode", result?.unicode_braille || "")
+---                }
+---                disabled={!result?.unicode_braille}
+---              >
+---                {copiedId === "unicode" ? "Copied" : "Copy"}
+---              </button>
+---            </div>
+---            <div className="output">{result?.unicode_braille || "—"}</div>
+---          </div>
+--+	            <div className="banner bannerWarning" role="note">
+--+	              <strong>Important:</strong> This tool is a translation aid.
+--+	              ADA/best-practice compliance depends on correct braille translation{" "}
+--+	              <em>and</em> physical layout/fabrication requirements. Always verify
+--+	              translation and formatting before production.{" "}
+--+	              <button
+--+	                type="button"
+--+	                className="linkButton"
+--+	                onClick={() => setComplianceModalOpen(true)}
+--+	              >
+--+	                Learn what must be verified
+--+	              </button>
+--+	            </div>
+--+
+--+	            <div className="summary">
+--+	              <div className="row space-between">
+--+	                <strong>Translation Summary</strong>
+--+	                <button
+--+	                  className="button secondary"
+--+	                  onClick={() => copyToClipboard("proofread", proofreadPacket)}
+--+	                  disabled={!result || !canExport}
+--+	                >
+--+	                  {copiedId === "proofread" ? "Copied" : "Copy for proofread"}
+--+	                </button>
+--+	              </div>
+--+	              <div className="summaryGrid">
+--+	                <div className="summaryItem">
+--+	                  <div className="muted">Profile used</div>
+--+	                  <div>
+--+	                    {profile.grade === "g1"
+--+	                      ? "Grade 1 (Uncontracted)"
+--+	                      : "Grade 2 (Contracted)"}
+--+	                  </div>
+--+	                </div>
+--+	                <div className="summaryItem">
+--+	                  <div className="muted">Smart Select</div>
+--+	                  <div>
+--+	                    {smartSelectEnabled
+--+	                      ? `ON (${smartSelectDecision.ruleId})`
+--+	                      : "OFF"}
+--+	                  </div>
+--+	                </div>
+--+	                <div className="summaryItem">
+--+	                  <div className="muted">Generated at</div>
+--+	                  <div>{lastGeneratedAt ?? "—"}</div>
+--+	                </div>
+--+	                <div className="summaryItem">
+--+	                  <div className="muted">Compliance Check</div>
+--+	                  <div className={`status status-${compliance.level.toLowerCase()}`}>
+--+	                    {compliance.level}
+--+	                  </div>
+--+	                </div>
+--+	              </div>
+--+	            </div>
+--+
+--+	            <div className={`compliancePanel compliance-${compliance.level.toLowerCase()}`}>
+--+	              <div className="row space-between">
+--+	                <strong>Compliance Check</strong>
+--+	                <span className="muted">Does not certify compliance.</span>
+--+	              </div>
+--+
+--+	              {compliance.flags.length ? (
+--+	                <div className="field">
+--+	                  <div className="output">
+--+	                    {compliance.flags
+--+	                      .map((flag) => `${flag.level} ${flag.code}: ${flag.message}`)
+--+	                      .join("\n")}
+--+	                  </div>
+--+	                </div>
+--+	              ) : (
+--+	                <div className="notice success">
+--+	                  No common risk flags detected (still requires verification).
+--+	                </div>
+--+	              )}
+--+
+--+	              {compliance.level === "WARN" ? (
+--+	                <div className="field">
+--+	                  <label className="toggle">
+--+	                    <input
+--+	                      type="checkbox"
+--+	                      checked={warnAcknowledged}
+--+	                      onChange={(event) => setWarnAcknowledged(event.target.checked)}
+--+	                    />
+--+	                    I will verify braille translation and physical layout requirements
+--+	                    before production.
+--+	                  </label>
+--+	                  {!warnAcknowledged ? (
+--+	                    <div className="notice">
+--+	                      Exports are locked until you acknowledge.
+--+	                    </div>
+--+	                  ) : null}
+--+	                </div>
+--+	              ) : null}
+--+
+--+	              {compliance.level === "BLOCK" ? (
+--+	                <div className="field">
+--+	                  <label className="toggle">
+--+	                    <input
+--+	                      type="checkbox"
+--+	                      checked={blockAcknowledged}
+--+	                      onChange={(event) => setBlockAcknowledged(event.target.checked)}
+--+	                    />
+--+	                    I understand this is high-risk and I will verify before production.
+--+	                  </label>
+--+	                  <label>
+--+	                    Reason (required to unlock exports)
+--+	                    <input
+--+	                      className="input"
+--+	                      value={blockReason}
+--+	                      onChange={(event) => setBlockReason(event.target.value)}
+--+	                      placeholder="Why is export necessary despite BLOCK flags?"
+--+	                    />
+--+	                  </label>
+--+	                  {!canExport ? (
+--+	                    <div className="notice">
+--+	                      Exports are locked until you acknowledge and provide a reason.
+--+	                    </div>
+--+	                  ) : null}
+--+	                </div>
+--+	              ) : null}
+--+	            </div>
+--+	
+--+	          <div className="field">
+--+	            <div className="row space-between">
+--+	              <label>Unicode braille</label>
+--+	              <button
+--+	                className="button secondary"
+--+	                onClick={() =>
+--+	                  copyToClipboard("unicode", result?.unicode_braille || "")
+--+	                }
+--+	                disabled={!result?.unicode_braille || !canExport}
+--+	              >
+--+	                {copiedId === "unicode" ? "Copied" : "Copy"}
+--+	              </button>
+--+	            </div>
+--+	            <div className="output">{result?.unicode_braille || "—"}</div>
+--+	          </div>
+-- 
+--           <div className="field">
+--             <div className="row space-between">
+--               <label>Dot patterns per cell (bitstrings)</label>
+---              <button
+---                className="button secondary"
+---                onClick={() => copyToClipboard("bits", bitPatternString)}
+---                disabled={!bitPatternString}
+---              >
+---                {copiedId === "bits" ? "Copied" : "Copy"}
+---              </button>
+--+	              <button
+--+	                className="button secondary"
+--+	                onClick={() => copyToClipboard("bits", bitPatternString)}
+--+	                disabled={!bitPatternString || !canExport}
+--+	              >
+--+	                {copiedId === "bits" ? "Copied" : "Copy"}
+--+	              </button>
+--             </div>
+--             <div className="output">{bitPatternString || "—"}</div>
+--           </div>
+--@@ -480,15 +769,15 @@ export default function HomePage() {
+--           <div className="field">
+--             <div className="row space-between">
+--               <label>Dot-number notation</label>
+---              <button
+---                className="button secondary"
+---                onClick={() =>
+---                  copyToClipboard("dots", result?.plain_dots || "")
+---                }
+---                disabled={!result?.plain_dots}
+---              >
+---                {copiedId === "dots" ? "Copied" : "Copy"}
+---              </button>
+--+	              <button
+--+	                className="button secondary"
+--+	                onClick={() =>
+--+	                  copyToClipboard("dots", result?.plain_dots || "")
+--+	                }
+--+	                disabled={!result?.plain_dots || !canExport}
+--+	              >
+--+	                {copiedId === "dots" ? "Copied" : "Copy"}
+--+	              </button>
+--             </div>
+--             <div className="output">{result?.plain_dots || "—"}</div>
+--           </div>
+--@@ -497,22 +786,22 @@ export default function HomePage() {
+--             <div className="row space-between">
+--               <label>SVG preview</label>
+--               <div className="row">
+---                <button
+---                  className="button secondary"
+---                  onClick={() =>
+---                    svgPreview && copyToClipboard("svg", svgMarkup)
+---                  }
+---                  disabled={!svgPreview}
+---                >
+---                  {copiedId === "svg" ? "Copied" : "Copy SVG"}
+---                </button>
+---                <button
+---                  className="button secondary"
+---                  onClick={downloadSvg}
+---                  disabled={!svgPreview}
+---                >
+---                  Download SVG
+---                </button>
+--+	                <button
+--+	                  className="button secondary"
+--+	                  onClick={() =>
+--+	                    svgPreview && copyToClipboard("svg", svgMarkup)
+--+	                  }
+--+	                  disabled={!svgPreview || !canExport}
+--+	                >
+--+	                  {copiedId === "svg" ? "Copied" : "Copy SVG"}
+--+	                </button>
+--+	                <button
+--+	                  className="button secondary"
+--+	                  onClick={downloadSvg}
+--+	                  disabled={!svgPreview || !canExport}
+--+	                >
+--+	                  Download SVG
+--+	                </button>
+--               </div>
+--             </div>
+--             <div className="output">
+--@@ -534,16 +823,20 @@ export default function HomePage() {
+--             <div className="field">
+--               <div className="row">
+--                 <span className="badge">liblouis {result?.metadata.liblouis_version || "—"}</span>
+---                <span className="badge">Profile {result?.metadata.profile_id || "—"}</span>
+--+                <span className="badge">Profile used {result?.metadata.profile_id || "—"}</span>
+--+                <span className="badge">Exports {canExport ? "unlocked" : "locked"}</span>
+--               </div>
+--               <div className="output">
+--                 Tables: {result?.metadata.table_names.join(", ") || "—"}
+---                {"\n"}Normalization: {result?.metadata.normalization_applied.join(", ") || "—"}
+--+                {"\n"}Input hash: {inputHash}
+--+                {"\n"}Smart Select: {smartSelectEnabled ? "ON" : "OFF"}
+--+                {smartSelectEnabled ? `\nRule: ${smartSelectDecision.ruleId}` : ""}
+--+                {"\n"}Compliance Check: {compliance.level}
+--               </div>
+--               {result?.warnings.length ? (
+--                 <div className="notice">
+---                  {result.warnings.map((warning, index) => (
+---                    <div key={`${warning.type}-${index}`}>{warning.message}</div>
+--+                  {result.warnings.map((warning) => (
+--+                    <div key={warning.code}>{warning.message}</div>
+--                   ))}
+--                 </div>
+--               ) : (
+--@@ -688,6 +981,146 @@ export default function HomePage() {
+--           </div>
+--         </div>
+--       </section>
+--+
+--+      {complianceModalOpen ? (
+--+        <div
+--+          className="modalBackdrop"
+--+          role="presentation"
+--+          onClick={() => setComplianceModalOpen(false)}
+--+        >
+--+          <div
+--+            className="modal"
+--+            role="dialog"
+--+            aria-modal="true"
+--+            aria-label="Learn what must be verified"
+--+            onClick={(event) => event.stopPropagation()}
+--+          >
+--+            <div className="row space-between">
+--+              <strong>Learn what must be verified</strong>
+--+              <button
+--+                type="button"
+--+                className="button secondary"
+--+                onClick={() => setComplianceModalOpen(false)}
+--+              >
+--+                Close
+--+              </button>
+--+            </div>
+--+
+--+            <div className="modalBody">
+--+              <div className="field">
+--+                <strong>1) Translation accuracy</strong>
+--+                <div className="muted">
+--+                  Verify contractions, capitalization, numbers, punctuation,
+--+                  abbreviations, proper nouns, and intended meaning. This tool does
+--+                  not certify correctness.
+--+                </div>
+--+              </div>
+--+
+--+              <div className="field">
+--+                <strong>2) Grade selection (Grade 1 vs Grade 2)</strong>
+--+                <div className="muted">
+--+                  Grade choice depends on context. Short labels, codes, and
+--+                  technical strings often require Grade 1. Sentence-like text may
+--+                  be more readable in Grade 2. Smart Select is a conservative helper
+--+                  and must be verified.
+--+                </div>
+--+              </div>
+--+
+--+              <div className="field">
+--+                <strong>3) Layout & fabrication factors</strong>
+--+                <div className="muted">
+--+                  Even if the braille text is correct, physical specs can break
+--+                  compliance: dot height/shape, dot spacing, cell spacing, line
+--+                  spacing, placement relative to tactile text, margins, substrate
+--+                  constraints, and printer/embosser calibration.
+--+                </div>
+--+              </div>
+--+
+--+              <div className="field">
+--+                <strong>4) Job-context factors</strong>
+--+                <div className="muted">
+--+                  Building code requirements, local AHJ variations, customer-provided
+--+                  text, multilingual needs, proofreading workflow, and sign type all
+--+                  matter. Always follow your internal review process.
+--+                </div>
+--+              </div>
+--+            </div>
+--+          </div>
+--+        </div>
+--+      ) : null}
+--+
+--+      {normalizeModalOpen ? (
+--+        <div
+--+          className="modalBackdrop"
+--+          role="presentation"
+--+          onClick={() => setNormalizeModalOpen(false)}
+--+        >
+--+          <div
+--+            className="modal"
+--+            role="dialog"
+--+            aria-modal="true"
+--+            aria-label="Normalize typography"
+--+            onClick={(event) => event.stopPropagation()}
+--+          >
+--+            <div className="row space-between">
+--+              <strong>Normalize typography (explicit)</strong>
+--+              <button
+--+                type="button"
+--+                className="button secondary"
+--+                onClick={() => setNormalizeModalOpen(false)}
+--+              >
+--+                Close
+--+              </button>
+--+            </div>
+--+
+--+            {typographyPreview.changes.length ? (
+--+              <div className="modalBody">
+--+                <div className="notice">
+--+                  This will change your input text. Review the preview and confirm
+--+                  before applying.
+--+                </div>
+--+                <div className="field">
+--+                  <strong>Changes</strong>
+--+                  <div className="output">{typographyPreview.changes.join("\n")}</div>
+--+                </div>
+--+                <div className="field">
+--+                  <strong>Before (exact)</strong>
+--+                  <div className="output">{input || "—"}</div>
+--+                </div>
+--+                <div className="field">
+--+                  <strong>After (proposed)</strong>
+--+                  <div className="output">{typographyPreview.normalized || "—"}</div>
+--+                </div>
+--+                <div className="row">
+--+                  <button
+--+                    type="button"
+--+                    className="button"
+--+                    onClick={() => {
+--+                      applyWithUndo(typographyPreview.normalized);
+--+                      setNormalizeModalOpen(false);
+--+                    }}
+--+                  >
+--+                    Apply changes
+--+                  </button>
+--+                  <button
+--+                    type="button"
+--+                    className="button secondary"
+--+                    onClick={() => setNormalizeModalOpen(false)}
+--+                  >
+--+                    Cancel
+--+                  </button>
+--+                </div>
+--+              </div>
+--+            ) : (
+--+              <div className="modalBody">
+--+                <div className="notice success">
+--+                  No smart quotes/dashes/ellipsis detected in the current input.
+--+                </div>
+--+              </div>
+--+            )}
+--+          </div>
+--+        </div>
+--+      ) : null}
+--     </main>
+--   );
+-- }
+--diff --git a/findings.md b/findings.md
+--index d6b45c6..0bb1ef9 100644
+----- a/findings.md
+--+++ b/findings.md
+--@@ -15,8 +15,8 @@
+-- - SVG output should preserve input line breaks (one braille line per input line) for operator clarity.
+-- 
+-- ## Research Findings
+---- "Assist" is implemented in `app/page.tsx` via `runAssist()` from `lib/assist.ts`, and the Phrase Library currently lives inside the Assist section.
+---- Phrase Library defaults come from `COMMON_PHRASES` in `lib/assist.ts` (currently a short list of common signage phrases).
+--+- Previously, "Assist" was implemented in `app/page.tsx` via `runAssist()` from `lib/assist.ts`, and the Phrase Library lived inside the Assist section.
+--+- Phrase Library defaults now come from `DEFAULT_PHRASE_GROUPS` in `lib/phraseLibrary.ts` (categorized + searchable).
+-- - Official FASTSIGNS logo SVG contains brand red `rgb(200,18,41)` and brand blue `rgb(0,46,151)` (from the downloaded SVG).
+-- - `design-reference.html` uses a light background with radial blue/cyan highlights, plus a bottom skyline overlay image.
+-- - `design-reference.html` tile styling uses `--tile-bg` and `--shadow-card` / `--shadow-card-hover` with `--card-radius: 0.875rem` and subtle borders.
+--@@ -46,6 +46,7 @@
+-- - `task_plan.md`, `findings.md`, `progress.md`
+-- 
+-- ## Visual/Browser Findings
+--+- The deployed site at `fs-braille.vercel.app` (checked 2026-01-21) still reflects the pre-refresh UI (top “Braille Translator” pill + auto-translate label). Use it only as a baseline until the updated UI is deployed.
+-- - `homepage-static.html` uses a light, airy background with a fixed body gradient overlay (radial blue/cyan highlights + soft linear gradient).
+-- - Core palette tokens: brand blue `#1F3CFF`, accent cyan `#00CCFF`, base background `#FAFBFC`, surface white `#FFFFFF`, text primary `#1A202C`.
+-- - Tile styles: gradient tile backgrounds (`--tile-bg`), subtle borders, rounded corners, glow shadows, hover lift (~3px) with brighter overlay and glow.
+--diff --git a/lib/normalization.ts b/lib/normalization.ts
+--index 480abe5..2453f9a 100644
+----- a/lib/normalization.ts
+--+++ b/lib/normalization.ts
+--@@ -6,8 +6,8 @@ export type NormalizationOptions = {
+-- };
+-- 
+-- export const DEFAULT_NORMALIZATION_OPTIONS: NormalizationOptions = {
+---  normalizeWhitespace: true,
+---  smartQuotes: true,
+--+  normalizeWhitespace: false,
+--+  smartQuotes: false,
+--   preserveLineBreaks: true,
+--   unsupportedHandling: "replace"
+-- };
+--diff --git a/lib/phraseLibrary.ts b/lib/phraseLibrary.ts
+--index 0c25b88..de9d6eb 100644
+----- a/lib/phraseLibrary.ts
+--+++ b/lib/phraseLibrary.ts
+--@@ -65,6 +65,27 @@ export const DEFAULT_PHRASE_GROUPS: PhraseGroup[] = [
+--       "PLEASE CLOSE DOOR"
+--     ]
+--   },
+--+  {
+--+    id: "amenities",
+--+    label: "Amenities",
+--+    phrases: [
+--+      "DRINKING FOUNTAIN",
+--+      "WATER FOUNTAIN",
+--+      "VENDING",
+--+      "CAFETERIA",
+--+      "LUNCHROOM",
+--+      "LOCKER ROOM",
+--+      "CHANGING ROOM",
+--+      "FAMILY RESTROOM",
+--+      "LACTATION ROOM",
+--+      "MOTHER'S ROOM",
+--+      "NURSING ROOM",
+--+      "SERVER ROOM",
+--+      "TELECOM",
+--+      "SECURITY",
+--+      "JANITOR CLOSET"
+--+    ]
+--+  },
+--   {
+--     id: "rules",
+--     label: "Rules",
+--diff --git a/lib/translation.node.ts b/lib/translation.node.ts
+--index 25ca024..30a3fc9 100644
+----- a/lib/translation.node.ts
+--+++ b/lib/translation.node.ts
+--@@ -1,11 +1,6 @@
+-- import { BrailleProfile } from "../config/profiles";
+-- import { getLiblouisVersion, translateWithLiblouis } from "./louis.node";
+---import {
+---  NormalizationOptions,
+---  NormalizationResult,
+---  Warning,
+---  normalizeInput
+---} from "./normalization";
+--+import { TranslationWarning } from "./translation";
+-- 
+-- export type BrailleCell = {
+--   bitstring: string;
+--@@ -17,14 +12,12 @@ export type TranslationResult = {
+--   unicode_braille: string;
+--   cells: BrailleCell[];
+--   plain_dots: string;
+---  warnings: Warning[];
+--+  warnings: TranslationWarning[];
+--   metadata: {
+--     liblouis_version: string;
+--     profile_id: BrailleProfile["id"];
+--     table_names: string[];
+---    normalization_applied: string[];
+--   };
+---  normalization: NormalizationResult;
+--   lines: BrailleCell[][];
+-- };
+-- 
+--@@ -57,17 +50,14 @@ const isBrailleChar = (codepoint: number) =>
+-- 
+-- export const translateText = async (
+--   text: string,
+---  profile: BrailleProfile,
+---  options: NormalizationOptions
+--+  profile: BrailleProfile
+-- ): Promise<TranslationResult> => {
+---  const normalization = normalizeInput(text, options);
+---  const warnings: Warning[] = [...normalization.warnings];
+---  const segments = options.preserveLineBreaks
+---    ? normalization.normalized.split("\n")
+---    : [normalization.normalized];
+--+  const warnings: TranslationWarning[] = [];
+--+  const segments = text.split(/\r?\n/);
+-- 
+--   const translatedSegments: string[] = [];
+---  for (const segment of segments) {
+--+  for (let index = 0; index < segments.length; index += 1) {
+--+    const segment = segments[index];
+--     if (!segment.trim()) {
+--       translatedSegments.push("");
+--       continue;
+--@@ -75,18 +65,16 @@ export const translateText = async (
+--     const raw = await translateWithLiblouis(profile.tables, segment);
+--     if (!raw) {
+--       warnings.push({
+---        type: "normalization",
+---        message: "Translation failed. Tables may be missing or not loaded yet."
+--+        code: "translation_failed",
+--+        message: `Translation failed on line ${index + 1}. Tables may be missing or not loaded yet.`
+--       });
+--       translatedSegments.push("");
+--       continue;
+--     }
+---    translatedSegments.push(raw.replace(/\n/g, " "));
+--+    translatedSegments.push(raw.replace(/\n+/g, " "));
+--   }
+-- 
+---  const unicode_braille = translatedSegments.join(
+---    options.preserveLineBreaks ? "\n" : ""
+---  );
+--+  const unicode_braille = translatedSegments.join("\n");
+--   const lines: BrailleCell[][] = [];
+--   const cells: BrailleCell[] = [];
+-- 
+--@@ -99,7 +87,7 @@ export const translateText = async (
+--       }
+--       if (!isBrailleChar(codepoint)) {
+--         warnings.push({
+---          type: "normalization",
+--+          code: "non_braille_output",
+--           message: `Non-braille character in output at line ${lineIndex + 1}.`
+--         });
+--         return;
+--@@ -109,8 +97,8 @@ export const translateText = async (
+--       cells.push(cell);
+--       if (codepoint - BRAILLE_BASE > 0b00111111) {
+--         warnings.push({
+---          type: "normalization",
+---          message: "Detected 8-dot braille; output truncated to 6-dot view."
+--+          code: "eight_dot_detected",
+--+          message: "Detected 8-dot braille; preview is truncated to 6-dot view."
+--         });
+--       }
+--     });
+--@@ -129,10 +117,8 @@ export const translateText = async (
+--     metadata: {
+--       liblouis_version: await getLiblouisVersion(),
+--       profile_id: profile.id,
+---      table_names: profile.tables,
+---      normalization_applied: normalization.applied
+--+      table_names: profile.tables
+--     },
+---    normalization,
+--     lines
+--   };
+-- };
+--diff --git a/lib/translation.ts b/lib/translation.ts
+--index 167ca09..0e60521 100644
+----- a/lib/translation.ts
+--+++ b/lib/translation.ts
+--@@ -1,11 +1,10 @@
+-- import { BrailleProfile } from "../config/profiles";
+-- import { getLiblouisVersion, translateWithLiblouis } from "./louis";
+---import {
+---  NormalizationOptions,
+---  NormalizationResult,
+---  Warning,
+---  normalizeInput
+---} from "./normalization";
+--+
+--+export type TranslationWarning = {
+--+  code: "translation_failed" | "non_braille_output" | "eight_dot_detected";
+--+  message: string;
+--+};
+-- 
+-- export type BrailleCell = {
+--   bitstring: string;
+--@@ -17,14 +16,12 @@ export type TranslationResult = {
+--   unicode_braille: string;
+--   cells: BrailleCell[];
+--   plain_dots: string;
+---  warnings: Warning[];
+--+  warnings: TranslationWarning[];
+--   metadata: {
+--     liblouis_version: string;
+--     profile_id: BrailleProfile["id"];
+--     table_names: string[];
+---    normalization_applied: string[];
+--   };
+---  normalization: NormalizationResult;
+--   lines: BrailleCell[][];
+-- };
+-- 
+--@@ -57,17 +54,14 @@ const isBrailleChar = (codepoint: number) =>
+-- 
+-- export const translateText = async (
+--   text: string,
+---  profile: BrailleProfile,
+---  options: NormalizationOptions
+--+  profile: BrailleProfile
+-- ): Promise<TranslationResult> => {
+---  const normalization = normalizeInput(text, options);
+---  const warnings: Warning[] = [...normalization.warnings];
+---  const segments = options.preserveLineBreaks
+---    ? normalization.normalized.split("\n")
+---    : [normalization.normalized];
+--+  const warnings: TranslationWarning[] = [];
+--+  const segments = text.split(/\r?\n/);
+-- 
+--   const translatedSegments: string[] = [];
+---  for (const segment of segments) {
+--+  for (let index = 0; index < segments.length; index += 1) {
+--+    const segment = segments[index];
+--     if (!segment.trim()) {
+--       translatedSegments.push("");
+--       continue;
+--@@ -75,18 +69,17 @@ export const translateText = async (
+--     const raw = await translateWithLiblouis(profile.tables, segment);
+--     if (!raw) {
+--       warnings.push({
+---        type: "normalization",
+---        message: "Translation failed. Tables may be missing or not loaded yet."
+--+        code: "translation_failed",
+--+        message: `Translation failed on line ${index + 1}. Tables may be missing or not loaded yet.`
+--       });
+--       translatedSegments.push("");
+--       continue;
+--     }
+---    translatedSegments.push(raw.replace(/\n/g, " "));
+--+    // One input line => one output line (operator-friendly).
+--+    translatedSegments.push(raw.replace(/\n+/g, " "));
+--   }
+-- 
+---  const unicode_braille = translatedSegments.join(
+---    options.preserveLineBreaks ? "\n" : ""
+---  );
+--+  const unicode_braille = translatedSegments.join("\n");
+--   const lines: BrailleCell[][] = [];
+--   const cells: BrailleCell[] = [];
+-- 
+--@@ -99,7 +92,7 @@ export const translateText = async (
+--       }
+--       if (!isBrailleChar(codepoint)) {
+--         warnings.push({
+---          type: "normalization",
+--+          code: "non_braille_output",
+--           message: `Non-braille character in output at line ${lineIndex + 1}.`
+--         });
+--         return;
+--@@ -109,8 +102,8 @@ export const translateText = async (
+--       cells.push(cell);
+--       if (codepoint - BRAILLE_BASE > 0b00111111) {
+--         warnings.push({
+---          type: "normalization",
+---          message: "Detected 8-dot braille; output truncated to 6-dot view."
+--+          code: "eight_dot_detected",
+--+          message: "Detected 8-dot braille; preview is truncated to 6-dot view."
+--         });
+--       }
+--     });
+--@@ -129,10 +122,8 @@ export const translateText = async (
+--     metadata: {
+--       liblouis_version: await getLiblouisVersion(),
+--       profile_id: profile.id,
+---      table_names: profile.tables,
+---      normalization_applied: normalization.applied
+--+      table_names: profile.tables
+--     },
+---    normalization,
+--     lines
+--   };
+-- };
+--diff --git a/progress.md b/progress.md
+--index 3319f28..34df4a1 100644
+----- a/progress.md
+--+++ b/progress.md
+--@@ -73,18 +73,37 @@
+--   - Updated page layout to a 2-column stack and re-aligned global styling to match `design-reference.html` (background, skyline overlay, tile gradients, shadows, borders).
+--   - Added a test to lock in multiline behavior.
+--   - Updated tiles so they are always white (no hover-to-white shift) while keeping a subtle lift and shadow on hover.
+--+  - Implemented compliance-first UX: persistent disclaimer banner + “Learn what must be verified” modal.
+--+  - Implemented Smart Select Grade (Conservative) with transparent rule explanation and explicit “Profile used” summary.
+--+  - Implemented Compliance Check panel (PASS/WARN/BLOCK) with export gating and local acknowledgements (WARN checkbox; BLOCK requires reason).
+--+  - Removed auto-translation behavior and removed silent input transformations; added explicit “Normalize typography…” flow with preview + confirmation.
+--+  - Added unit tests for decideGrade() and complianceCheck().
+--+  - Adjusted “tiles” and chips to be always white (no blue tint at rest) and keep only lift/shadow on hover.
+--+  - Fixed input textarea placeholder to render as real line breaks (not literal `\\n`).
+--+  - Expanded Phrase Library with an “Amenities” category.
+-- - Files created/modified:
+--   - app/page.tsx (updated)
+--   - app/globals.css (updated)
+--+  - lib/compliance.ts (added)
+--+  - lib/hash.ts (added)
+--+  - lib/typography.ts (added)
+--   - lib/translation.ts (updated)
+--   - lib/translation.node.ts (updated)
+--+  - lib/normalization.ts (defaults updated)
+--+  - scripts/generate-golden.ts (updated)
+--   - tests/multiline-output.test.ts (added)
+--+  - tests/compliance.test.ts (added)
+--+  - lib/phraseLibrary.ts (updated)
+--+
+--+### Test Results (2026-01-21)
+--+- `npm test` passes (liblouis emits table-resolution errors to stderr, but outputs remain deterministic and tests pass).
+--+- `npm run build` passes.
+-- 
+-- ## 5-Question Reboot Check
+-- | Question | Answer |
+-- |----------|--------|
+---| Where am I? | Phase 1 |
+---| Where am I going? | Phases 2-5 |
+---| What's the goal? | Update braille app UI to match `thehub-designreference` design language (no sidebar) |
+--+| Where am I? | Phase 4 (Testing & Verification) |
+--+| Where am I going? | Phase 4 → Phase 5 |
+--+| What's the goal? | Compliance-first braille translator UX + FASTSIGNS-branded SaaS layout matching `design-reference.html` (no sidebar) |
+-- | What have I learned? | See findings.md |
+-- | What have I done? | See above |
+--diff --git a/scripts/generate-golden.ts b/scripts/generate-golden.ts
+--index db6c71b..bab7560 100644
+----- a/scripts/generate-golden.ts
+--+++ b/scripts/generate-golden.ts
+--@@ -1,6 +1,5 @@
+-- import { writeFile } from "node:fs/promises";
+-- import { BRAILLE_PROFILES } from "../config/profiles";
+---import { DEFAULT_NORMALIZATION_OPTIONS } from "../lib/normalization";
+-- import { translateText } from "../lib/translation.node";
+-- 
+-- const CASES = [
+--@@ -20,8 +19,7 @@ const run = async () => {
+--     for (const input of CASES) {
+--       const result = await translateText(
+--         input,
+---        profile,
+---        DEFAULT_NORMALIZATION_OPTIONS
+--+        profile
+--       );
+--       liblouisVersion = result.metadata.liblouis_version;
+--       cases.push({
+--diff --git a/task_plan.md b/task_plan.md
+--index e5a460f..3961d67 100644
+----- a/task_plan.md
+--+++ b/task_plan.md
+--@@ -1,4 +1,4 @@
+---# Task Plan: Resource Site Alignment + Multiline SVG
+--+# Task Plan: Compliance-First Braille Translator UX
+-- <!-- 
+--   WHAT: This is your roadmap for the entire task. Think of it as your "working memory on disk."
+--   WHY: After 50+ tool calls, your original goals can get forgotten. This file keeps them fresh.
+--@@ -6,7 +6,13 @@
+-- -->
+-- 
+-- ## Goal
+---Make the braille app match `design-reference.html` (resource site design language, no sidebar), improve the layout, and ensure SVG output preserves input line breaks (one SVG braille line per input line) for operator intuitiveness.
+--+Make the braille app safer and less liability-prone for franchise use:
+--+- Prominent in-product compliance guidance (no claims of compliance/certification).
+--+- Conservative, transparent Smart Select for Grade 1 vs Grade 2.
+--+- Deterministic Compliance Check with PASS/WARN/BLOCK and export gating + acknowledgements.
+--+- No silent input transformations (only explicit, previewed actions).
+--+- UI aligned to `design-reference.html` design language (no sidebar) with a SaaS-like layout.
+--+- SVG output preserves input line breaks (one braille line per input line).
+-- 
+-- ## Current Phase
+-- Phase 4
+--@@ -28,13 +34,20 @@ Phase 4
+-- ### Phase 3: Implementation
+-- - [x] Update translation to preserve line breaks in SVG (option 1)
+-- - [x] Rework layout to avoid tall 3-column layout
+---- [x] Update styles to match `design-reference.html` tiles/background/shadows
+--+- [x] Update styles to match `design-reference.html` background/shadows while keeping white tiles
+--+- [x] Update header layout (remove top pill; logo above title)
+--+- [x] Add compliance banner + “Learn what must be verified” modal
+--+- [x] Add Smart Select toggle with transparent rule explanation
+--+- [x] Add Compliance Check panel with PASS/WARN/BLOCK and export gating
+--+- [x] Add proofread-friendly export (“Copy for proofread”) and embed export metadata in SVG
+--+- [x] Remove silent transforms and auto-translation behavior
+-- - **Status:** complete
+-- 
+-- ### Phase 4: Testing & Verification
+-- - [x] Verify multiline input produces multiline SVG (unit test)
+-- - [ ] Verify layout across desktop/mobile breakpoints (requires local preview; sandbox blocks `next dev` from listening)
+-- - [x] Verify build/test passes
+--+- [x] Verify tiles/chips are always white (CSS update; needs deploy visual confirmation)
+-- - [x] Document test results in progress.md
+-- - **Status:** in_progress
+-- 
+--@@ -46,8 +59,8 @@ Phase 4
+-- 
+-- ## Key Questions
+-- 1. Which files define the current braille app UI layout and styling?
+---2. Which portions of `design-reference.html` define the tile/card styling?
+---3. Should multiline input always force multiline output (even if liblouis wraps)?
+--+2. What additional risk flags are needed beyond the initial set?
+--+3. Should export gating apply to all copy actions or only SVG/download actions?
+-- 
+-- ## Decisions Made
+-- | Decision | Rationale |
+--diff --git a/tests/multiline-output.test.ts b/tests/multiline-output.test.ts
+--index 7ed92fe..198b282 100644
+----- a/tests/multiline-output.test.ts
+--+++ b/tests/multiline-output.test.ts
+--@@ -1,16 +1,13 @@
+-- import { describe, expect, it } from "vitest";
+-- import { getProfileById } from "../config/profiles";
+---import { DEFAULT_NORMALIZATION_OPTIONS } from "../lib/normalization";
+-- import { translateText } from "../lib/translation.node";
+-- 
+-- describe("multiline translation behavior", () => {
+--   it("preserves input line breaks by translating each line independently", async () => {
+--     const profile = getProfileById("en-us-g2");
+---    const options = { ...DEFAULT_NORMALIZATION_OPTIONS, preserveLineBreaks: true };
+---
+---    const first = await translateText("EXIT", profile, options);
+---    const second = await translateText("COPY ROOM", profile, options);
+---    const combined = await translateText("EXIT\nCOPY ROOM", profile, options);
+--+    const first = await translateText("EXIT", profile);
+--+    const second = await translateText("COPY ROOM", profile);
+--+    const combined = await translateText("EXIT\nCOPY ROOM", profile);
+-- 
+--     expect(combined.unicode_braille).toBe(
+--       `${first.unicode_braille}\n${second.unicode_braille}`
+--@@ -18,4 +15,3 @@ describe("multiline translation behavior", () => {
+--     expect(combined.lines.length).toBe(2);
+--   });
+-- });
+---
+--diff --git a/tests/normalization.test.ts b/tests/normalization.test.ts
+--index 90bcbab..2c71e17 100644
+----- a/tests/normalization.test.ts
+--+++ b/tests/normalization.test.ts
+--@@ -8,6 +8,8 @@ describe("normalizeInput", () => {
+--   it("normalizes smart quotes and whitespace", () => {
+--     const result = normalizeInput("Room\u2019  101", {
+--       ...DEFAULT_NORMALIZATION_OPTIONS,
+--+      smartQuotes: true,
+--+      normalizeWhitespace: true,
+--       preserveLineBreaks: true
+--     });
+--     expect(result.normalized).toBe("Room' 101");
+--@@ -16,6 +18,7 @@ describe("normalizeInput", () => {
+--   it("preserves line breaks when enabled", () => {
+--     const result = normalizeInput("Line 1\nLine   2", {
+--       ...DEFAULT_NORMALIZATION_OPTIONS,
+--+      normalizeWhitespace: true,
+--       preserveLineBreaks: true
+--     });
+--     expect(result.normalized).toBe("Line 1\nLine 2");
+--diff --git a/tests/translation.golden.test.ts b/tests/translation.golden.test.ts
+--index 67d7312..6e8c3da 100644
+----- a/tests/translation.golden.test.ts
+--+++ b/tests/translation.golden.test.ts
+--@@ -1,7 +1,6 @@
+-- import { readFileSync } from "node:fs";
+-- import { describe, expect, it } from "vitest";
+-- import { getProfileById } from "../config/profiles";
+---import { DEFAULT_NORMALIZATION_OPTIONS } from "../lib/normalization";
+-- import { translateText } from "../lib/translation.node";
+-- 
+-- const loadGolden = (profileId: "en-us-g1" | "en-us-g2") => {
+--@@ -26,8 +25,7 @@ const runProfileTests = (profileId: "en-us-g1" | "en-us-g2") => {
+--     it(`${profileId} translates ${testCase.input}`, async () => {
+--       const result = await translateText(
+--         testCase.input,
+---        profile,
+---        DEFAULT_NORMALIZATION_OPTIONS
+--+        profile
+--       );
+--       expect(result.unicode_braille).toBe(testCase.unicode_braille);
+--       expect(result.cells.map((cell) => cell.bitstring)).toEqual(
+--diff --git a/lib/compliance.ts b/lib/compliance.ts
+--new file mode 100644
+--index 0000000..d7fd325
+----- /dev/null
+--+++ b/lib/compliance.ts
+--@@ -0,0 +1,318 @@
+--+export type GradeId = "grade1" | "grade2";
+--+
+--+export type GradeDecision = {
+--+  grade: GradeId;
+--+  ruleId:
+--+    | "empty"
+--+    | "short_length"
+--+    | "technical_content"
+--+    | "label_like"
+--+    | "long_text"
+--+    | "default";
+--+  reason: string;
+--+};
+--+
+--+const countWords = (text: string) =>
+--+  text
+--+    .trim()
+--+    .split(/\s+/)
+--+    .filter(Boolean).length;
+--+
+--+const countDigits = (text: string) => (text.match(/\d/g) ?? []).length;
+--+
+--+const hasSentencePunctuation = (text: string) => /[.!?;:]/.test(text);
+--+
+--+const isMultiSentence = (text: string) => (text.match(/[.!?]/g) ?? []).length >= 2;
+--+
+--+const looksTechnical = (text: string) => {
+--+  const lower = text.toLowerCase();
+--+  if (/(https?:\/\/|www\.)/.test(lower)) return true;
+--+  if (/(mailto:|tel:)/.test(lower)) return true;
+--+  if (/\b\S+@\S+\.\S+\b/.test(text)) return true;
+--+
+--+  // Phone-ish: 10+ digits total, or common formatted patterns.
+--+  if (countDigits(text) >= 10) return true;
+--+  if (/\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b/.test(text)) return true;
+--+
+--+  // Path / identifier hints.
+--+  if (/[\\/_:]/.test(text)) return true;
+--+  // Long alphanumeric runs that include digits (codes / IDs).
+--+  if (/\b(?=[A-Za-z0-9]{4,}\b)(?=.*\d)(?=.*[A-Za-z])[A-Za-z0-9]+\b/.test(text)) return true;
+--+  if (/\b\w+[-_]\w+\b/.test(text)) return true;
+--+  if (/\b(?:RM|ROOM|STE|SUITE)\s*\d+[A-Z]?\b/i.test(text)) return true;
+--+
+--+  return false;
+--+};
+--+
+--+export const decideGrade = (text: string): GradeDecision => {
+--+  const trimmed = text.trim();
+--+
+--+  if (!trimmed) {
+--+    return {
+--+      grade: "grade1",
+--+      ruleId: "empty",
+--+      reason: "Empty/whitespace input defaults to Grade 1."
+--+    };
+--+  }
+--+
+--+  if (trimmed.length <= 25) {
+--+    return {
+--+      grade: "grade1",
+--+      ruleId: "short_length",
+--+      reason: "Short labels are usually safer as Grade 1."
+--+    };
+--+  }
+--+
+--+  if (looksTechnical(trimmed)) {
+--+    return {
+--+      grade: "grade1",
+--+      ruleId: "technical_content",
+--+      reason: "Identifiers, codes, and technical strings are usually safer as Grade 1."
+--+    };
+--+  }
+--+
+--+  if (!hasSentencePunctuation(trimmed) && countWords(trimmed) <= 4) {
+--+    return {
+--+      grade: "grade1",
+--+      ruleId: "label_like",
+--+      reason: "Short label-like text without sentence punctuation is usually safer as Grade 1."
+--+    };
+--+  }
+--+
+--+  if (isMultiSentence(trimmed) || countWords(trimmed) >= 6 || trimmed.length >= 40) {
+--+    return {
+--+      grade: "grade2",
+--+      ruleId: "long_text",
+--+      reason: "Longer, sentence-like text is often more readable in Grade 2 (still requires verification)."
+--+    };
+--+  }
+--+
+--+  return {
+--+    grade: "grade1",
+--+    ruleId: "default",
+--+    reason: "Defaulting to Grade 1 for conservative handling."
+--+  };
+--+};
+--+
+--+export type ComplianceLevel = "PASS" | "WARN" | "BLOCK";
+--+
+--+export type ComplianceFlag = {
+--+  code:
+--+    | "non_ascii_quotes"
+--+    | "dash_variant"
+--+    | "ellipsis"
+--+    | "unusual_symbol"
+--+    | "non_ascii_letter"
+--+    | "emoji_or_pictograph"
+--+    | "all_caps"
+--+    | "numbers_present"
+--+    | "abbreviation_detected"
+--+    | "punctuation_dense"
+--+    | "punctuation_high_risk"
+--+    | "multiline_input"
+--+    | "length_risk"
+--+    | "technical_string"
+--+    | "grade2_short_label_risk";
+--+  level: Exclude<ComplianceLevel, "PASS">;
+--+  message: string;
+--+};
+--+
+--+export type ComplianceReport = {
+--+  level: ComplianceLevel;
+--+  flags: ComplianceFlag[];
+--+};
+--+
+--+type ComplianceInput = {
+--+  text: string;
+--+  profileId: "en-us-g1" | "en-us-g2";
+--+  smartSelectEnabled: boolean;
+--+  smartSelectDecision?: GradeDecision;
+--+};
+--+
+--+const hasEmojiOrPictograph = (text: string) => {
+--+  try {
+--+    return /[\p{Extended_Pictographic}]/u.test(text);
+--+  } catch {
+--+    // Fallback: very rough range-based check.
+--+    return /[\u{1F300}-\u{1FAFF}]/u.test(text);
+--+  }
+--+};
+--+
+--+export const complianceCheck = (input: ComplianceInput): ComplianceReport => {
+--+  const text = input.text ?? "";
+--+  const flags: ComplianceFlag[] = [];
+--+  const trimmed = text.trim();
+--+
+--+  if (hasEmojiOrPictograph(text)) {
+--+    flags.push({
+--+      code: "emoji_or_pictograph",
+--+      level: "BLOCK",
+--+      message:
+--+        "Emoji/pictographs detected. Remove them before generating or exporting braille."
+--+    });
+--+  }
+--+
+--+  if (/[\u2018\u2019\u201c\u201d]/.test(text)) {
+--+    flags.push({
+--+      code: "non_ascii_quotes",
+--+      level: "WARN",
+--+      message:
+--+        "Smart quotes detected. Verify punctuation handling (or normalize typography intentionally)."
+--+    });
+--+  }
+--+
+--+  if (/[\u2013\u2014]/.test(text)) {
+--+    flags.push({
+--+      code: "dash_variant",
+--+      level: "WARN",
+--+      message:
+--+        "En/em dashes detected. Verify punctuation handling (or normalize typography intentionally)."
+--+    });
+--+  }
+--+
+--+  if (/\u2026/.test(text)) {
+--+    flags.push({
+--+      code: "ellipsis",
+--+      level: "WARN",
+--+      message:
+--+        "Ellipsis character detected. Verify punctuation handling (or normalize typography intentionally)."
+--+    });
+--+  }
+--+
+--+  if (/[©®™]/.test(text)) {
+--+    flags.push({
+--+      code: "unusual_symbol",
+--+      level: "WARN",
+--+      message:
+--+        "Trademark/copyright symbols detected. Verify whether these should appear on the sign and how they should be handled."
+--+    });
+--+  }
+--+
+--+  // Non-English letters / diacritics (profile mismatch risk)
+--+  try {
+--+    const chars = Array.from(text);
+--+    const nonAsciiLetters = chars.filter((char) => {
+--+      const code = char.codePointAt(0) ?? 0;
+--+      if (code <= 0x7f) return false;
+--+      return /\p{L}/u.test(char);
+--+    });
+--+    if (nonAsciiLetters.length) {
+--+      flags.push({
+--+        code: "non_ascii_letter",
+--+        level: "WARN",
+--+        message:
+--+          "Non-English letters/diacritics detected. Verify language/profile handling (US English tables may be insufficient)."
+--+      });
+--+    }
+--+  } catch {
+--+    if (/[^\x00-\x7f]/.test(text)) {
+--+      flags.push({
+--+        code: "non_ascii_letter",
+--+        level: "WARN",
+--+        message:
+--+          "Non-ASCII characters detected. Verify language/profile handling."
+--+      });
+--+    }
+--+  }
+--+
+--+  if (trimmed && /[A-Za-z]/.test(trimmed)) {
+--+    const lettersOnly = trimmed.replace(/[^A-Za-z]+/g, "");
+--+    const isAllCaps = lettersOnly.length > 0 && lettersOnly === lettersOnly.toUpperCase();
+--+    if (isAllCaps && countWords(trimmed) >= 2) {
+--+      flags.push({
+--+        code: "all_caps",
+--+        level: "WARN",
+--+        message:
+--+          "All-caps multi-word text detected. Capitalization rules matter in braille; verify carefully."
+--+      });
+--+    }
+--+  }
+--+
+--+  if (/\d/.test(text)) {
+--+    flags.push({
+--+      code: "numbers_present",
+--+      level: "WARN",
+--+      message:
+--+        "Numbers/ordinals detected. Verify number indicators, spacing, and formatting."
+--+    });
+--+  }
+--+
+--+  if (/\b(rm|room|ste|suite|dept|dr\.?|st\.?)\b/i.test(text)) {
+--+    flags.push({
+--+      code: "abbreviation_detected",
+--+      level: "WARN",
+--+      message:
+--+        "Abbreviations detected (e.g., Rm/Ste/Dept/St/Dr). Confirm intended expansion and meaning."
+--+    });
+--+  }
+--+
+--+  const punctMatches = text.match(/[\/\\\-()"'&:]/g) ?? [];
+--+  if (punctMatches.length >= 10 || /[\/\\]{3,}/.test(text) || /-{3,}/.test(text)) {
+--+    flags.push({
+--+      code: "punctuation_high_risk",
+--+      level: "BLOCK",
+--+      message:
+--+        "High punctuation density detected. Simplify the text or verify punctuation handling before exporting."
+--+    });
+--+  } else if (punctMatches.length >= 4 || /[()]/.test(text)) {
+--+    flags.push({
+--+      code: "punctuation_dense",
+--+      level: "WARN",
+--+      message:
+--+        "Punctuation-heavy text detected. Verify punctuation handling and intended meaning."
+--+    });
+--+  }
+--+
+--+  if (text.includes("\n")) {
+--+    flags.push({
+--+      code: "multiline_input",
+--+      level: "WARN",
+--+      message:
+--+        "Multi-line input detected. Sign line breaks and layout rules differ from document braille; verify layout."
+--+    });
+--+  }
+--+
+--+  if (trimmed.length > 80) {
+--+    flags.push({
+--+      code: "length_risk",
+--+      level: "WARN",
+--+      message:
+--+        "Long text detected. It may not fit typical sign formats; verify line breaks, placement, and layout."
+--+    });
+--+  }
+--+
+--+  if (/(https?:\/\/|www\.|mailto:|tel:|\b\S+@\S+\.\S+\b)/i.test(text)) {
+--+    flags.push({
+--+      code: "technical_string",
+--+      level: "WARN",
+--+      message:
+--+        "Technical string detected (URL/email/phone/tel/mailto). Verify formatting and whether Grade 1 is appropriate."
+--+    });
+--+  }
+--+
+--+  if (
+--+    input.smartSelectEnabled &&
+--+    input.smartSelectDecision?.grade === "grade2" &&
+--+    trimmed.length <= 25
+--+  ) {
+--+    flags.push({
+--+      code: "grade2_short_label_risk",
+--+      level: "WARN",
+--+      message:
+--+        "Smart Select chose Grade 2 for a short label. Verify grade choice; Grade 1 is often safer for short labels."
+--+    });
+--+  }
+--+
+--+  // Profile mismatch reminder (conservative, informational)
+--+  if (input.profileId !== "en-us-g1" && input.profileId !== "en-us-g2") {
+--+    // Not expected today; keep deterministic structure.
+--+  }
+--+
+--+  const level: ComplianceLevel = flags.some((flag) => flag.level === "BLOCK")
+--+    ? "BLOCK"
+--+    : flags.length
+--+      ? "WARN"
+--+      : "PASS";
+--+
+--+  return { level, flags };
+--+};
+--diff --git a/lib/hash.ts b/lib/hash.ts
+--new file mode 100644
+--index 0000000..cf74991
+----- /dev/null
+--+++ b/lib/hash.ts
+--@@ -0,0 +1,9 @@
+--+export const fnv1a32 = (input: string): string => {
+--+  let hash = 0x811c9dc5;
+--+  for (let i = 0; i < input.length; i += 1) {
+--+    hash ^= input.charCodeAt(i);
+--+    hash = Math.imul(hash, 0x01000193);
+--+  }
+--+  return (hash >>> 0).toString(16).padStart(8, "0");
+--+};
+--+
+--diff --git a/lib/typography.ts b/lib/typography.ts
+--new file mode 100644
+--index 0000000..6493ac5
+----- /dev/null
+--+++ b/lib/typography.ts
+--@@ -0,0 +1,27 @@
+--+export type TypographyNormalization = {
+--+  normalized: string;
+--+  changes: string[];
+--+};
+--+
+--+const REPLACEMENTS: Array<[RegExp, string, string]> = [
+--+  [/\u2018|\u2019/g, "'", "Smart quotes → straight apostrophe"],
+--+  [/\u201C|\u201D/g, '"', "Smart quotes → straight quotes"],
+--+  [/\u2013|\u2014/g, "-", "En/em dash → hyphen"],
+--+  [/\u2026/g, "...", "Ellipsis → three dots"],
+--+  [/\u00a0/g, " ", "Non-breaking space → space"]
+--+];
+--+
+--+export const normalizeTypography = (input: string): TypographyNormalization => {
+--+  let working = input;
+--+  const changes: string[] = [];
+--+
+--+  REPLACEMENTS.forEach(([pattern, replacement, label]) => {
+--+    if (pattern.test(working)) {
+--+      working = working.replace(pattern, replacement);
+--+      changes.push(label);
+--+    }
+--+  });
+--+
+--+  return { normalized: working, changes: Array.from(new Set(changes)) };
+--+};
+--+
+--diff --git a/tests/compliance.test.ts b/tests/compliance.test.ts
+--new file mode 100644
+--index 0000000..7648308
+----- /dev/null
+--+++ b/tests/compliance.test.ts
+--@@ -0,0 +1,110 @@
+--+import { describe, expect, it } from "vitest";
+--+import { complianceCheck, decideGrade } from "../lib/compliance";
+--+
+--+describe("decideGrade (conservative, deterministic)", () => {
+--+  it('RESTROOM → grade1', () => {
+--+    expect(decideGrade("RESTROOM").grade).toBe("grade1");
+--+  });
+--+
+--+  it('Conference Room → grade1', () => {
+--+    expect(decideGrade("Conference Room").grade).toBe("grade1");
+--+  });
+--+
+--+  it('Employees Only → grade1', () => {
+--+    expect(decideGrade("Employees Only").grade).toBe("grade1");
+--+  });
+--+
+--+  it("Sentence-like text → grade2", () => {
+--+    expect(decideGrade("This area is restricted to authorized personnel.").grade).toBe(
+--+      "grade2"
+--+    );
+--+  });
+--+
+--+  it('Room 204 → grade1', () => {
+--+    expect(decideGrade("Room 204").grade).toBe("grade1");
+--+  });
+--+
+--+  it('Suite 12B → grade1', () => {
+--+    expect(decideGrade("Suite 12B").grade).toBe("grade1");
+--+  });
+--+
+--+  it('Call 860-555-1212 → grade1', () => {
+--+    expect(decideGrade("Call 860-555-1212").grade).toBe("grade1");
+--+  });
+--+
+--+  it("Long sentence → grade2", () => {
+--+    expect(decideGrade("Use the elevator to reach the second floor.").grade).toBe(
+--+      "grade2"
+--+    );
+--+  });
+--+
+--+  it('Model MX-3000 → grade1', () => {
+--+    expect(decideGrade("Model MX-3000").grade).toBe("grade1");
+--+  });
+--+
+--+  it("Long sentence (wash hands) → grade2", () => {
+--+    expect(
+--+      decideGrade("Please wash your hands before returning to work.").grade
+--+    ).toBe("grade2");
+--+  });
+--+});
+--+
+--+describe("complianceCheck (risk flags; never claims compliance)", () => {
+--+  const run = (text: string) =>
+--+    complianceCheck({
+--+      text,
+--+      profileId: "en-us-g2",
+--+      smartSelectEnabled: false
+--+    });
+--+
+--+  it("smart quotes → WARN", () => {
+--+    const report = run("“Restroom”");
+--+    expect(report.level).toBe("WARN");
+--+    expect(report.flags.map((f) => f.code)).toContain("non_ascii_quotes");
+--+  });
+--+
+--+  it("em dash → WARN", () => {
+--+    const report = run("RESTROOM — WOMEN");
+--+    expect(report.level).toBe("WARN");
+--+    expect(report.flags.map((f) => f.code)).toContain("dash_variant");
+--+  });
+--+
+--+  it("non-English letter → WARN", () => {
+--+    const report = run("Café");
+--+    expect(report.level).toBe("WARN");
+--+    expect(report.flags.map((f) => f.code)).toContain("non_ascii_letter");
+--+  });
+--+
+--+  it("punctuation density → WARN", () => {
+--+    const report = run("Room 204 (East)");
+--+    expect(report.level).toBe("WARN");
+--+    expect(report.flags.map((f) => f.code)).toContain("punctuation_dense");
+--+  });
+--+
+--+  it("emoji/unexpected symbol → BLOCK", () => {
+--+    const report = run("😀 Restroom");
+--+    expect(report.level).toBe("BLOCK");
+--+    expect(report.flags.map((f) => f.code)).toContain("emoji_or_pictograph");
+--+  });
+--+
+--+  it("tel: technical string → WARN", () => {
+--+    const report = run("tel:8605551212");
+--+    expect(report.level).toBe("WARN");
+--+    expect(report.flags.map((f) => f.code)).toContain("technical_string");
+--+  });
+--+
+--+  it("multiline input → WARN", () => {
+--+    const report = run("EXIT\nCOPY ROOM");
+--+    expect(report.level).toBe("WARN");
+--+    expect(report.flags.map((f) => f.code)).toContain("multiline_input");
+--+  });
+--+
+--+  it("very long string → WARN", () => {
+--+    const report = run(
+--+      "This is a very long sign label that will likely exceed typical formats and needs review."
+--+    );
+--+    expect(report.level).toBe("WARN");
+--+    expect(report.flags.map((f) => f.code)).toContain("length_risk");
+--+  });
+--+});
+--+
+-diff --git a/lib/compliance.ts b/lib/compliance.ts
+-index d7fd325..b61e4e8 100644
+---- a/lib/compliance.ts
+-+++ b/lib/compliance.ts
+-@@ -104,6 +104,7 @@ export type ComplianceFlag = {
+-     | "unusual_symbol"
+-     | "non_ascii_letter"
+-     | "emoji_or_pictograph"
+-+    | "non_bmp_character"
+-     | "all_caps"
+-     | "numbers_present"
+-     | "abbreviation_detected"
+-@@ -152,6 +153,24 @@ export const complianceCheck = (input: ComplianceInput): ComplianceReport => {
+-     });
 -   }
 - 
---  const unicode_braille = translatedSegments.join(
---    options.preserveLineBreaks ? "\n" : ""
---  );
--+  const unicode_braille = translatedSegments.join("\n");
--   const lines: BrailleCell[][] = [];
--   const cells: BrailleCell[] = [];
-- 
--@@ -99,7 +87,7 @@ export const translateText = async (
--       }
--       if (!isBrailleChar(codepoint)) {
--         warnings.push({
---          type: "normalization",
--+          code: "non_braille_output",
--           message: `Non-braille character in output at line ${lineIndex + 1}.`
--         });
--         return;
--@@ -109,8 +97,8 @@ export const translateText = async (
--       cells.push(cell);
--       if (codepoint - BRAILLE_BASE > 0b00111111) {
--         warnings.push({
---          type: "normalization",
---          message: "Detected 8-dot braille; output truncated to 6-dot view."
--+          code: "eight_dot_detected",
--+          message: "Detected 8-dot braille; preview is truncated to 6-dot view."
--         });
--       }
--     });
--@@ -129,10 +117,8 @@ export const translateText = async (
--     metadata: {
--       liblouis_version: await getLiblouisVersion(),
--       profile_id: profile.id,
---      table_names: profile.tables,
---      normalization_applied: normalization.applied
--+      table_names: profile.tables
--     },
---    normalization,
--     lines
--   };
-- };
--diff --git a/lib/translation.ts b/lib/translation.ts
--index 167ca09..0e60521 100644
----- a/lib/translation.ts
--+++ b/lib/translation.ts
--@@ -1,11 +1,10 @@
-- import { BrailleProfile } from "../config/profiles";
-- import { getLiblouisVersion, translateWithLiblouis } from "./louis";
---import {
---  NormalizationOptions,
---  NormalizationResult,
---  Warning,
---  normalizeInput
---} from "./normalization";
+-+  // Some non-BMP characters (surrogate pairs) can be problematic in signage workflows
+-+  // and may not be supported by the current translation engine build.
+-+  try {
+-+    const hasNonBmp = Array.from(text).some(
+-+      (char) => (char.codePointAt(0) ?? 0) > 0xffff
+-+    );
+-+    if (hasNonBmp) {
+-+      flags.push({
+-+        code: "non_bmp_character",
+-+        level: "BLOCK",
+-+        message:
+-+          "Non-standard characters detected (e.g., emoji/flags). Remove them before generating or exporting braille."
+-+      });
+-+    }
+-+  } catch {
+-+    // Best-effort only.
+-+  }
 -+
--+export type TranslationWarning = {
--+  code: "translation_failed" | "non_braille_output" | "eight_dot_detected";
--+  message: string;
+-   if (/[\u2018\u2019\u201c\u201d]/.test(text)) {
+-     flags.push({
+-       code: "non_ascii_quotes",
+-diff --git a/lib/louis.ts b/lib/louis.ts
+-index 9d0372c..6ba417a 100644
+---- a/lib/louis.ts
+-+++ b/lib/louis.ts
+-@@ -35,6 +35,10 @@ const REQUIRED_TABLE_FILES = [
+- 
+- let cachedEngine: Promise<LouisEngine> | null = null;
+- 
+-+export const resetLiblouis = () => {
+-+  cachedEngine = null;
 -+};
-- 
-- export type BrailleCell = {
--   bitstring: string;
--@@ -17,14 +16,12 @@ export type TranslationResult = {
--   unicode_braille: string;
--   cells: BrailleCell[];
--   plain_dots: string;
---  warnings: Warning[];
--+  warnings: TranslationWarning[];
--   metadata: {
--     liblouis_version: string;
--     profile_id: BrailleProfile["id"];
--     table_names: string[];
---    normalization_applied: string[];
--   };
---  normalization: NormalizationResult;
--   lines: BrailleCell[][];
-- };
-- 
--@@ -57,17 +54,14 @@ const isBrailleChar = (codepoint: number) =>
-- 
-- export const translateText = async (
--   text: string,
---  profile: BrailleProfile,
---  options: NormalizationOptions
--+  profile: BrailleProfile
-- ): Promise<TranslationResult> => {
---  const normalization = normalizeInput(text, options);
---  const warnings: Warning[] = [...normalization.warnings];
---  const segments = options.preserveLineBreaks
---    ? normalization.normalized.split("\n")
---    : [normalization.normalized];
--+  const warnings: TranslationWarning[] = [];
--+  const segments = text.split(/\r?\n/);
-- 
--   const translatedSegments: string[] = [];
---  for (const segment of segments) {
--+  for (let index = 0; index < segments.length; index += 1) {
--+    const segment = segments[index];
--     if (!segment.trim()) {
--       translatedSegments.push("");
--       continue;
--@@ -75,18 +69,17 @@ export const translateText = async (
--     const raw = await translateWithLiblouis(profile.tables, segment);
--     if (!raw) {
--       warnings.push({
---        type: "normalization",
---        message: "Translation failed. Tables may be missing or not loaded yet."
--+        code: "translation_failed",
--+        message: `Translation failed on line ${index + 1}. Tables may be missing or not loaded yet.`
--       });
--       translatedSegments.push("");
--       continue;
--     }
---    translatedSegments.push(raw.replace(/\n/g, " "));
--+    // One input line => one output line (operator-friendly).
--+    translatedSegments.push(raw.replace(/\n+/g, " "));
--   }
-- 
---  const unicode_braille = translatedSegments.join(
---    options.preserveLineBreaks ? "\n" : ""
---  );
--+  const unicode_braille = translatedSegments.join("\n");
--   const lines: BrailleCell[][] = [];
--   const cells: BrailleCell[] = [];
-- 
--@@ -99,7 +92,7 @@ export const translateText = async (
--       }
--       if (!isBrailleChar(codepoint)) {
--         warnings.push({
---          type: "normalization",
--+          code: "non_braille_output",
--           message: `Non-braille character in output at line ${lineIndex + 1}.`
--         });
--         return;
--@@ -109,8 +102,8 @@ export const translateText = async (
--       cells.push(cell);
--       if (codepoint - BRAILLE_BASE > 0b00111111) {
--         warnings.push({
---          type: "normalization",
---          message: "Detected 8-dot braille; output truncated to 6-dot view."
--+          code: "eight_dot_detected",
--+          message: "Detected 8-dot braille; preview is truncated to 6-dot view."
--         });
--       }
--     });
--@@ -129,10 +122,8 @@ export const translateText = async (
--     metadata: {
--       liblouis_version: await getLiblouisVersion(),
--       profile_id: profile.id,
---      table_names: profile.tables,
---      normalization_applied: normalization.applied
--+      table_names: profile.tables
--     },
---    normalization,
--     lines
--   };
-- };
--diff --git a/progress.md b/progress.md
--index 3319f28..34df4a1 100644
----- a/progress.md
--+++ b/progress.md
--@@ -73,18 +73,37 @@
--   - Updated page layout to a 2-column stack and re-aligned global styling to match `design-reference.html` (background, skyline overlay, tile gradients, shadows, borders).
--   - Added a test to lock in multiline behavior.
--   - Updated tiles so they are always white (no hover-to-white shift) while keeping a subtle lift and shadow on hover.
--+  - Implemented compliance-first UX: persistent disclaimer banner + “Learn what must be verified” modal.
--+  - Implemented Smart Select Grade (Conservative) with transparent rule explanation and explicit “Profile used” summary.
--+  - Implemented Compliance Check panel (PASS/WARN/BLOCK) with export gating and local acknowledgements (WARN checkbox; BLOCK requires reason).
--+  - Removed auto-translation behavior and removed silent input transformations; added explicit “Normalize typography…” flow with preview + confirmation.
--+  - Added unit tests for decideGrade() and complianceCheck().
--+  - Adjusted “tiles” and chips to be always white (no blue tint at rest) and keep only lift/shadow on hover.
--+  - Fixed input textarea placeholder to render as real line breaks (not literal `\\n`).
--+  - Expanded Phrase Library with an “Amenities” category.
-- - Files created/modified:
--   - app/page.tsx (updated)
--   - app/globals.css (updated)
--+  - lib/compliance.ts (added)
--+  - lib/hash.ts (added)
--+  - lib/typography.ts (added)
--   - lib/translation.ts (updated)
--   - lib/translation.node.ts (updated)
--+  - lib/normalization.ts (defaults updated)
--+  - scripts/generate-golden.ts (updated)
--   - tests/multiline-output.test.ts (added)
--+  - tests/compliance.test.ts (added)
--+  - lib/phraseLibrary.ts (updated)
 -+
--+### Test Results (2026-01-21)
--+- `npm test` passes (liblouis emits table-resolution errors to stderr, but outputs remain deterministic and tests pass).
--+- `npm run build` passes.
+- const loadScript = (src: string) =>
+-   new Promise<void>((resolve, reject) => {
+-     const normalizedSrc = src.startsWith("/") ? src : `/${src}`;
+-@@ -157,7 +161,22 @@ export const translateWithLiblouis = async (
+-   text: string
+- ): Promise<string | null> => {
+-   const engine = await loadLiblouis();
+--  return engine.translateString(tables.join(","), text);
+-+  const run = async () => engine.translateString(tables.join(","), text);
+-+  try {
+-+    const timeoutMs = 2500;
+-+    const timeout = new Promise<null>((resolve) =>
+-+      setTimeout(() => resolve(null), timeoutMs)
+-+    );
+-+    const result = await Promise.race([run(), timeout]);
+-+    if (result === null) {
+-+      // If the worker aborted or hung, reset so a future retry can recover.
+-+      resetLiblouis();
+-+    }
+-+    return result;
+-+  } catch {
+-+    resetLiblouis();
+-+    return null;
+-+  }
+- };
 - 
-- ## 5-Question Reboot Check
-- | Question | Answer |
-- |----------|--------|
---| Where am I? | Phase 1 |
---| Where am I going? | Phases 2-5 |
---| What's the goal? | Update braille app UI to match `thehub-designreference` design language (no sidebar) |
--+| Where am I? | Phase 4 (Testing & Verification) |
--+| Where am I going? | Phase 4 → Phase 5 |
--+| What's the goal? | Compliance-first braille translator UX + FASTSIGNS-branded SaaS layout matching `design-reference.html` (no sidebar) |
-- | What have I learned? | See findings.md |
-- | What have I done? | See above |
--diff --git a/scripts/generate-golden.ts b/scripts/generate-golden.ts
--index db6c71b..bab7560 100644
----- a/scripts/generate-golden.ts
--+++ b/scripts/generate-golden.ts
--@@ -1,6 +1,5 @@
-- import { writeFile } from "node:fs/promises";
-- import { BRAILLE_PROFILES } from "../config/profiles";
---import { DEFAULT_NORMALIZATION_OPTIONS } from "../lib/normalization";
-- import { translateText } from "../lib/translation.node";
-- 
-- const CASES = [
--@@ -20,8 +19,7 @@ const run = async () => {
--     for (const input of CASES) {
--       const result = await translateText(
--         input,
---        profile,
---        DEFAULT_NORMALIZATION_OPTIONS
--+        profile
--       );
--       liblouisVersion = result.metadata.liblouis_version;
--       cases.push({
--diff --git a/task_plan.md b/task_plan.md
--index e5a460f..3961d67 100644
----- a/task_plan.md
--+++ b/task_plan.md
--@@ -1,4 +1,4 @@
---# Task Plan: Resource Site Alignment + Multiline SVG
--+# Task Plan: Compliance-First Braille Translator UX
-- <!-- 
--   WHAT: This is your roadmap for the entire task. Think of it as your "working memory on disk."
--   WHY: After 50+ tool calls, your original goals can get forgotten. This file keeps them fresh.
--@@ -6,7 +6,13 @@
-- -->
-- 
-- ## Goal
---Make the braille app match `design-reference.html` (resource site design language, no sidebar), improve the layout, and ensure SVG output preserves input line breaks (one SVG braille line per input line) for operator intuitiveness.
--+Make the braille app safer and less liability-prone for franchise use:
--+- Prominent in-product compliance guidance (no claims of compliance/certification).
--+- Conservative, transparent Smart Select for Grade 1 vs Grade 2.
--+- Deterministic Compliance Check with PASS/WARN/BLOCK and export gating + acknowledgements.
--+- No silent input transformations (only explicit, previewed actions).
--+- UI aligned to `design-reference.html` design language (no sidebar) with a SaaS-like layout.
--+- SVG output preserves input line breaks (one braille line per input line).
-- 
-- ## Current Phase
-- Phase 4
--@@ -28,13 +34,20 @@ Phase 4
-- ### Phase 3: Implementation
-- - [x] Update translation to preserve line breaks in SVG (option 1)
-- - [x] Rework layout to avoid tall 3-column layout
---- [x] Update styles to match `design-reference.html` tiles/background/shadows
--+- [x] Update styles to match `design-reference.html` background/shadows while keeping white tiles
--+- [x] Update header layout (remove top pill; logo above title)
--+- [x] Add compliance banner + “Learn what must be verified” modal
--+- [x] Add Smart Select toggle with transparent rule explanation
--+- [x] Add Compliance Check panel with PASS/WARN/BLOCK and export gating
--+- [x] Add proofread-friendly export (“Copy for proofread”) and embed export metadata in SVG
--+- [x] Remove silent transforms and auto-translation behavior
-- - **Status:** complete
-- 
-- ### Phase 4: Testing & Verification
-- - [x] Verify multiline input produces multiline SVG (unit test)
-- - [ ] Verify layout across desktop/mobile breakpoints (requires local preview; sandbox blocks `next dev` from listening)
-- - [x] Verify build/test passes
--+- [x] Verify tiles/chips are always white (CSS update; needs deploy visual confirmation)
-- - [x] Document test results in progress.md
-- - **Status:** in_progress
-- 
--@@ -46,8 +59,8 @@ Phase 4
-- 
-- ## Key Questions
-- 1. Which files define the current braille app UI layout and styling?
---2. Which portions of `design-reference.html` define the tile/card styling?
---3. Should multiline input always force multiline output (even if liblouis wraps)?
--+2. What additional risk flags are needed beyond the initial set?
--+3. Should export gating apply to all copy actions or only SVG/download actions?
-- 
-- ## Decisions Made
-- | Decision | Rationale |
--diff --git a/tests/multiline-output.test.ts b/tests/multiline-output.test.ts
--index 7ed92fe..198b282 100644
----- a/tests/multiline-output.test.ts
--+++ b/tests/multiline-output.test.ts
--@@ -1,16 +1,13 @@
-- import { describe, expect, it } from "vitest";
-- import { getProfileById } from "../config/profiles";
---import { DEFAULT_NORMALIZATION_OPTIONS } from "../lib/normalization";
-- import { translateText } from "../lib/translation.node";
-- 
-- describe("multiline translation behavior", () => {
--   it("preserves input line breaks by translating each line independently", async () => {
--     const profile = getProfileById("en-us-g2");
---    const options = { ...DEFAULT_NORMALIZATION_OPTIONS, preserveLineBreaks: true };
---
---    const first = await translateText("EXIT", profile, options);
---    const second = await translateText("COPY ROOM", profile, options);
---    const combined = await translateText("EXIT\nCOPY ROOM", profile, options);
--+    const first = await translateText("EXIT", profile);
--+    const second = await translateText("COPY ROOM", profile);
--+    const combined = await translateText("EXIT\nCOPY ROOM", profile);
-- 
--     expect(combined.unicode_braille).toBe(
--       `${first.unicode_braille}\n${second.unicode_braille}`
--@@ -18,4 +15,3 @@ describe("multiline translation behavior", () => {
--     expect(combined.lines.length).toBe(2);
--   });
-- });
---
--diff --git a/tests/normalization.test.ts b/tests/normalization.test.ts
--index 90bcbab..2c71e17 100644
----- a/tests/normalization.test.ts
--+++ b/tests/normalization.test.ts
--@@ -8,6 +8,8 @@ describe("normalizeInput", () => {
--   it("normalizes smart quotes and whitespace", () => {
--     const result = normalizeInput("Room\u2019  101", {
--       ...DEFAULT_NORMALIZATION_OPTIONS,
--+      smartQuotes: true,
--+      normalizeWhitespace: true,
--       preserveLineBreaks: true
--     });
--     expect(result.normalized).toBe("Room' 101");
--@@ -16,6 +18,7 @@ describe("normalizeInput", () => {
--   it("preserves line breaks when enabled", () => {
--     const result = normalizeInput("Line 1\nLine   2", {
--       ...DEFAULT_NORMALIZATION_OPTIONS,
--+      normalizeWhitespace: true,
--       preserveLineBreaks: true
--     });
--     expect(result.normalized).toBe("Line 1\nLine 2");
--diff --git a/tests/translation.golden.test.ts b/tests/translation.golden.test.ts
--index 67d7312..6e8c3da 100644
----- a/tests/translation.golden.test.ts
--+++ b/tests/translation.golden.test.ts
--@@ -1,7 +1,6 @@
-- import { readFileSync } from "node:fs";
-- import { describe, expect, it } from "vitest";
-- import { getProfileById } from "../config/profiles";
---import { DEFAULT_NORMALIZATION_OPTIONS } from "../lib/normalization";
-- import { translateText } from "../lib/translation.node";
-- 
-- const loadGolden = (profileId: "en-us-g1" | "en-us-g2") => {
--@@ -26,8 +25,7 @@ const runProfileTests = (profileId: "en-us-g1" | "en-us-g2") => {
--     it(`${profileId} translates ${testCase.input}`, async () => {
--       const result = await translateText(
--         testCase.input,
---        profile,
---        DEFAULT_NORMALIZATION_OPTIONS
--+        profile
--       );
--       expect(result.unicode_braille).toBe(testCase.unicode_braille);
--       expect(result.cells.map((cell) => cell.bitstring)).toEqual(
+- export const getLiblouisVersion = async (): Promise<string> => {
 -diff --git a/lib/compliance.ts b/lib/compliance.ts
 -new file mode 100644
--index 0000000..d7fd325
+-index 0000000..b61e4e8
 ---- /dev/null
 -+++ b/lib/compliance.ts
--@@ -0,0 +1,318 @@
+-@@ -0,0 +1,337 @@
 -+export type GradeId = "grade1" | "grade2";
 -+
 -+export type GradeDecision = {
@@ -1802,6 +2371,7 @@ index 0d25565..e69de29 100644
 -+    | "unusual_symbol"
 -+    | "non_ascii_letter"
 -+    | "emoji_or_pictograph"
+-+    | "non_bmp_character"
 -+    | "all_caps"
 -+    | "numbers_present"
 -+    | "abbreviation_detected"
@@ -1848,6 +2418,24 @@ index 0d25565..e69de29 100644
 -+      message:
 -+        "Emoji/pictographs detected. Remove them before generating or exporting braille."
 -+    });
+-+  }
+-+
+-+  // Some non-BMP characters (surrogate pairs) can be problematic in signage workflows
+-+  // and may not be supported by the current translation engine build.
+-+  try {
+-+    const hasNonBmp = Array.from(text).some(
+-+      (char) => (char.codePointAt(0) ?? 0) > 0xffff
+-+    );
+-+    if (hasNonBmp) {
+-+      flags.push({
+-+        code: "non_bmp_character",
+-+        level: "BLOCK",
+-+        message:
+-+          "Non-standard characters detected (e.g., emoji/flags). Remove them before generating or exporting braille."
+-+      });
+-+    }
+-+  } catch {
+-+    // Best-effort only.
 -+  }
 -+
 -+  if (/[\u2018\u2019\u201c\u201d]/.test(text)) {
@@ -2178,82 +2766,93 @@ index 0d25565..e69de29 100644
 -+  });
 -+});
 -+
-diff --git a/lib/compliance.ts b/lib/compliance.ts
-index d7fd325..b61e4e8 100644
---- a/lib/compliance.ts
-+++ b/lib/compliance.ts
-@@ -104,6 +104,7 @@ export type ComplianceFlag = {
-     | "unusual_symbol"
-     | "non_ascii_letter"
-     | "emoji_or_pictograph"
-+    | "non_bmp_character"
-     | "all_caps"
-     | "numbers_present"
-     | "abbreviation_detected"
-@@ -152,6 +153,24 @@ export const complianceCheck = (input: ComplianceInput): ComplianceReport => {
-     });
+diff --git a/scripts/copy-liblouis-assets.cjs b/scripts/copy-liblouis-assets.cjs
+index 34e118c..d25b346 100644
+--- a/scripts/copy-liblouis-assets.cjs
++++ b/scripts/copy-liblouis-assets.cjs
+@@ -75,6 +75,82 @@ const patchEasyApi = (source) => {
+     }
    }
  
-+  // Some non-BMP characters (surrogate pairs) can be problematic in signage workflows
-+  // and may not be supported by the current translation engine build.
-+  try {
-+    const hasNonBmp = Array.from(text).some(
-+      (char) => (char.codePointAt(0) ?? 0) > 0xffff
++  // Harden the async worker wrapper so liblouis aborts don't crash the worker
++  // with "Uncaught abort()". Instead, failures resolve as `null` so the UI can
++  // surface a controlled error and reload the engine.
++  if (!patched.includes("SAFE_WORKER_TRY_CATCH")) {
++    const safeLogLine =
++      "try { self.postMessage({isLog: true, level: 'error', msg: '[liblouis] ' + (err && err.message ? err.message : String(err))}); } catch(e) {}";
++
++    // Insert try/catch inside the worker's `lou` command.
++    patched = patched.replace(
++      /^(\s*)\"return liblouis\[data\.fn\]\.apply\(liblouis, data\.args\);\",\s*$/m,
++      (_match, indent) =>
++        [
++          `${indent}"// SAFE_WORKER_TRY_CATCH",`,
++          `${indent}"try {",`,
++          `${indent}"return liblouis[data.fn].apply(liblouis, data.args);",`,
++          `${indent}"} catch (err) {",`,
++          `${indent}"${safeLogLine}",`,
++          `${indent}"return null;",`,
++          `${indent}"}",`
++        ].join("\n")
 +    );
-+    if (hasNonBmp) {
-+      flags.push({
-+        code: "non_bmp_character",
-+        level: "BLOCK",
-+        message:
-+          "Non-standard characters detected (e.g., emoji/flags). Remove them before generating or exporting braille."
-+      });
-+    }
-+  } catch {
-+    // Best-effort only.
++
++    patched = patched.replace(
++      "\"var res = CMD[msg.cmd](msg.data);\",",
++      [
++        "\"var res = null;\",",
++        "\"try {\",",
++        "\t\"res = CMD[msg.cmd](msg.data);\",",
++        "\"} catch (err) {\",",
++        `\t\"${safeLogLine}\",`,
++        "\t\"res = null;\",",
++        "\"}\","
++      ].join("\n")
++    );
 +  }
 +
-   if (/[\u2018\u2019\u201c\u201d]/.test(text)) {
-     flags.push({
-       code: "non_ascii_quotes",
-diff --git a/lib/louis.ts b/lib/louis.ts
-index 9d0372c..6ba417a 100644
---- a/lib/louis.ts
-+++ b/lib/louis.ts
-@@ -35,6 +35,10 @@ const REQUIRED_TABLE_FILES = [
- 
- let cachedEngine: Promise<LouisEngine> | null = null;
- 
-+export const resetLiblouis = () => {
-+  cachedEngine = null;
-+};
-+
- const loadScript = (src: string) =>
-   new Promise<void>((resolve, reject) => {
-     const normalizedSrc = src.startsWith("/") ? src : `/${src}`;
-@@ -157,7 +161,22 @@ export const translateWithLiblouis = async (
-   text: string
- ): Promise<string | null> => {
-   const engine = await loadLiblouis();
--  return engine.translateString(tables.join(","), text);
-+  const run = async () => engine.translateString(tables.join(","), text);
-+  try {
-+    const timeoutMs = 2500;
-+    const timeout = new Promise<null>((resolve) =>
-+      setTimeout(() => resolve(null), timeoutMs)
++  // Fix buffer sizing for the UTF16/UTF32 builds: liblouis expects lengths in
++  // code units, while this build's memory helpers deal in bytes. The upstream
++  // wrapper sets lengths incorrectly and can corrupt memory, causing aborts
++  // even for normal inputs.
++  if (!patched.includes("SAFE_UTF16_LENGTHS")) {
++    patched = patched.replace(
++      "var bufflen = this.mem.getBufferLength(inbuf);",
++      [
++        "var baseBufflen = this.mem.getBufferLength(inbuf); // bytes",
++        "var bytesPerChar = baseBufflen / (inbuf.length + 1);",
++        "var bufflen = baseBufflen * 8; // allocate extra headroom for expansion",
++        "var outlen_units = Math.floor(bufflen / bytesPerChar); // code units",
++        "// SAFE_UTF16_LENGTHS"
++      ].join("\n\t\t\t")
 +    );
-+    const result = await Promise.race([run(), timeout]);
-+    if (result === null) {
-+      // If the worker aborted or hung, reset so a future retry can recover.
-+      resetLiblouis();
-+    }
-+    return result;
-+  } catch {
-+    resetLiblouis();
-+    return null;
++
++    patched = patched.replace(
++      "this.capi.setValue(bufflen_ptr, bufflen, \"i32\");",
++      "this.capi.setValue(bufflen_ptr, outlen_units, \"i32\");"
++    );
++
++    patched = patched.replace(
++      "this.capi.setValue(strlen_ptr, bufflen, \"i32\");",
++      "this.capi.setValue(strlen_ptr, inbuf.length, \"i32\");"
++    );
++
++    patched = patched.replace(
++      /if\(!success\)\s*\{\s*return null;\s*\}/,
++      [
++        "if(!success) {",
++        "\t\t\t\tthis.capi._free(outbuff_ptr);",
++        "\t\t\t\tthis.capi._free(inbuff_ptr);",
++        "\t\t\t\tthis.capi._free(bufflen_ptr);",
++        "\t\t\t\tthis.capi._free(strlen_ptr);",
++        "\t\t\t\treturn null;",
++        "\t\t\t}"
++      ].join("\n")
++    );
 +  }
++
+   return patched;
  };
  
- export const getLiblouisVersion = async (): Promise<string> => {
 diff --git a/lib/compliance.ts b/lib/compliance.ts
 new file mode 100644
 index 0000000..b61e4e8

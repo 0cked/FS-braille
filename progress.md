@@ -101,7 +101,10 @@
 
 ### Runtime Stability (2026-01-21)
 - Observed browser crashes from liblouis (`Uncaught abort()` in `build-no-tables-utf16.js`) on some inputs (likely emoji/non-BMP characters).
-- Mitigation: block preview generation when Compliance Check is `BLOCK`, add explicit `non_bmp_character` BLOCK flag, and reset/reload the liblouis engine after errors/timeouts.
+- Mitigation:
+  - Patch `easy-api.js` worker wrapper to catch errors (prevents “Uncaught abort()” from terminating the worker).
+  - Patch UTF16 length units + add output headroom in `easy-api.js` (prevents memory corruption that can crash even on normal inputs like “RECEPTION”).
+  - Block preview generation when Compliance Check is `BLOCK`, add explicit `non_bmp_character` BLOCK flag, and reset/reload the liblouis engine after errors/timeouts.
 
 ## 5-Question Reboot Check
 | Question | Answer |
