@@ -95,6 +95,8 @@
 <!-- Multimodal content must be captured as text immediately -->
 - 2026-01-20: On `https://fs-braille.vercel.app/`, clicking Translate triggers liblouis compilation spam like `[40000] en-us-g2.ctb:31: error: Character 'a' is not defined` and `[40000] ... Dot pattern \\12/ is not defined`, ending with ~1983 errors and missing output.
 - 2026-01-20: Network requests for `/liblouis/*.ctb|*.cti|*.uti` return 200/206 (Range) and files exist; compilation still fails until dot-pattern mappings are loaded first.
+- 2026-01-20: Re-test after a new Vercel deployment still fails: translating `EXIT` produces `[40000] ... Character 'a' is not defined` / `Dot pattern \\15/ is not defined`, ending with `1829 errors found` + `en-us-g2.ctb could not be found`, and Outputs remain `—`.
+- 2026-01-20: Live `/liblouis/easy-api.js` does **not** contain the `preloadTableFiles` patch (string check returns false), and runtime still performs on-demand table loading via `HEAD 200` + `GET 206` Range requests to `/liblouis/*.ctb|*.cti|*.uti` (suggesting the preload-based mitigation is not deployed/active).
 
 ---
 <!-- 

@@ -121,6 +121,9 @@ Phase 4
 -->
 | Error | Attempt | Resolution |
 |-------|---------|------------|
+| Vercel: liblouis compile spam (`Character 'a' is not defined`, `Dot pattern \\15/ is not defined`) and `en-us-g2.ctb could not be found` persists after table include patch | 2 | Switch to preloading required table/include files into worker FS (avoid Range-based lazy loading / sync XHR). |
+| Error | Attempt | Resolution |
+|-------|---------|------------|
 | npm E404 for liblouis-wasm on Vercel | 1 | Swap to `liblouis` + `liblouis-build` packages and update loader |
 | Next.js build error: fs not found in liblouis-build | 1 | Load liblouis assets via script tags in browser, avoid bundling |
 | Runtime error: tables not found | 1 | Remove `tables/` prefix from table names and guard null translations |

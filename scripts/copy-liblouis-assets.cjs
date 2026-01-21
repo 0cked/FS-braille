@@ -8,6 +8,76 @@ const publicRoot = path.join(projectRoot, "public", "liblouis");
 const tablesRoot = path.join(publicRoot, "tables");
 const tablesSource = path.join(buildRoot, "tables");
 
+const patchEasyApi = (source) => {
+  let patched = source;
+
+  // Expose a helper that lets callers preload table files into the Emscripten
+  // filesystem, so we can avoid `FS.createLazyFile` (sync XHR) when needed.
+  // This is especially useful in locked-down / CDN environments where sync XHR
+  // may behave inconsistently.
+  if (!patched.includes("preloadTableFiles")) {
+    const newline = patched.includes("\r\n") ? "\r\n" : "\n";
+    patched = patched.replace(
+      /"disableOnDemandTableLoading"\s*\];/,
+      `"disableOnDemandTableLoading",${newline}\t"preloadTableFiles"];`
+    );
+
+    const impl = [
+      "",
+      "// Preload a small set of table/include files into the Emscripten FS.",
+      "// Intended for browser/worker usage to avoid lazy-loading via sync XHR.",
+      "LiblouisEasyApi.prototype.preloadTableFiles = function(entries, opts) {",
+      "\topts = opts || {};",
+      "\tvar capi = this.capi;",
+      "\tvar FS = capi.FS;",
+      "\tvar tableDir = opts.tableDir || '/tables';",
+      "",
+      "\ttry { FS.mkdir(tableDir); } catch(e) { }",
+      "",
+      "\tvar count = 0;",
+      "\tfor(var i = 0; i < entries.length; ++i) {",
+      "\t\tvar entry = entries[i];",
+      "\t\tvar name = entry && (entry.name || entry.path || entry[0]);",
+      "\t\tvar data = entry && (entry.data || entry.buffer || entry[1]);",
+      "\t\tif(!name || !data) { continue; }",
+      "",
+      "\t\tvar bytes = data instanceof Uint8Array ? data : new Uint8Array(data);",
+      "\t\tvar tablePath = tableDir + '/' + name;",
+      "\t\tvar rootPath = '/' + name;",
+      "",
+      "\t\ttry { FS.unlink(tablePath); } catch(e) { }",
+      "\t\ttry { FS.unlink(rootPath); } catch(e) { }",
+      "",
+      "\t\tFS.writeFile(tablePath, bytes, { encoding: 'binary' });",
+      "\t\tFS.writeFile(rootPath, bytes, { encoding: 'binary' });",
+      "\t\tcount++;",
+      "\t}",
+      "",
+      "\treturn count;",
+      "};",
+      ""
+    ].join("\n");
+
+    // Insert right before `node_dirExists` (present in this build).
+    patched = patched.replace(
+      /(\r?\n)function node_dirExists\(capi, path\) \{/,
+      `${newline}${impl}${newline}function node_dirExists(capi, path) {`
+    );
+
+    // If insertion failed (unexpected upstream changes), append near the end.
+    if (!patched.includes("LiblouisEasyApi.prototype.preloadTableFiles")) {
+      const marker = "// create a default instance in browser environments";
+      if (patched.includes(marker)) {
+        patched = patched.replace(marker, `${impl}${newline}${marker}`);
+      } else {
+        patched = `${patched}${newline}${impl}`;
+      }
+    }
+  }
+
+  return patched;
+};
+
 const ensureDir = (dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -71,7 +141,9 @@ const easyApiPath = path.join(liblouisRoot, "easy-api.js");
 const buildPath = path.join(buildRoot, "build-no-tables-utf16.js");
 
 if (fs.existsSync(easyApiPath)) {
-  fs.copyFileSync(easyApiPath, path.join(publicRoot, "easy-api.js"));
+  const raw = fs.readFileSync(easyApiPath, "utf8");
+  const patched = patchEasyApi(raw);
+  fs.writeFileSync(path.join(publicRoot, "easy-api.js"), patched);
   console.log(`Copied Easy API: ${easyApiPath}`);
 } else {
   console.warn("easy-api.js not found in liblouis package.");

@@ -15,6 +15,3 @@ public/liblouis/*.ctb
 public/liblouis/*.cti
 public/liblouis/*.uti
 public/liblouis/tables/
-
-# Lock file
-package-lock.json

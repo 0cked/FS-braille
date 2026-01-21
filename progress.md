@@ -125,6 +125,7 @@
 | Test | Input | Expected | Actual | Status |
 |------|-------|----------|--------|--------|
 | Local prod: translate g2 | `EXIT` | Non-empty braille outputs; no liblouis compile errors | Outputs populated (`⠠⠠⠑⠭⠊⠞` etc); no `[40000]` spam | ✓ |
+| Live Vercel: translate g2 | `EXIT` | Non-empty braille outputs; no liblouis compile errors | `[40000] ... Character 'a' is not defined` / `Dot pattern \\15/ is not defined`; `1829 errors found`; Outputs stay `—` | ✗ |
 
 ## Error Log
 <!-- 
@@ -188,3 +189,5 @@
     - inject `include braille-patterns.cti` near the top of the copied `chardefs.cti`
     - remove the later `include braille-patterns.cti` from copied `en-us-g1.ctb` to avoid duplicate definitions
   - Verified fix with `npm run build` + `next start` and Playwright: translating `EXIT` produces unicode braille + dots with no liblouis `[40000]` error spam.
+  - Re-tested the live Vercel deployment (after a reported new deploy): still fails on `EXIT` with compile spam ending in `1829 errors found` and `en-us-g2.ctb could not be found`; outputs remain empty.
+  - Verified live `/liblouis/easy-api.js` does not include the `preloadTableFiles` patch and the worker still performs Range-based on-demand loading (`HEAD 200` + `GET 206`) for table files.
