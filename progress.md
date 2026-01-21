@@ -63,6 +63,21 @@
   - Notes:
     - `npm ci` reports dependency vulnerabilities (from audit output); not addressed as part of this UI change.
 
+### Resource Site Alignment + Multiline SVG (New Work)
+- **Status:** in_progress
+- Actions taken:
+  - Reviewed `design-reference.html` and extracted tile/background/shadow tokens for alignment.
+  - Confirmed current deployed layout appears as multiple tall columns; planned a 2-column stacked layout for usability.
+  - Updated translation logic to translate line-by-line when preserving line breaks so SVG lines match input lines.
+  - Updated page layout to a 2-column stack and re-aligned global styling to match `design-reference.html` (background, skyline overlay, tile gradients, shadows, borders).
+  - Added a test to lock in multiline behavior.
+- Files created/modified:
+  - app/page.tsx (updated)
+  - app/globals.css (updated)
+  - lib/translation.ts (updated)
+  - lib/translation.node.ts (updated)
+  - tests/multiline-output.test.ts (added)
+
 ## 5-Question Reboot Check
 | Question | Answer |
 |----------|--------|

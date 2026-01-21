@@ -200,248 +200,251 @@ export default function HomePage() {
         </div>
       </header>
 
-      <section className="grid">
-        <div className="panel">
-          <h2>Input</h2>
-          <div className="field">
-            <label htmlFor="input-text">Sign text (one line per sign line)</label>
-            <textarea
-              id="input-text"
-              className="textarea"
-              value={input}
-              placeholder="RESTROOM\nROOM 101\nEXIT\nSUITE 200"
-              onChange={(event) => setInput(event.target.value)}
-            />
-            <div className="row space-between">
-              <div className="row">
-                <button className="button" onClick={handleTranslate}>
-                  {isTranslating ? "Translating..." : "Translate"}
-                </button>
-                <button
-                  className="button secondary"
-                  onClick={() => applyWithUndo("")}
-                  disabled={!input.length}
-                >
-                  Clear
-                </button>
-                <button
-                  className="button secondary"
-                  onClick={handleUndo}
-                  disabled={!undoStack.length}
-                >
-                  Undo
-                </button>
-              </div>
-              <span className="muted">Auto-translate with {AUTO_TRANSLATE_DELAY}ms delay</span>
-            </div>
-          </div>
-
-          <div className="field">
-            <label htmlFor="profile">Translation profile</label>
-            <select
-              id="profile"
-              className="select"
-              value={profileId}
-              onChange={(event) =>
-                setProfileId(event.target.value as typeof profileId)
-              }
-            >
-              {BRAILLE_PROFILES.map((profileOption) => (
-                <option key={profileOption.id} value={profileOption.id}>
-                  {profileOption.label}
-                </option>
-              ))}
-            </select>
-            <span className="muted">{profile.description}</span>
-          </div>
-
-          <details>
-            <summary>Options</summary>
+      <section className="layout">
+        <div className="layoutCol">
+          <div className="panel">
+            <h2>Input</h2>
             <div className="field">
-              <label>Normalization</label>
-              <div className="row">
-                <label className="toggle">
-                  <input
-                    type="checkbox"
-                    checked={options.normalizeWhitespace}
-                    onChange={(event) =>
-                      setOptions((prev) => ({
-                        ...prev,
-                        normalizeWhitespace: event.target.checked
-                      }))
-                    }
-                  />
-                  Normalize whitespace
-                </label>
-                <label className="toggle">
-                  <input
-                    type="checkbox"
-                    checked={options.smartQuotes}
-                    onChange={(event) =>
-                      setOptions((prev) => ({
-                        ...prev,
-                        smartQuotes: event.target.checked
-                      }))
-                    }
-                  />
-                  Smart quotes to ASCII
-                </label>
-                <label className="toggle">
-                  <input
-                    type="checkbox"
-                    checked={options.preserveLineBreaks}
-                    onChange={(event) =>
-                      setOptions((prev) => ({
-                        ...prev,
-                        preserveLineBreaks: event.target.checked
-                      }))
-                    }
-                  />
-                  Preserve line breaks
-                </label>
-              </div>
-              <div className="row">
-                <label className="toggle">
-                  <input
-                    type="radio"
-                    name="unsupported"
-                    checked={options.unsupportedHandling === "replace"}
-                    onChange={() =>
-                      setOptions((prev) => ({
-                        ...prev,
-                        unsupportedHandling: "replace"
-                      }))
-                    }
-                  />
-                  Replace unsupported with ?
-                </label>
-                <label className="toggle">
-                  <input
-                    type="radio"
-                    name="unsupported"
-                    checked={options.unsupportedHandling === "remove"}
-                    onChange={() =>
-                      setOptions((prev) => ({
-                        ...prev,
-                        unsupportedHandling: "remove"
-                      }))
-                    }
-                  />
-                  Remove unsupported
-                </label>
+              <label htmlFor="input-text">Sign text (one line per sign line)</label>
+              <textarea
+                id="input-text"
+                className="textarea"
+                value={input}
+                placeholder="RESTROOM\nROOM 101\nEXIT\nSUITE 200"
+                onChange={(event) => setInput(event.target.value)}
+              />
+              <div className="row space-between">
+                <div className="row">
+                  <button className="button" onClick={handleTranslate}>
+                    {isTranslating ? "Translating..." : "Translate"}
+                  </button>
+                  <button
+                    className="button secondary"
+                    onClick={() => applyWithUndo("")}
+                    disabled={!input.length}
+                  >
+                    Clear
+                  </button>
+                  <button
+                    className="button secondary"
+                    onClick={handleUndo}
+                    disabled={!undoStack.length}
+                  >
+                    Undo
+                  </button>
+                </div>
+                <span className="muted">Auto-translate with {AUTO_TRANSLATE_DELAY}ms delay</span>
               </div>
             </div>
-          </details>
-        </div>
 
-        <div className="panel">
-          <h2>Phrase Library</h2>
-          <p className="muted">Click a phrase to insert it as a new line.</p>
+            <div className="field">
+              <label htmlFor="profile">Translation profile</label>
+              <select
+                id="profile"
+                className="select"
+                value={profileId}
+                onChange={(event) =>
+                  setProfileId(event.target.value as typeof profileId)
+                }
+              >
+                {BRAILLE_PROFILES.map((profileOption) => (
+                  <option key={profileOption.id} value={profileOption.id}>
+                    {profileOption.label}
+                  </option>
+                ))}
+              </select>
+              <span className="muted">{profile.description}</span>
+            </div>
 
-          <div className="row">
-            <input
-              className="input"
-              value={phraseQuery}
-              onChange={(event) => setPhraseQuery(event.target.value)}
-              placeholder="Search phrases"
-            />
-            <select
-              className="select"
-              value={phraseGroupId}
-              onChange={(event) => setPhraseGroupId(event.target.value)}
-            >
-              <option value="all">All categories</option>
-              {DEFAULT_PHRASE_GROUPS.map((group) => (
-                <option key={group.id} value={group.id}>
-                  {group.label}
-                </option>
-              ))}
-            </select>
+            <details>
+              <summary>Options</summary>
+              <div className="field">
+                <label>Normalization</label>
+                <div className="row">
+                  <label className="toggle">
+                    <input
+                      type="checkbox"
+                      checked={options.normalizeWhitespace}
+                      onChange={(event) =>
+                        setOptions((prev) => ({
+                          ...prev,
+                          normalizeWhitespace: event.target.checked
+                        }))
+                      }
+                    />
+                    Normalize whitespace
+                  </label>
+                  <label className="toggle">
+                    <input
+                      type="checkbox"
+                      checked={options.smartQuotes}
+                      onChange={(event) =>
+                        setOptions((prev) => ({
+                          ...prev,
+                          smartQuotes: event.target.checked
+                        }))
+                      }
+                    />
+                    Smart quotes to ASCII
+                  </label>
+                  <label className="toggle">
+                    <input
+                      type="checkbox"
+                      checked={options.preserveLineBreaks}
+                      onChange={(event) =>
+                        setOptions((prev) => ({
+                          ...prev,
+                          preserveLineBreaks: event.target.checked
+                        }))
+                      }
+                    />
+                    Preserve line breaks
+                  </label>
+                </div>
+                <div className="row">
+                  <label className="toggle">
+                    <input
+                      type="radio"
+                      name="unsupported"
+                      checked={options.unsupportedHandling === "replace"}
+                      onChange={() =>
+                        setOptions((prev) => ({
+                          ...prev,
+                          unsupportedHandling: "replace"
+                        }))
+                      }
+                    />
+                    Replace unsupported with ?
+                  </label>
+                  <label className="toggle">
+                    <input
+                      type="radio"
+                      name="unsupported"
+                      checked={options.unsupportedHandling === "remove"}
+                      onChange={() =>
+                        setOptions((prev) => ({
+                          ...prev,
+                          unsupportedHandling: "remove"
+                        }))
+                      }
+                    />
+                    Remove unsupported
+                  </label>
+                </div>
+              </div>
+            </details>
           </div>
 
-          {visiblePhraseGroups.length ? (
-            visiblePhraseGroups.map((group) => (
-              <div key={group.id} className="field">
-                <label>{group.label}</label>
+          <div className="panel">
+            <h2>Phrase Library</h2>
+            <p className="muted">Click a phrase to insert it as a new line.</p>
+
+            <div className="row">
+              <input
+                className="input"
+                value={phraseQuery}
+                onChange={(event) => setPhraseQuery(event.target.value)}
+                placeholder="Search phrases"
+              />
+              <select
+                className="select"
+                value={phraseGroupId}
+                onChange={(event) => setPhraseGroupId(event.target.value)}
+              >
+                <option value="all">All categories</option>
+                {DEFAULT_PHRASE_GROUPS.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {visiblePhraseGroups.length ? (
+              visiblePhraseGroups.map((group) => (
+                <div key={group.id} className="field">
+                  <label>{group.label}</label>
+                  <div className="chips">
+                    {group.phrases.map((phrase) => (
+                      <button
+                        key={phrase}
+                        className="chip"
+                        onClick={() => handlePhraseInsert(phrase)}
+                      >
+                        {phrase}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="muted">No matching phrases.</div>
+            )}
+
+            <div className="field">
+              <label>My Phrases</label>
+              <div className="row">
+                <input
+                  className="input"
+                  value={newPhrase}
+                  onChange={(event) => setNewPhrase(event.target.value)}
+                  placeholder="Add custom phrase"
+                />
+                <button className="button secondary" onClick={handleAddPhrase}>
+                  Add
+                </button>
+              </div>
+              {myPhrases.length ? (
                 <div className="chips">
-                  {group.phrases.map((phrase) => (
+                  {myPhrases.map((phrase) => (
                     <button
                       key={phrase}
-                      className="chip"
+                      className="chip secondary"
                       onClick={() => handlePhraseInsert(phrase)}
                     >
                       {phrase}
                     </button>
                   ))}
                 </div>
-              </div>
-            ))
-          ) : (
-            <div className="muted">No matching phrases.</div>
-          )}
-
-          <div className="field">
-            <label>My Phrases</label>
-            <div className="row">
-              <input
-                className="input"
-                value={newPhrase}
-                onChange={(event) => setNewPhrase(event.target.value)}
-                placeholder="Add custom phrase"
-              />
-              <button className="button secondary" onClick={handleAddPhrase}>
-                Add
-              </button>
+              ) : (
+                <div className="muted">No custom phrases yet.</div>
+              )}
             </div>
-            {myPhrases.length ? (
-              <div className="chips">
-                {myPhrases.map((phrase) => (
+
+            <details>
+              <summary>Import / Export</summary>
+              <div className="field">
+                <label>Paste JSON array of phrases</label>
+                <textarea
+                  className="textarea"
+                  value={importJson}
+                  onChange={(event) => setImportJson(event.target.value)}
+                  placeholder='["ROOM","SUITE 200","EXIT"]'
+                />
+                <div className="row">
                   <button
-                    key={phrase}
-                    className="chip secondary"
-                    onClick={() => handlePhraseInsert(phrase)}
+                    className="button secondary"
+                    onClick={handleImportPhrases}
                   >
-                    {phrase}
+                    Import JSON
                   </button>
-                ))}
+                  <button
+                    className="button secondary"
+                    onClick={() =>
+                      copyToClipboard("phrases", JSON.stringify(myPhrases, null, 2))
+                    }
+                  >
+                    {copiedId === "phrases" ? "Copied" : "Copy JSON"}
+                  </button>
+                </div>
               </div>
-            ) : (
-              <div className="muted">No custom phrases yet.</div>
-            )}
+            </details>
           </div>
-
-          <details>
-            <summary>Import / Export</summary>
-            <div className="field">
-              <label>Paste JSON array of phrases</label>
-              <textarea
-                className="textarea"
-                value={importJson}
-                onChange={(event) => setImportJson(event.target.value)}
-                placeholder='["ROOM","SUITE 200","EXIT"]'
-              />
-              <div className="row">
-                <button
-                  className="button secondary"
-                  onClick={handleImportPhrases}
-                >
-                  Import JSON
-                </button>
-                <button
-                  className="button secondary"
-                  onClick={() =>
-                    copyToClipboard("phrases", JSON.stringify(myPhrases, null, 2))
-                  }
-                >
-                  {copiedId === "phrases" ? "Copied" : "Copy JSON"}
-                </button>
-              </div>
-            </div>
-          </details>
         </div>
 
-        <div className="panel">
-          <h2>Outputs</h2>
+        <div className="layoutCol">
+          <div className="panel">
+            <h2>Outputs</h2>
 
           <div className="field">
             <div className="row space-between">
@@ -547,14 +550,13 @@ export default function HomePage() {
               )}
             </div>
           </details>
-        </div>
-      </section>
+          </div>
 
-      <section className="panel secondary">
-        <details>
-          <summary>Advanced SVG layout</summary>
-          <div className="grid">
-          <div className="field">
+          <div className="panel secondary">
+            <details>
+              <summary>Advanced SVG layout</summary>
+              <div className="grid">
+              <div className="field">
             <label>Cell width (mm)</label>
             <input
               className="input"
@@ -568,7 +570,7 @@ export default function HomePage() {
               }
             />
           </div>
-          <div className="field">
+              <div className="field">
             <label>Cell height (mm)</label>
             <input
               className="input"
@@ -582,7 +584,7 @@ export default function HomePage() {
               }
             />
           </div>
-          <div className="field">
+              <div className="field">
             <label>Dot diameter (mm)</label>
             <input
               className="input"
@@ -596,7 +598,7 @@ export default function HomePage() {
               }
             />
           </div>
-          <div className="field">
+              <div className="field">
             <label>Interdot X (mm)</label>
             <input
               className="input"
@@ -610,7 +612,7 @@ export default function HomePage() {
               }
             />
           </div>
-          <div className="field">
+              <div className="field">
             <label>Interdot Y (mm)</label>
             <input
               className="input"
@@ -624,7 +626,7 @@ export default function HomePage() {
               }
             />
           </div>
-          <div className="field">
+              <div className="field">
             <label>Intercell X (mm)</label>
             <input
               className="input"
@@ -638,7 +640,7 @@ export default function HomePage() {
               }
             />
           </div>
-          <div className="field">
+              <div className="field">
             <label>Interline Y (mm)</label>
             <input
               className="input"
@@ -652,7 +654,7 @@ export default function HomePage() {
               }
             />
           </div>
-          <div className="field">
+              <div className="field">
             <label>Margin left (mm)</label>
             <input
               className="input"
@@ -666,7 +668,7 @@ export default function HomePage() {
               }
             />
           </div>
-          <div className="field">
+              <div className="field">
             <label>Margin top (mm)</label>
             <input
               className="input"
@@ -680,8 +682,10 @@ export default function HomePage() {
               }
             />
           </div>
+              </div>
+            </details>
           </div>
-        </details>
+        </div>
       </section>
     </main>
   );

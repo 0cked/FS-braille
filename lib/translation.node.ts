@@ -61,19 +61,32 @@ export const translateText = async (
   options: NormalizationOptions
 ): Promise<TranslationResult> => {
   const normalization = normalizeInput(text, options);
-  const raw = await translateWithLiblouis(
-    profile.tables,
-    normalization.normalized
-  );
-
-  const unicode_braille = raw ?? "";
   const warnings: Warning[] = [...normalization.warnings];
-  if (!raw && normalization.normalized.trim().length > 0) {
-    warnings.push({
-      type: "normalization",
-      message: "Translation failed. Tables may be missing or not loaded yet."
-    });
+  const segments = options.preserveLineBreaks
+    ? normalization.normalized.split("\n")
+    : [normalization.normalized];
+
+  const translatedSegments: string[] = [];
+  for (const segment of segments) {
+    if (!segment.trim()) {
+      translatedSegments.push("");
+      continue;
+    }
+    const raw = await translateWithLiblouis(profile.tables, segment);
+    if (!raw) {
+      warnings.push({
+        type: "normalization",
+        message: "Translation failed. Tables may be missing or not loaded yet."
+      });
+      translatedSegments.push("");
+      continue;
+    }
+    translatedSegments.push(raw.replace(/\n/g, " "));
   }
+
+  const unicode_braille = translatedSegments.join(
+    options.preserveLineBreaks ? "\n" : ""
+  );
   const lines: BrailleCell[][] = [];
   const cells: BrailleCell[] = [];
 

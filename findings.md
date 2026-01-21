@@ -11,11 +11,15 @@
 - Remove the "Assist" section/panel.
 - Keep Phrase Library, and expand it.
 - Overall UX should be more intuitive/easy for FASTSIGNS franchisees.
+- Match the design language in `design-reference.html` (tiles, colors, background, shadows, edges/corners), excluding the sidebar.
+- SVG output should preserve input line breaks (one braille line per input line) for operator clarity.
 
 ## Research Findings
 - "Assist" is implemented in `app/page.tsx` via `runAssist()` from `lib/assist.ts`, and the Phrase Library currently lives inside the Assist section.
 - Phrase Library defaults come from `COMMON_PHRASES` in `lib/assist.ts` (currently a short list of common signage phrases).
 - Official FASTSIGNS logo SVG contains brand red `rgb(200,18,41)` and brand blue `rgb(0,46,151)` (from the downloaded SVG).
+- `design-reference.html` uses a light background with radial blue/cyan highlights, plus a bottom skyline overlay image.
+- `design-reference.html` tile styling uses `--tile-bg` and `--shadow-card` / `--shadow-card-hover` with `--card-radius: 0.875rem` and subtle borders.
 - Located planning templates at `/home/jacob/.codex/skills/planning-with-files/templates` due to missing `CLAUDE_PLUGIN_ROOT` env var.
 - `homepage-static.html` defines design tokens and tile styles (gradients, border radii, shadows, hover lift).
 - `department_operations.html` repeats the same base palette and adds a skyline overlay layer at the bottom of the page.
@@ -28,6 +32,8 @@
 | Keep Phrase Library independent of Assist | Allows removing the Assist panel without losing the core phrase workflow |
 | Store the FASTSIGNS logo in `public/fastsigns-logo.svg` | Avoids runtime network dependency and ensures consistent branding |
 | Insert phrases as new lines | Better matches franchise sign workflows (one line per sign line) |
+| Translate line-by-line for multiline input | Ensures SVG preview has one braille line per input line (operator-friendly) |
+| Align CSS tokens to `design-reference.html` | Keeps the app visually consistent with the resource site (no sidebar) |
 
 ## Issues Encountered
 | Issue | Resolution |

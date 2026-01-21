@@ -1,4 +1,4 @@
-# Task Plan: FASTSIGNS-Branded Braille App Refresh
+# Task Plan: Resource Site Alignment + Multiline SVG
 <!-- 
   WHAT: This is your roadmap for the entire task. Think of it as your "working memory on disk."
   WHY: After 50+ tool calls, your original goals can get forgotten. This file keeps them fresh.
@@ -6,42 +6,37 @@
 -->
 
 ## Goal
-Make the braille app more intuitive for FASTSIGNS franchisees:
-- Tiles should be white (not blue/gradient tiles).
-- Use the official FASTSIGNS logo for branding.
-- Remove the "Assist" section.
-- Keep and expand the Phrase Library.
+Make the braille app match `design-reference.html` (resource site design language, no sidebar), improve the layout, and ensure SVG output preserves input line breaks (one SVG braille line per input line) for operator intuitiveness.
 
 ## Current Phase
-Phase 5
+Phase 4
 
 ## Phases
 
 ### Phase 1: Requirements & Discovery
-- [x] Confirm what "tiles" map to in UI (CSS + components)
-- [x] Identify where the Assist panel is rendered
-- [x] Identify where Phrase Library data comes from
+- [x] Confirm design tokens from `design-reference.html`
+- [x] Confirm current line-break behavior in braille/SVG output
+- [x] Identify layout changes needed to avoid tall 3-column layout
 - **Status:** complete
 
 ### Phase 2: Planning & Structure
-- [x] Decide how to keep Phrase Library without Assist
-- [x] Decide where/how to render the FASTSIGNS logo
-- [x] Decide minimal UX improvements for franchisees
+- [x] Map resource-site tokens into `app/globals.css`
+- [x] Decide new page layout (2-column + stacking)
+- [x] Decide translation strategy for multiline (line-by-line translation)
 - **Status:** complete
 
 ### Phase 3: Implementation
-- [x] Update styles so panels/tiles are white
-- [x] Add FASTSIGNS logo asset + header layout
-- [x] Remove Assist section and any unused logic
-- [x] Expand Phrase Library content and UI
+- [x] Update translation to preserve line breaks in SVG (option 1)
+- [x] Rework layout to avoid tall 3-column layout
+- [x] Update styles to match `design-reference.html` tiles/background/shadows
 - **Status:** complete
 
 ### Phase 4: Testing & Verification
-- [x] Verify tile backgrounds are white and readable
-- [x] Verify phrase insertion behavior is correct
+- [x] Verify multiline input produces multiline SVG (unit test)
+- [ ] Verify layout across desktop/mobile breakpoints (needs visual check in browser)
 - [x] Verify build/test passes
 - [x] Document test results in progress.md
-- **Status:** complete
+- **Status:** in_progress
 
 ### Phase 5: Delivery
 - [x] Review modified files
@@ -51,8 +46,8 @@ Phase 5
 
 ## Key Questions
 1. Which files define the current braille app UI layout and styling?
-2. What does "more intuitive for franchisees" mean in this app (workflow)?
-3. What should Phrase Library include by default for FASTSIGNS use cases?
+2. Which portions of `design-reference.html` define the tile/card styling?
+3. Should multiline input always force multiline output (even if liblouis wraps)?
 
 ## Decisions Made
 | Decision | Rationale |
