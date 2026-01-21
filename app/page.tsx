@@ -15,8 +15,6 @@ import { normalizeTypography } from "../lib/typography";
 import { resetLiblouis } from "../lib/louis";
 
 const UNDO_LIMIT = 10;
-const LOCAL_STORAGE_KEY = "fastsigns_braille_phrases";
-const ACK_STORAGE_KEY = "fastsigns_braille_ack_v1";
 const INPUT_PLACEHOLDER = `RESTROOM
 ROOM 101
 EXIT
@@ -30,34 +28,11 @@ export default function HomePage() {
   const [isTranslating, setIsTranslating] = useState(false);
   const [lastGeneratedAt, setLastGeneratedAt] = useState<string | null>(null);
   const [undoStack, setUndoStack] = useState<string[]>([]);
-  const [phraseQuery, setPhraseQuery] = useState("");
-  const [phraseGroupId, setPhraseGroupId] = useState<string>("all");
-  const [myPhrases, setMyPhrases] = useState<string[]>([]);
-  const [newPhrase, setNewPhrase] = useState("");
-  const [importJson, setImportJson] = useState("");
   const [layout, setLayout] = useState<SvgLayout>(DEFAULT_SVG_LAYOUT);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [complianceModalOpen, setComplianceModalOpen] = useState(false);
   const [normalizeModalOpen, setNormalizeModalOpen] = useState(false);
-  const [warnAcknowledged, setWarnAcknowledged] = useState(false);
-  const [blockAcknowledged, setBlockAcknowledged] = useState(false);
-  const [blockReason, setBlockReason] = useState("");
   const [translateError, setTranslateError] = useState<string | null>(null);
-
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (stored) {
-        setMyPhrases(JSON.parse(stored));
-      }
-    } catch {
-      setMyPhrases([]);
-    }
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(myPhrases));
-  }, [myPhrases]);
 
   const smartSelectDecision = useMemo(() => decideGrade(input), [input]);
   const effectiveProfileId = smartSelectEnabled
@@ -84,49 +59,8 @@ export default function HomePage() {
   const inputHash = useMemo(() => fnv1a32(input), [input]);
 
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem(ACK_STORAGE_KEY);
-      if (!raw) {
-        setWarnAcknowledged(false);
-        setBlockAcknowledged(false);
-        setBlockReason("");
-        return;
-      }
-      const parsed = JSON.parse(raw) as {
-        inputHash?: string;
-        warnAcknowledged?: boolean;
-        blockAcknowledged?: boolean;
-        blockReason?: string;
-      };
-      if (parsed.inputHash !== inputHash) {
-        setWarnAcknowledged(false);
-        setBlockAcknowledged(false);
-        setBlockReason("");
-        return;
-      }
-      setWarnAcknowledged(Boolean(parsed.warnAcknowledged));
-      setBlockAcknowledged(Boolean(parsed.blockAcknowledged));
-      setBlockReason(String(parsed.blockReason ?? ""));
-    } catch {
-      setWarnAcknowledged(false);
-      setBlockAcknowledged(false);
-      setBlockReason("");
-    }
-  }, [inputHash]);
-
-  useEffect(() => {
     setTranslateError(null);
   }, [input]);
-
-  useEffect(() => {
-    const payload = JSON.stringify({
-      inputHash,
-      warnAcknowledged,
-      blockAcknowledged,
-      blockReason
-    });
-    window.localStorage.setItem(ACK_STORAGE_KEY, payload);
-  }, [blockAcknowledged, blockReason, inputHash, warnAcknowledged]);
 
   useEffect(() => {
     if (!complianceModalOpen && !normalizeModalOpen) {
@@ -142,31 +76,9 @@ export default function HomePage() {
     return () => window.removeEventListener("keydown", handler);
   }, [complianceModalOpen, normalizeModalOpen]);
 
-  const canExport = useMemo(() => {
-    if (compliance.level === "PASS") return true;
-    if (compliance.level === "WARN") return warnAcknowledged;
-    return blockAcknowledged && blockReason.trim().length > 0;
-  }, [blockAcknowledged, blockReason, compliance.level, warnAcknowledged]);
-
   const typographyPreview = useMemo(() => normalizeTypography(input), [input]);
 
-  const visiblePhraseGroups = useMemo(() => {
-    const query = phraseQuery.trim().toLowerCase();
-    const groups =
-      phraseGroupId === "all"
-        ? DEFAULT_PHRASE_GROUPS
-        : DEFAULT_PHRASE_GROUPS.filter((group) => group.id === phraseGroupId);
-
-    const matches = (phrase: string) =>
-      !query || phrase.toLowerCase().includes(query);
-
-    return groups
-      .map((group) => ({
-        ...group,
-        phrases: group.phrases.filter(matches)
-      }))
-      .filter((group) => group.phrases.length);
-  }, [phraseGroupId, phraseQuery]);
+  const phraseGroups = DEFAULT_PHRASE_GROUPS;
 
   const applyWithUndo = (nextText: string) => {
     setUndoStack((prev) => [input, ...prev].slice(0, UNDO_LIMIT));
@@ -249,17 +161,10 @@ export default function HomePage() {
         flags: compliance.flags.map((flag) => ({
           code: flag.code,
           level: flag.level
-        })),
-        acknowledgement: {
-          warn_acknowledged: warnAcknowledged,
-          block_acknowledged: blockAcknowledged,
-          block_reason: blockReason || null
-        }
+        }))
       }
     }),
     [
-      blockAcknowledged,
-      blockReason,
       compliance.flags,
       compliance.level,
       effectiveProfileId,
@@ -268,8 +173,7 @@ export default function HomePage() {
       smartSelectDecision.grade,
       smartSelectDecision.reason,
       smartSelectDecision.ruleId,
-      smartSelectEnabled,
-      warnAcknowledged
+      smartSelectEnabled
     ]
   );
 
@@ -313,12 +217,6 @@ export default function HomePage() {
     } else {
       lines.push("No common risk flags detected (still requires verification).");
     }
-    lines.push(
-      `Acknowledgement: WARN=${warnAcknowledged ? "yes" : "no"}, BLOCK=${blockAcknowledged ? "yes" : "no"}`
-    );
-    if (blockReason.trim()) {
-      lines.push(`BLOCK reason: ${blockReason.trim()}`);
-    }
     if (result.warnings.length) {
       lines.push("Engine warnings:");
       result.warnings.forEach((warning) => lines.push(`- ${warning.message}`));
@@ -334,8 +232,6 @@ export default function HomePage() {
     lines.push(result.plain_dots || "—");
     return lines.join("\n");
   }, [
-    blockAcknowledged,
-    blockReason,
     compliance.flags,
     compliance.level,
     input,
@@ -345,8 +241,7 @@ export default function HomePage() {
     result,
     smartSelectDecision.reason,
     smartSelectDecision.ruleId,
-    smartSelectEnabled,
-    warnAcknowledged
+    smartSelectEnabled
   ]);
 
   const copyToClipboard = async (id: string, value: string) => {
@@ -370,27 +265,6 @@ export default function HomePage() {
     link.download = "braille-preview.svg";
     link.click();
     URL.revokeObjectURL(url);
-  };
-
-  const handleAddPhrase = () => {
-    const trimmed = newPhrase.trim();
-    if (!trimmed) {
-      return;
-    }
-    setMyPhrases((prev) => Array.from(new Set([...prev, trimmed])));
-    setNewPhrase("");
-  };
-
-  const handleImportPhrases = () => {
-    try {
-      const parsed = JSON.parse(importJson);
-      if (Array.isArray(parsed)) {
-        setMyPhrases(parsed.map((phrase) => String(phrase)));
-        setImportJson("");
-      }
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const handlePhraseInsert = (phrase: string) => {
@@ -531,109 +405,25 @@ export default function HomePage() {
           </div>
 
           <div className="panel">
-            <h2>Phrase Library</h2>
+            <h2>Common Signage Phrases</h2>
             <p className="muted">Click a phrase to insert it as a new line.</p>
 
-            <div className="row">
-              <input
-                className="input"
-                value={phraseQuery}
-                onChange={(event) => setPhraseQuery(event.target.value)}
-                placeholder="Search phrases"
-              />
-              <select
-                className="select"
-                value={phraseGroupId}
-                onChange={(event) => setPhraseGroupId(event.target.value)}
-              >
-                <option value="all">All categories</option>
-                {DEFAULT_PHRASE_GROUPS.map((group) => (
-                  <option key={group.id} value={group.id}>
-                    {group.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {visiblePhraseGroups.length ? (
-              visiblePhraseGroups.map((group) => (
-                <div key={group.id} className="field">
-                  <label>{group.label}</label>
-                  <div className="chips">
-                    {group.phrases.map((phrase) => (
-                      <button
-                        key={phrase}
-                        className="chip"
-                        onClick={() => handlePhraseInsert(phrase)}
-                      >
-                        {phrase}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="muted">No matching phrases.</div>
-            )}
-
-            <div className="field">
-              <label>My Phrases</label>
-              <div className="row">
-                <input
-                  className="input"
-                  value={newPhrase}
-                  onChange={(event) => setNewPhrase(event.target.value)}
-                  placeholder="Add custom phrase"
-                />
-                <button className="button secondary" onClick={handleAddPhrase}>
-                  Add
-                </button>
-              </div>
-              {myPhrases.length ? (
+            {phraseGroups.map((group) => (
+              <div key={group.id} className="field">
+                <label>{group.label}</label>
                 <div className="chips">
-                  {myPhrases.map((phrase) => (
+                  {group.phrases.map((phrase) => (
                     <button
                       key={phrase}
-                      className="chip secondary"
+                      className="chip"
                       onClick={() => handlePhraseInsert(phrase)}
                     >
                       {phrase}
                     </button>
                   ))}
                 </div>
-              ) : (
-                <div className="muted">No custom phrases yet.</div>
-              )}
-            </div>
-
-            <details>
-              <summary>Import / Export</summary>
-              <div className="field">
-                <label>Paste JSON array of phrases</label>
-                <textarea
-                  className="textarea"
-                  value={importJson}
-                  onChange={(event) => setImportJson(event.target.value)}
-                  placeholder='["ROOM","SUITE 200","EXIT"]'
-                />
-                <div className="row">
-                  <button
-                    className="button secondary"
-                    onClick={handleImportPhrases}
-                  >
-                    Import JSON
-                  </button>
-                  <button
-                    className="button secondary"
-                    onClick={() =>
-                      copyToClipboard("phrases", JSON.stringify(myPhrases, null, 2))
-                    }
-                  >
-                    {copiedId === "phrases" ? "Copied" : "Copy JSON"}
-                  </button>
-                </div>
               </div>
-            </details>
+            ))}
           </div>
         </div>
 
@@ -661,7 +451,7 @@ export default function HomePage() {
 	                <button
 	                  className="button secondary"
 	                  onClick={() => copyToClipboard("proofread", proofreadPacket)}
-	                  disabled={!result || !canExport}
+	                  disabled={!result}
 	                >
 	                  {copiedId === "proofread" ? "Copied" : "Copy for proofread"}
 	                </button>
@@ -754,51 +544,6 @@ export default function HomePage() {
 	                </div>
 	              )}
 
-	              {compliance.level === "WARN" ? (
-	                <div className="field">
-	                  <label className="toggle">
-	                    <input
-	                      type="checkbox"
-	                      checked={warnAcknowledged}
-	                      onChange={(event) => setWarnAcknowledged(event.target.checked)}
-	                    />
-	                    I will verify braille translation and physical layout requirements
-	                    before production.
-	                  </label>
-	                  {!warnAcknowledged ? (
-	                    <div className="notice">
-	                      Exports are locked until you acknowledge.
-	                    </div>
-	                  ) : null}
-	                </div>
-	              ) : null}
-
-	              {compliance.level === "BLOCK" ? (
-	                <div className="field">
-	                  <label className="toggle">
-	                    <input
-	                      type="checkbox"
-	                      checked={blockAcknowledged}
-	                      onChange={(event) => setBlockAcknowledged(event.target.checked)}
-	                    />
-	                    I understand this is high-risk and I will verify before production.
-	                  </label>
-	                  <label>
-	                    Reason (required to unlock exports)
-	                    <input
-	                      className="input"
-	                      value={blockReason}
-	                      onChange={(event) => setBlockReason(event.target.value)}
-	                      placeholder="Why is export necessary despite BLOCK flags?"
-	                    />
-	                  </label>
-	                  {!canExport ? (
-	                    <div className="notice">
-	                      Exports are locked until you acknowledge and provide a reason.
-	                    </div>
-	                  ) : null}
-	                </div>
-	              ) : null}
 	            </div>
 	
 	          <div className="field">
@@ -809,7 +554,7 @@ export default function HomePage() {
 	                onClick={() =>
 	                  copyToClipboard("unicode", result?.unicode_braille || "")
 	                }
-	                disabled={!result?.unicode_braille || !canExport}
+	                disabled={!result?.unicode_braille}
 	              >
 	                {copiedId === "unicode" ? "Copied" : "Copy"}
 	              </button>
@@ -823,7 +568,7 @@ export default function HomePage() {
 	              <button
 	                className="button secondary"
 	                onClick={() => copyToClipboard("bits", bitPatternString)}
-	                disabled={!bitPatternString || !canExport}
+	                disabled={!bitPatternString}
 	              >
 	                {copiedId === "bits" ? "Copied" : "Copy"}
 	              </button>
@@ -839,7 +584,7 @@ export default function HomePage() {
 	                onClick={() =>
 	                  copyToClipboard("dots", result?.plain_dots || "")
 	                }
-	                disabled={!result?.plain_dots || !canExport}
+	                disabled={!result?.plain_dots}
 	              >
 	                {copiedId === "dots" ? "Copied" : "Copy"}
 	              </button>
@@ -856,14 +601,14 @@ export default function HomePage() {
 	                  onClick={() =>
 	                    svgPreview && copyToClipboard("svg", svgMarkup)
 	                  }
-	                  disabled={!svgPreview || !canExport}
+	                  disabled={!svgPreview}
 	                >
 	                  {copiedId === "svg" ? "Copied" : "Copy SVG"}
 	                </button>
 	                <button
 	                  className="button secondary"
 	                  onClick={downloadSvg}
-	                  disabled={!svgPreview || !canExport}
+	                  disabled={!svgPreview}
 	                >
 	                  Download SVG
 	                </button>
@@ -889,7 +634,6 @@ export default function HomePage() {
               <div className="row">
                 <span className="badge">liblouis {result?.metadata.liblouis_version || "—"}</span>
                 <span className="badge">Profile used {result?.metadata.profile_id || "—"}</span>
-                <span className="badge">Exports {canExport ? "unlocked" : "locked"}</span>
               </div>
               <div className="output">
                 Tables: {result?.metadata.table_names.join(", ") || "—"}
