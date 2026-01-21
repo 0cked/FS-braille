@@ -106,6 +106,10 @@
   - Patch UTF16 length units + add output headroom in `easy-api.js` (prevents memory corruption that can crash even on normal inputs like “RECEPTION”).
   - Block preview generation when Compliance Check is `BLOCK`, add explicit `non_bmp_character` BLOCK flag, and reset/reload the liblouis engine after errors/timeouts.
 
+### UX Polish (2026-01-21)
+- Renamed `Generate preview` → `Generate output` and removed the redundant “preview updates…” hint.
+- Switched Smart Select from a checkbox look to a toggle switch.
+
 ## 5-Question Reboot Check
 | Question | Answer |
 |----------|--------|

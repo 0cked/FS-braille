@@ -191,7 +191,7 @@ export default function HomePage() {
     }
     if (compliance.level === "BLOCK") {
       setTranslateError(
-        "Preview generation is blocked due to high-risk Compliance Check flags. Resolve the BLOCK items before generating braille."
+        "Output generation is blocked due to high-risk Compliance Check flags. Resolve the BLOCK items before generating braille."
       );
       setResult(null);
       return;
@@ -430,7 +430,7 @@ export default function HomePage() {
               <div className="row space-between">
                 <div className="row">
                   <button className="button" onClick={handleTranslate}>
-                    {isTranslating ? "Generating..." : "Generate preview"}
+                    {isTranslating ? "Generating..." : "Generate output"}
                   </button>
                   <button
                     className="button secondary"
@@ -447,7 +447,6 @@ export default function HomePage() {
                     Undo
                   </button>
                 </div>
-                <span className="muted">Preview updates only when you click Generate preview.</span>
               </div>
               {translateError ? (
                 <div className="notice" role="alert">
@@ -459,13 +458,16 @@ export default function HomePage() {
             <div className="field">
               <label htmlFor="profile">Grade selection</label>
               <div className="row space-between">
-                <label className="toggle">
+                <label className="switch">
                   <input
                     type="checkbox"
                     checked={smartSelectEnabled}
                     onChange={(event) => setSmartSelectEnabled(event.target.checked)}
                   />
-                  Smart Select Grade (Conservative)
+                  <span className="switchTrack" aria-hidden="true">
+                    <span className="switchThumb" />
+                  </span>
+                  <span>Smart Select Grade (Conservative)</span>
                 </label>
                 <span className="badge">
                   Used: {profile.grade === "g1" ? "Grade 1" : "Grade 2"}
