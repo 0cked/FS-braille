@@ -203,7 +203,8 @@ label {
 }
 
 .panel {
-  background: var(--bg-surface);
+  background-color: var(--bg-surface);
+  background-image: none;
   border-radius: var(--card-radius);
   border: 1px solid var(--card-border);
   box-shadow: var(--shadow-card);
@@ -222,14 +223,16 @@ label {
 }
 
 .panel:hover {
-  background: var(--bg-surface);
+  background-color: var(--bg-surface);
+  background-image: none;
   transform: translateY(-4px);
   border-color: rgba(31, 60, 255, 0.12);
   box-shadow: var(--shadow-card-hover);
 }
 
 .panel.secondary {
-  background: var(--bg-surface);
+  background-color: var(--bg-surface);
+  background-image: none;
   box-shadow: var(--shadow-card);
 }
 
@@ -351,7 +354,8 @@ label {
   font-family: var(--font-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular,
     Menlo, monospace;
   font-size: 14px;
-  background: var(--tile-bg-muted), var(--bg-surface);
+  background-color: var(--bg-surface);
+  background-image: none;
   padding: 12px 14px;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
