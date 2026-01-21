@@ -118,6 +118,253 @@ export type ComplianceFlag = {
   message: string;
 };
 
+export type ComplianceFlagDocumentation = {
+  title: string;
+  description: string;
+  links: Array<{
+    label: string;
+    url: string;
+  }>;
+};
+
+export const COMPLIANCE_DOCUMENTATION: Record<
+  ComplianceFlag["code"],
+  ComplianceFlagDocumentation
+> = {
+  all_caps: {
+    title: "All-Caps Text in Braille",
+    description:
+      "When text is in all capitals, each letter requires a capitalization indicator in braille. Multi-word all-caps text can be represented with a capital word indicator or individual capital letter indicators.",
+    links: [
+      {
+        label: "UEB Guidelines - Capitalization",
+        url: "http://www.iceb.org/ueb.html"
+      },
+      {
+        label: "Braille Authority of North America - Capital Letters",
+        url: "https://www.brailleauthority.org/"
+      },
+      {
+        label: "liblouis Documentation - Capitalization Rules",
+        url: "https://liblouis.io/documentation/"
+      }
+    ]
+  },
+  numbers_present: {
+    title: "Numbers and Ordinals in Braille",
+    description:
+      "Numbers in braille require a number indicator before the numeric sequence. Ordinals, decimals, and formatted numbers need special attention for proper spacing and indicators.",
+    links: [
+      {
+        label: "UEB Guidelines - Numbers",
+        url: "http://www.iceb.org/ueb.html"
+      },
+      {
+        label: "BANA - Numeric Mode Indicator Rules",
+        url: "https://www.brailleauthority.org/"
+      }
+    ]
+  },
+  abbreviation_detected: {
+    title: "Abbreviations in Braille",
+    description:
+      "Abbreviations may require Grade 1 indicators to prevent misinterpretation. Common abbreviations like 'Dr.', 'St.', 'Rm' need verification for correct expansion and meaning in context.",
+    links: [
+      {
+        label: "UEB Guidelines - Abbreviations",
+        url: "http://www.iceb.org/ueb.html"
+      },
+      {
+        label: "BANA - Common Abbreviations",
+        url: "https://www.brailleauthority.org/"
+      }
+    ]
+  },
+  non_ascii_quotes: {
+    title: "Smart Quotes and Typography",
+    description:
+      "Curly quotes (smart quotes) are handled differently than straight ASCII quotes in braille. They should be normalized or verified for correct punctuation handling.",
+    links: [
+      {
+        label: "UEB Guidelines - Punctuation",
+        url: "http://www.iceb.org/ueb.html"
+      },
+      {
+        label: "Typography Normalization Best Practices",
+        url: "https://www.brailleauthority.org/"
+      }
+    ]
+  },
+  dash_variant: {
+    title: "Em Dashes and En Dashes",
+    description:
+      "Different dash types (hyphen, en dash, em dash) have distinct representations in braille. Verify that the correct dash type is used for the intended meaning.",
+    links: [
+      {
+        label: "UEB Guidelines - Dashes",
+        url: "http://www.iceb.org/ueb.html"
+      },
+      {
+        label: "BANA - Dash Usage",
+        url: "https://www.brailleauthority.org/"
+      }
+    ]
+  },
+  ellipsis: {
+    title: "Ellipsis Character",
+    description:
+      "The Unicode ellipsis character should be verified for correct handling. It may need to be represented as three periods in braille depending on context.",
+    links: [
+      {
+        label: "UEB Guidelines - Ellipsis",
+        url: "http://www.iceb.org/ueb.html"
+      }
+    ]
+  },
+  unusual_symbol: {
+    title: "Trademark and Copyright Symbols",
+    description:
+      "Special symbols like ©, ®, and ™ require specific braille representations. Verify they should appear on the sign and how they should be transcribed.",
+    links: [
+      {
+        label: "UEB Guidelines - Special Symbols",
+        url: "http://www.iceb.org/ueb.html"
+      },
+      {
+        label: "BANA - Symbol Guidelines",
+        url: "https://www.brailleauthority.org/"
+      }
+    ]
+  },
+  non_ascii_letter: {
+    title: "Non-English Letters and Diacritics",
+    description:
+      "Letters with accents or from non-English alphabets may not be supported by US English braille tables. Verify language/profile handling or use appropriate international tables.",
+    links: [
+      {
+        label: "liblouis - Language Tables",
+        url: "https://liblouis.io/documentation/"
+      },
+      {
+        label: "International Braille Standards",
+        url: "http://www.iceb.org/"
+      }
+    ]
+  },
+  emoji_or_pictograph: {
+    title: "Emoji and Pictographs",
+    description:
+      "Emoji and pictographic characters cannot be represented in tactile braille and must be removed or replaced with text descriptions.",
+    links: [
+      {
+        label: "Accessibility Best Practices - Emoji Alt Text",
+        url: "https://www.w3.org/WAI/WCAG21/Understanding/"
+      }
+    ]
+  },
+  non_bmp_character: {
+    title: "Non-BMP Unicode Characters",
+    description:
+      "Characters outside the Basic Multilingual Plane (including some emoji, rare symbols, and historical scripts) are not supported by the translation engine and must be removed.",
+    links: [
+      {
+        label: "Unicode Planes Overview",
+        url: "https://en.wikipedia.org/wiki/Plane_(Unicode)"
+      }
+    ]
+  },
+  punctuation_dense: {
+    title: "Punctuation-Heavy Text",
+    description:
+      "Text with heavy punctuation (parentheses, slashes, special characters) requires careful verification. Each punctuation mark affects spacing and meaning in braille.",
+    links: [
+      {
+        label: "UEB Guidelines - Punctuation",
+        url: "http://www.iceb.org/ueb.html"
+      },
+      {
+        label: "BANA - Punctuation Rules",
+        url: "https://www.brailleauthority.org/"
+      }
+    ]
+  },
+  punctuation_high_risk: {
+    title: "High Punctuation Density",
+    description:
+      "Extremely high punctuation density detected. This often indicates technical content, paths, or formatted data that may not translate correctly. Simplify or verify carefully.",
+    links: [
+      {
+        label: "UEB Guidelines - Technical Material",
+        url: "http://www.iceb.org/ueb.html"
+      },
+      {
+        label: "liblouis - Computer Braille Code",
+        url: "https://liblouis.io/documentation/"
+      }
+    ]
+  },
+  multiline_input: {
+    title: "Multi-Line Signage Layout",
+    description:
+      "Sign braille has different line break rules than document braille. Each line should be verified for proper formatting and spacing per ADA/accessibility standards.",
+    links: [
+      {
+        label: "ADA Standards - Signage Requirements",
+        url: "https://www.ada.gov/regs2010/2010ADAstandards/2010ADAStandards.htm#c7"
+      },
+      {
+        label: "ICC A117.1 - Accessible Design Standards",
+        url: "https://www.iccsafe.org/products-and-services/i-codes/the-a117-series/"
+      }
+    ]
+  },
+  length_risk: {
+    title: "Long Text for Signage",
+    description:
+      "Text exceeding typical sign dimensions may not fit standard formats. Verify line breaks, cell count per line, and physical layout constraints.",
+    links: [
+      {
+        label: "ADA Standards - Signage Dimensions",
+        url: "https://www.ada.gov/regs2010/2010ADAstandards/2010ADAStandards.htm#c7"
+      },
+      {
+        label: "Braille Cell Spacing Standards",
+        url: "https://www.brailleauthority.org/"
+      }
+    ]
+  },
+  technical_string: {
+    title: "Technical Strings (URLs, Emails, Phone Numbers)",
+    description:
+      "Technical content like URLs, email addresses, and phone numbers should typically use Grade 1 braille to avoid contractions that could alter the meaning.",
+    links: [
+      {
+        label: "UEB Guidelines - Technical Material",
+        url: "http://www.iceb.org/ueb.html"
+      },
+      {
+        label: "Computer Braille Code",
+        url: "https://www.brailleauthority.org/"
+      }
+    ]
+  },
+  grade2_short_label_risk: {
+    title: "Grade 2 for Short Labels",
+    description:
+      "Grade 2 contractions on short labels may reduce readability or create ambiguity. Grade 1 is often safer for brief signage like room numbers and labels.",
+    links: [
+      {
+        label: "UEB Guidelines - Contractions",
+        url: "http://www.iceb.org/ueb.html"
+      },
+      {
+        label: "BANA - Grade Selection Guidelines",
+        url: "https://www.brailleauthority.org/"
+      }
+    ]
+  }
+};
+
 export type ComplianceReport = {
   level: ComplianceLevel;
   flags: ComplianceFlag[];

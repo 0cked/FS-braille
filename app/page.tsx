@@ -9,7 +9,7 @@ import {
 import { translateText, TranslationResult } from "../lib/translation";
 import { DEFAULT_SVG_LAYOUT, SvgLayout, renderBrailleSvg } from "../lib/svg";
 import { DEFAULT_PHRASE_GROUPS } from "../lib/phraseLibrary";
-import { complianceCheck, decideGrade } from "../lib/compliance";
+import { complianceCheck, decideGrade, COMPLIANCE_DOCUMENTATION } from "../lib/compliance";
 import { fnv1a32 } from "../lib/hash";
 import { normalizeTypography } from "../lib/typography";
 import { resetLiblouis } from "../lib/louis";
@@ -703,12 +703,50 @@ export default function HomePage() {
 	              </div>
 
 	              {compliance.flags.length ? (
-	                <div className="field">
-	                  <div className="output">
-	                    {compliance.flags
-	                      .map((flag) => `${flag.level} ${flag.code}: ${flag.message}`)
-	                      .join("\n")}
-	                  </div>
+	                <div className="complianceFlagsList">
+	                  {compliance.flags.map((flag) => {
+	                    const docs = COMPLIANCE_DOCUMENTATION[flag.code];
+	                    return (
+	                      <div key={flag.code} className="complianceFlag">
+	                        <div className="complianceFlagHeader">
+	                          <span className={`complianceFlagLevel level-${flag.level.toLowerCase()}`}>
+	                            {flag.level}
+	                          </span>
+	                          <span className="complianceFlagCode">{flag.code}</span>
+	                        </div>
+	                        <div className="complianceFlagMessage">{flag.message}</div>
+	                        {docs && (
+	                          <details className="complianceFlagDocs">
+	                            <summary>Learn more about {docs.title}</summary>
+	                            <div className="complianceFlagDocsContent">
+	                              <p className="complianceFlagDocsDescription">
+	                                {docs.description}
+	                              </p>
+	                              {docs.links.length > 0 && (
+	                                <div className="complianceFlagDocsLinks">
+	                                  <strong>Helpful resources:</strong>
+	                                  <ul>
+	                                    {docs.links.map((link, idx) => (
+	                                      <li key={idx}>
+	                                        <a
+	                                          href={link.url}
+	                                          target="_blank"
+	                                          rel="noopener noreferrer"
+	                                          className="complianceFlagDocsLink"
+	                                        >
+	                                          {link.label}
+	                                        </a>
+	                                      </li>
+	                                    ))}
+	                                  </ul>
+	                                </div>
+	                              )}
+	                            </div>
+	                          </details>
+	                        )}
+	                      </div>
+	                    );
+	                  })}
 	                </div>
 	              ) : (
 	                <div className="notice success">
