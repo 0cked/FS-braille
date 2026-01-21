@@ -1,26 +1,77 @@
 :root {
   color-scheme: light;
-  --bg: #fbfbf8;
-  --bg-tint: #f2f6fb;
-  --panel: #ffffff;
-  --panel-muted: #f7f8fb;
-  --ink: #121416;
-  --muted: #55606a;
-  --border: #d9dee6;
-  --accent: #0a4c8a;
-  --accent-2: #c62828;
-  --accent-3: #0f766e;
-  --shadow: 0 16px 40px rgba(9, 20, 38, 0.12);
-  --radius: 16px;
-  --radius-sm: 10px;
-  --space-1: 6px;
-  --space-2: 10px;
-  --space-3: 14px;
-  --space-4: 18px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-7: 40px;
-  --space-8: 56px;
+  --brand-blue: #1f3cff;
+  --brand-cyan: #00ccff;
+  --brand-blue-dark: #001de1;
+  --brand-blue-light: #5268ff;
+  --bg-base: #fafbfc;
+  --bg-surface: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-overlay: #ffffff;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  --text-disabled: #a0aec0;
+  --border-color: rgba(0, 0, 0, 0.06);
+  --tile-bg:
+    radial-gradient(
+      140% 140% at 18% 0%,
+      rgba(0, 204, 255, 0.09) 0%,
+      rgba(0, 204, 255, 0.03) 55%,
+      rgba(30, 144, 255, 0.02) 100%
+    ),
+    linear-gradient(135deg, rgba(0, 204, 255, 0.055), rgba(30, 144, 255, 0.04));
+  --tile-bg-muted:
+    radial-gradient(
+      140% 140% at 18% 0%,
+      rgba(0, 204, 255, 0.072) 0%,
+      rgba(0, 204, 255, 0.024) 55%,
+      rgba(30, 144, 255, 0.016) 100%
+    ),
+    linear-gradient(135deg, rgba(0, 204, 255, 0.044), rgba(30, 144, 255, 0.032));
+  --primary: var(--brand-blue);
+  --primary-dark: var(--brand-blue-dark);
+  --primary-light: var(--brand-blue-light);
+  --primary-glow: rgba(31, 60, 255, 0.08);
+  --primary-glow-intense: rgba(31, 60, 255, 0.15);
+  --glow-subtle: rgba(31, 60, 255, 0.02);
+  --glow-default: rgba(31, 60, 255, 0.04);
+  --glow-strong: rgba(31, 60, 255, 0.08);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --card-radius: 0.875rem;
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-card:
+    0 0 0 1px rgba(15, 23, 42, 0.03),
+    0 1px 3px rgba(15, 23, 42, 0.06),
+    0 8px 30px rgba(15, 23, 42, 0.04);
+  --shadow-card-hover:
+    0 0 0 1px rgba(15, 23, 42, 0.03),
+    0 1px 3px rgba(15, 23, 42, 0.06),
+    0 20px 40px rgba(15, 23, 42, 0.08);
+  --shadow-subtle: 0 8px 24px rgba(15, 23, 42, 0.06);
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 2rem;
+  --space-8: 2.5rem;
+  --space-9: 3rem;
+  --max-content-width: 1200px;
+  --content-gutter: clamp(1rem, 5vw, 3rem);
+  --skyline-image: url("https://storage.googleapis.com/resourcesite-publicassets-prod/townskyline.svg");
+  --skyline-opacity: 0.12;
+  --skyline-height: clamp(240px, 35vh, 520px);
+  --skyline-scale: 200%;
   font-family: var(--font-body), "IBM Plex Sans", sans-serif;
 }
 
@@ -30,12 +81,42 @@
 
 body {
   margin: 0;
-  color: var(--ink);
-  background:
-    radial-gradient(circle at top left, rgba(10, 76, 138, 0.08), transparent 50%),
-    radial-gradient(circle at 80% 0%, rgba(198, 40, 40, 0.08), transparent 40%),
-    linear-gradient(180deg, var(--bg), #ffffff 40%, var(--bg-tint) 100%);
+  color: var(--text-primary);
+  background: var(--bg-base);
   min-height: 100vh;
+  position: relative;
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0;
+  animation: bodyFadeIn 0.25s ease-out 0.1s forwards;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1400px 560px at 15% -10%, rgba(31, 60, 255, 0.12), transparent 72%),
+    radial-gradient(1400px 560px at 85% -12%, rgba(0, 204, 255, 0.09), transparent 74%),
+    linear-gradient(180deg, rgba(248, 250, 255, 0.96) 0%, rgba(243, 252, 255, 0.92) 100%);
+  z-index: -2;
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--skyline-height);
+  background-image: var(--skyline-image);
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-size: auto var(--skyline-scale);
+  opacity: var(--skyline-opacity);
+  pointer-events: none;
+  z-index: -1;
 }
 
 a {
@@ -55,8 +136,8 @@ label {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
-  padding: clamp(24px, 4vw, 56px);
-  max-width: 1200px;
+  padding: var(--content-gutter);
+  max-width: var(--max-content-width);
   margin: 0 auto;
 }
 
@@ -73,7 +154,7 @@ label {
 }
 
 .subtitle {
-  color: var(--muted);
+  color: var(--text-secondary);
   margin: 0;
   max-width: 760px;
 }
@@ -85,20 +166,36 @@ label {
 }
 
 .panel {
-  background: var(--panel);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
+  background: var(--tile-bg);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-card), inset 0 1px 0 var(--glow-subtle);
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+  position: relative;
+  overflow: hidden;
   animation: fadeUp 0.6s ease both;
 }
 
+.panel:hover {
+  background: var(--bg-overlay);
+  color: var(--text-primary);
+  transform: translateY(-3px);
+  border-color: rgba(31, 60, 255, 0.12);
+  box-shadow: 0 0 36px var(--primary-glow), var(--shadow-card-hover),
+    inset 0 1px 0 var(--glow-default);
+}
+
 .panel.secondary {
-  background: var(--panel-muted);
-  box-shadow: none;
+  background: var(--tile-bg-muted);
+  box-shadow: var(--shadow-subtle);
 }
 
 .panel h2 {
@@ -115,13 +212,22 @@ label {
 .input,
 .textarea,
 .select {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   padding: 12px 14px;
   font-size: 15px;
   font-family: var(--font-body), "IBM Plex Sans", sans-serif;
-  background: #ffffff;
-  color: var(--ink);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: rgba(31, 60, 255, 0.35);
+  box-shadow: 0 0 0 3px rgba(31, 60, 255, 0.12);
 }
 
 .textarea {
@@ -145,7 +251,7 @@ label {
   gap: var(--space-2);
   align-items: center;
   font-size: 14px;
-  color: var(--muted);
+  color: var(--text-secondary);
 }
 
 .button {
@@ -156,28 +262,37 @@ label {
   padding: 10px 18px;
   font-weight: 600;
   font-size: 14px;
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: #ffffff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 10px 20px rgba(10, 76, 138, 0.22);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 12px 24px rgba(31, 60, 255, 0.22);
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px rgba(31, 60, 255, 0.28);
 }
 
 .button.secondary {
-  background: #ffffff;
-  color: var(--accent);
-  border: 1px solid rgba(10, 76, 138, 0.35);
+  background: var(--bg-surface);
+  color: var(--primary);
+  border: 1px solid rgba(31, 60, 255, 0.2);
   box-shadow: none;
+}
+
+.button.secondary:hover {
+  box-shadow: 0 12px 24px rgba(31, 60, 255, 0.1);
 }
 
 .button.ghost {
   background: transparent;
-  color: var(--accent);
-  border: 1px dashed var(--border);
+  color: var(--primary);
+  border: 1px dashed var(--border-color);
   box-shadow: none;
 }
 
 .button:active {
-  transform: translateY(1px) scale(0.99);
+  transform: translateY(0) scale(0.99);
 }
 
 .badge {
@@ -185,40 +300,41 @@ label {
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  color: var(--accent);
-  background: rgba(10, 76, 138, 0.08);
+  color: var(--primary);
+  background: rgba(31, 60, 255, 0.08);
+  border: 1px solid rgba(31, 60, 255, 0.18);
   border-radius: 999px;
   padding: 6px 10px;
   font-weight: 600;
 }
 
 .muted {
-  color: var(--muted);
+  color: var(--text-secondary);
 }
 
 .output {
   font-family: var(--font-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular,
     Menlo, monospace;
   font-size: 14px;
-  background: #fbfbfd;
+  background: var(--tile-bg-muted);
   padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
   white-space: pre-wrap;
   word-break: break-word;
 }
 
 hr {
   border: none;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border-color);
   margin: var(--space-2) 0;
 }
 
 details {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
   padding: var(--space-3);
-  background: #ffffff;
+  background: var(--bg-surface);
 }
 
 details summary {
@@ -235,34 +351,38 @@ details summary {
 .chip {
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(10, 76, 138, 0.08);
-  color: var(--accent);
+  background: rgba(31, 60, 255, 0.08);
+  color: var(--primary);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   border: 1px solid transparent;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .chip.secondary {
-  background: rgba(15, 118, 110, 0.1);
-  color: var(--accent-3);
+  background: rgba(16, 185, 129, 0.12);
+  color: #0f766e;
 }
 
 .chip:hover {
-  border-color: rgba(10, 76, 138, 0.3);
+  border-color: rgba(31, 60, 255, 0.3);
+  transform: translateY(-1px);
 }
 
 .notice {
   padding: 10px 12px;
-  background: rgba(198, 40, 40, 0.08);
-  color: var(--accent-2);
-  border-radius: var(--radius-sm);
+  background: rgba(0, 204, 255, 0.12);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
   font-size: 13px;
+  border: 1px solid rgba(0, 204, 255, 0.2);
 }
 
 .success {
-  background: rgba(15, 118, 110, 0.08);
-  color: var(--accent-3);
+  background: rgba(16, 185, 129, 0.12);
+  color: #0f766e;
+  border-color: rgba(16, 185, 129, 0.24);
 }
 
 @keyframes fadeUp {
@@ -273,6 +393,12 @@ details summary {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes bodyFadeIn {
+  to {
+    opacity: 1;
   }
 }
 

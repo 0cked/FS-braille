@@ -9,6 +9,14 @@ out/
 *.log
 npm-debug.log*
 
+# Local references / planning artifacts
+thehub-designreference/
+task_plan.md
+findings.md
+progress.md
+newesterrors.txt
+fs-braille-mu9nj3apg-jacobs-projects-e5f2e2e4.vercel.app-1768939/
+
 # Generated liblouis assets (regenerated via postinstall)
 public/liblouis/*.js
 public/liblouis/*.ctb

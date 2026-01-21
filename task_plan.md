@@ -1,4 +1,4 @@
-# Task Plan: FASTSIGNS Braille Translator Web App
+# Task Plan: Align Braille App UI With thehub Design Reference
 <!-- 
   WHAT: This is your roadmap for the entire task. Think of it as your "working memory on disk."
   WHY: After 50+ tool calls, your original goals can get forgotten. This file keeps them fresh.
@@ -6,138 +6,60 @@
 -->
 
 ## Goal
-<!-- 
-  WHAT: One clear sentence describing what you're trying to achieve.
-  WHY: This is your north star. Re-reading this keeps you focused on the end state.
-  EXAMPLE: "Create a Python CLI todo app with add, list, and delete functionality."
--->
-Deliver a production-ready Next.js app that runs liblouis-based braille translation in the browser (WASM), with FASTSIGNS-friendly UI, deterministic outputs, SVG preview, Assist features, tests, and deployment docs for Vercel.
+Update the braille app UI to match the design language in `thehub-designreference` (tiles, colors, background, overall look) while excluding the sidebar.
 
 ## Current Phase
-<!-- 
-  WHAT: Which phase you're currently working on (e.g., "Phase 1", "Phase 3").
-  WHY: Quick reference for where you are in the task. Update this as you progress.
--->
-Phase 4
+Phase 3
 
 ## Phases
-<!-- 
-  WHAT: Break your task into 3-7 logical phases. Each phase should be completable.
-  WHY: Breaking work into phases prevents overwhelm and makes progress visible.
-  WHEN: Update status after completing each phase: pending → in_progress → complete
--->
 
 ### Phase 1: Requirements & Discovery
-<!-- 
-  WHAT: Understand what needs to be done and gather initial information.
-  WHY: Starting without understanding leads to wasted effort. This phase prevents that.
--->
 - [x] Understand user intent
 - [x] Identify constraints and requirements
+- [x] Inspect design reference files and app UI structure
 - [x] Document findings in findings.md
 - **Status:** complete
-<!-- 
-  STATUS VALUES:
-  - pending: Not started yet
-  - in_progress: Currently working on this
-  - complete: Finished this phase
--->
 
 ### Phase 2: Planning & Structure
-<!-- 
-  WHAT: Decide how you'll approach the problem and what structure you'll use.
-  WHY: Good planning prevents rework. Document decisions so you remember why you chose them.
--->
-- [x] Define technical approach (WASM vs serverless)
-- [x] Create project structure if needed
+- [x] Define UI changes and mapping from reference to app components
+- [x] Identify files/components/styles to update
 - [x] Document decisions with rationale
 - **Status:** complete
 
 ### Phase 3: Implementation
-<!-- 
-  WHAT: Actually build/create/write the solution.
-  WHY: This is where the work happens. Break into smaller sub-tasks if needed.
--->
-- [x] Scaffold Next.js app + config
-- [x] Implement liblouis WASM wrapper + profiles + normalization
-- [x] Implement SVG renderer + Assist rules engine
-- [x] Build UI and wiring
-- [x] Add tests + README + assets
-- **Status:** complete
-
-### Phase 4: Testing & Verification
-<!-- 
-  WHAT: Verify everything works and meets requirements.
-  WHY: Catching issues early saves time. Document test results in progress.md.
--->
-- [ ] Verify requirements + outputs
-- [ ] Document test results in progress.md
-- [ ] Fix any issues found
+- [x] Update styles/components to match reference design language
+- [ ] Ensure responsiveness and usability
+- [x] Keep sidebar excluded
 - **Status:** in_progress
 
+### Phase 4: Testing & Verification
+- [ ] Verify updated UI matches reference (tiles, colors, background)
+- [ ] Check desktop and mobile rendering
+- [ ] Document test results in progress.md
+- **Status:** pending
+
 ### Phase 5: Delivery
-<!-- 
-  WHAT: Final review and handoff to user.
-  WHY: Ensures nothing is forgotten and deliverables are complete.
--->
-- [ ] Review all output files
-- [ ] Ensure deliverables are complete
-- [ ] Deliver to user with file tree + critical files
+- [ ] Review modified files
+- [ ] Summarize changes for user
+- [ ] Provide next steps if needed
 - **Status:** pending
 
 ## Key Questions
-<!-- 
-  WHAT: Important questions you need to answer during the task.
-  WHY: These guide your research and decision-making. Answer them as you go.
-  EXAMPLE: 
-    1. Should tasks persist between sessions? (Yes - need file storage)
-    2. What format for storing tasks? (JSON file)
--->
-1. Is WASM liblouis the most reliable Vercel-friendly approach?
-2. What minimal tables/assets are needed for en-us-g1/g2?
-3. How to structure deterministic normalization and warnings?
+1. Which files define the current braille app UI layout and styling?
+2. What specific colors/spacing/typography/tiles are shown in the reference files?
+3. Are there any constraints in the existing design system we must preserve?
 
 ## Decisions Made
-<!-- 
-  WHAT: Technical and design decisions you've made, with the reasoning behind them.
-  WHY: You'll forget why you made choices. This table helps you remember and justify decisions.
-  WHEN: Update whenever you make a significant choice (technology, approach, structure).
-  EXAMPLE:
-    | Use JSON for storage | Simple, human-readable, built-in Python support |
--->
 | Decision | Rationale |
 |----------|-----------|
-| Use liblouis browser build (Emscripten) | Avoids native binaries and Vercel build/runtime issues |
-| Bundle only required en-us tables | Reduce size and keep deployment simple |
+|          |           |
 
 ## Errors Encountered
-<!-- 
-  WHAT: Every error you encounter, what attempt number it was, and how you resolved it.
-  WHY: Logging errors prevents repeating the same mistakes. This is critical for learning.
-  WHEN: Add immediately when an error occurs, even if you fix it quickly.
-  EXAMPLE:
-    | FileNotFoundError | 1 | Check if file exists, create empty list if not |
-    | JSONDecodeError | 2 | Handle empty file case explicitly |
--->
 | Error | Attempt | Resolution |
 |-------|---------|------------|
-| Vercel: liblouis compile spam (`Character 'a' is not defined`, `Dot pattern \\15/ is not defined`) and `en-us-g2.ctb could not be found` persists after table include patch | 2 | Switch to preloading required table/include files into worker FS (avoid Range-based lazy loading / sync XHR). |
-| Error | Attempt | Resolution |
-|-------|---------|------------|
-| npm E404 for liblouis-wasm on Vercel | 1 | Swap to `liblouis` + `liblouis-build` packages and update loader |
-| Next.js build error: fs not found in liblouis-build | 1 | Load liblouis assets via script tags in browser, avoid bundling |
-| Runtime error: tables not found | 1 | Remove `tables/` prefix from table names and guard null translations |
-| Runtime error: characters not defined (missing includes) | 3 | Use TABLE_URL `/liblouis/tables/` with table names without `tables/` prefix |
-| Runtime error: `Character 'a' is not defined` / `Dot pattern \\12/ is not defined` (Vercel) | 1 | Patch copied `chardefs.cti` to include `braille-patterns.cti` early; remove duplicate `include braille-patterns.cti` from copied `en-us-g1.ctb` |
+| session-catchup script failed (CLAUDE_PLUGIN_ROOT empty) | 1 | Proceeded by using known template path under /home/jacob/.codex/skills/planning-with-files |
 
 ## Notes
-<!-- 
-  REMINDERS:
-  - Update phase status as you progress: pending → in_progress → complete
-  - Re-read this plan before major decisions (attention manipulation)
-  - Log ALL errors - they help avoid repetition
-  - Never repeat a failed action - mutate your approach instead
--->
 - Update phase status as you progress: pending → in_progress → complete
 - Re-read this plan before major decisions (attention manipulation)
 - Log ALL errors - they help avoid repetition
