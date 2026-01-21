@@ -1,6 +1,5 @@
 import { writeFile } from "node:fs/promises";
 import { BRAILLE_PROFILES } from "../config/profiles";
-import { DEFAULT_NORMALIZATION_OPTIONS } from "../lib/normalization";
 import { translateText } from "../lib/translation.node";
 
 const CASES = [
@@ -20,8 +19,7 @@ const run = async () => {
     for (const input of CASES) {
       const result = await translateText(
         input,
-        profile,
-        DEFAULT_NORMALIZATION_OPTIONS
+        profile
       );
       liblouisVersion = result.metadata.liblouis_version;
       cases.push({

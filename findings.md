@@ -15,8 +15,8 @@
 - SVG output should preserve input line breaks (one braille line per input line) for operator clarity.
 
 ## Research Findings
-- "Assist" is implemented in `app/page.tsx` via `runAssist()` from `lib/assist.ts`, and the Phrase Library currently lives inside the Assist section.
-- Phrase Library defaults come from `COMMON_PHRASES` in `lib/assist.ts` (currently a short list of common signage phrases).
+- Previously, "Assist" was implemented in `app/page.tsx` via `runAssist()` from `lib/assist.ts`, and the Phrase Library lived inside the Assist section.
+- Phrase Library defaults now come from `DEFAULT_PHRASE_GROUPS` in `lib/phraseLibrary.ts` (categorized + searchable).
 - Official FASTSIGNS logo SVG contains brand red `rgb(200,18,41)` and brand blue `rgb(0,46,151)` (from the downloaded SVG).
 - `design-reference.html` uses a light background with radial blue/cyan highlights, plus a bottom skyline overlay image.
 - `design-reference.html` tile styling uses `--tile-bg` and `--shadow-card` / `--shadow-card-hover` with `--card-radius: 0.875rem` and subtle borders.
@@ -46,6 +46,7 @@
 - `task_plan.md`, `findings.md`, `progress.md`
 
 ## Visual/Browser Findings
+- The deployed site at `fs-braille.vercel.app` (checked 2026-01-21) still reflects the pre-refresh UI (top “Braille Translator” pill + auto-translate label). Use it only as a baseline until the updated UI is deployed.
 - `homepage-static.html` uses a light, airy background with a fixed body gradient overlay (radial blue/cyan highlights + soft linear gradient).
 - Core palette tokens: brand blue `#1F3CFF`, accent cyan `#00CCFF`, base background `#FAFBFC`, surface white `#FFFFFF`, text primary `#1A202C`.
 - Tile styles: gradient tile backgrounds (`--tile-bg`), subtle borders, rounded corners, glow shadows, hover lift (~3px) with brighter overlay and glow.

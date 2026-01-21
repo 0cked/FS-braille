@@ -66,6 +66,27 @@ export const DEFAULT_PHRASE_GROUPS: PhraseGroup[] = [
     ]
   },
   {
+    id: "amenities",
+    label: "Amenities",
+    phrases: [
+      "DRINKING FOUNTAIN",
+      "WATER FOUNTAIN",
+      "VENDING",
+      "CAFETERIA",
+      "LUNCHROOM",
+      "LOCKER ROOM",
+      "CHANGING ROOM",
+      "FAMILY RESTROOM",
+      "LACTATION ROOM",
+      "MOTHER'S ROOM",
+      "NURSING ROOM",
+      "SERVER ROOM",
+      "TELECOM",
+      "SECURITY",
+      "JANITOR CLOSET"
+    ]
+  },
+  {
     id: "rules",
     label: "Rules",
     phrases: [

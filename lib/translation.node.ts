@@ -1,11 +1,6 @@
 import { BrailleProfile } from "../config/profiles";
 import { getLiblouisVersion, translateWithLiblouis } from "./louis.node";
-import {
-  NormalizationOptions,
-  NormalizationResult,
-  Warning,
-  normalizeInput
-} from "./normalization";
+import { TranslationWarning } from "./translation";
 
 export type BrailleCell = {
   bitstring: string;
@@ -17,14 +12,12 @@ export type TranslationResult = {
   unicode_braille: string;
   cells: BrailleCell[];
   plain_dots: string;
-  warnings: Warning[];
+  warnings: TranslationWarning[];
   metadata: {
     liblouis_version: string;
     profile_id: BrailleProfile["id"];
     table_names: string[];
-    normalization_applied: string[];
   };
-  normalization: NormalizationResult;
   lines: BrailleCell[][];
 };
 
@@ -57,17 +50,14 @@ const isBrailleChar = (codepoint: number) =>
 
 export const translateText = async (
   text: string,
-  profile: BrailleProfile,
-  options: NormalizationOptions
+  profile: BrailleProfile
 ): Promise<TranslationResult> => {
-  const normalization = normalizeInput(text, options);
-  const warnings: Warning[] = [...normalization.warnings];
-  const segments = options.preserveLineBreaks
-    ? normalization.normalized.split("\n")
-    : [normalization.normalized];
+  const warnings: TranslationWarning[] = [];
+  const segments = text.split(/\r?\n/);
 
   const translatedSegments: string[] = [];
-  for (const segment of segments) {
+  for (let index = 0; index < segments.length; index += 1) {
+    const segment = segments[index];
     if (!segment.trim()) {
       translatedSegments.push("");
       continue;
@@ -75,18 +65,16 @@ export const translateText = async (
     const raw = await translateWithLiblouis(profile.tables, segment);
     if (!raw) {
       warnings.push({
-        type: "normalization",
-        message: "Translation failed. Tables may be missing or not loaded yet."
+        code: "translation_failed",
+        message: `Translation failed on line ${index + 1}. Tables may be missing or not loaded yet.`
       });
       translatedSegments.push("");
       continue;
     }
-    translatedSegments.push(raw.replace(/\n/g, " "));
+    translatedSegments.push(raw.replace(/\n+/g, " "));
   }
 
-  const unicode_braille = translatedSegments.join(
-    options.preserveLineBreaks ? "\n" : ""
-  );
+  const unicode_braille = translatedSegments.join("\n");
   const lines: BrailleCell[][] = [];
   const cells: BrailleCell[] = [];
 
@@ -99,7 +87,7 @@ export const translateText = async (
       }
       if (!isBrailleChar(codepoint)) {
         warnings.push({
-          type: "normalization",
+          code: "non_braille_output",
           message: `Non-braille character in output at line ${lineIndex + 1}.`
         });
         return;
@@ -109,8 +97,8 @@ export const translateText = async (
       cells.push(cell);
       if (codepoint - BRAILLE_BASE > 0b00111111) {
         warnings.push({
-          type: "normalization",
-          message: "Detected 8-dot braille; output truncated to 6-dot view."
+          code: "eight_dot_detected",
+          message: "Detected 8-dot braille; preview is truncated to 6-dot view."
         });
       }
     });
@@ -129,10 +117,8 @@ export const translateText = async (
     metadata: {
       liblouis_version: await getLiblouisVersion(),
       profile_id: profile.id,
-      table_names: profile.tables,
-      normalization_applied: normalization.applied
+      table_names: profile.tables
     },
-    normalization,
     lines
   };
 };

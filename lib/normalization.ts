@@ -6,8 +6,8 @@ export type NormalizationOptions = {
 };
 
 export const DEFAULT_NORMALIZATION_OPTIONS: NormalizationOptions = {
-  normalizeWhitespace: true,
-  smartQuotes: true,
+  normalizeWhitespace: false,
+  smartQuotes: false,
   preserveLineBreaks: true,
   unsupportedHandling: "replace"
 };

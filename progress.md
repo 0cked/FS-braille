@@ -73,18 +73,37 @@
   - Updated page layout to a 2-column stack and re-aligned global styling to match `design-reference.html` (background, skyline overlay, tile gradients, shadows, borders).
   - Added a test to lock in multiline behavior.
   - Updated tiles so they are always white (no hover-to-white shift) while keeping a subtle lift and shadow on hover.
+  - Implemented compliance-first UX: persistent disclaimer banner + “Learn what must be verified” modal.
+  - Implemented Smart Select Grade (Conservative) with transparent rule explanation and explicit “Profile used” summary.
+  - Implemented Compliance Check panel (PASS/WARN/BLOCK) with export gating and local acknowledgements (WARN checkbox; BLOCK requires reason).
+  - Removed auto-translation behavior and removed silent input transformations; added explicit “Normalize typography…” flow with preview + confirmation.
+  - Added unit tests for decideGrade() and complianceCheck().
+  - Adjusted “tiles” and chips to be always white (no blue tint at rest) and keep only lift/shadow on hover.
+  - Fixed input textarea placeholder to render as real line breaks (not literal `\\n`).
+  - Expanded Phrase Library with an “Amenities” category.
 - Files created/modified:
   - app/page.tsx (updated)
   - app/globals.css (updated)
+  - lib/compliance.ts (added)
+  - lib/hash.ts (added)
+  - lib/typography.ts (added)
   - lib/translation.ts (updated)
   - lib/translation.node.ts (updated)
+  - lib/normalization.ts (defaults updated)
+  - scripts/generate-golden.ts (updated)
   - tests/multiline-output.test.ts (added)
+  - tests/compliance.test.ts (added)
+  - lib/phraseLibrary.ts (updated)
+
+### Test Results (2026-01-21)
+- `npm test` passes (liblouis emits table-resolution errors to stderr, but outputs remain deterministic and tests pass).
+- `npm run build` passes.
 
 ## 5-Question Reboot Check
 | Question | Answer |
 |----------|--------|
-| Where am I? | Phase 1 |
-| Where am I going? | Phases 2-5 |
-| What's the goal? | Update braille app UI to match `thehub-designreference` design language (no sidebar) |
+| Where am I? | Phase 4 (Testing & Verification) |
+| Where am I going? | Phase 4 → Phase 5 |
+| What's the goal? | Compliance-first braille translator UX + FASTSIGNS-branded SaaS layout matching `design-reference.html` (no sidebar) |
 | What have I learned? | See findings.md |
 | What have I done? | See above |

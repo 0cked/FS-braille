@@ -1,4 +1,4 @@
-# Task Plan: Resource Site Alignment + Multiline SVG
+# Task Plan: Compliance-First Braille Translator UX
 <!-- 
   WHAT: This is your roadmap for the entire task. Think of it as your "working memory on disk."
   WHY: After 50+ tool calls, your original goals can get forgotten. This file keeps them fresh.
@@ -6,7 +6,13 @@
 -->
 
 ## Goal
-Make the braille app match `design-reference.html` (resource site design language, no sidebar), improve the layout, and ensure SVG output preserves input line breaks (one SVG braille line per input line) for operator intuitiveness.
+Make the braille app safer and less liability-prone for franchise use:
+- Prominent in-product compliance guidance (no claims of compliance/certification).
+- Conservative, transparent Smart Select for Grade 1 vs Grade 2.
+- Deterministic Compliance Check with PASS/WARN/BLOCK and export gating + acknowledgements.
+- No silent input transformations (only explicit, previewed actions).
+- UI aligned to `design-reference.html` design language (no sidebar) with a SaaS-like layout.
+- SVG output preserves input line breaks (one braille line per input line).
 
 ## Current Phase
 Phase 4
@@ -28,13 +34,20 @@ Phase 4
 ### Phase 3: Implementation
 - [x] Update translation to preserve line breaks in SVG (option 1)
 - [x] Rework layout to avoid tall 3-column layout
-- [x] Update styles to match `design-reference.html` tiles/background/shadows
+- [x] Update styles to match `design-reference.html` background/shadows while keeping white tiles
+- [x] Update header layout (remove top pill; logo above title)
+- [x] Add compliance banner + “Learn what must be verified” modal
+- [x] Add Smart Select toggle with transparent rule explanation
+- [x] Add Compliance Check panel with PASS/WARN/BLOCK and export gating
+- [x] Add proofread-friendly export (“Copy for proofread”) and embed export metadata in SVG
+- [x] Remove silent transforms and auto-translation behavior
 - **Status:** complete
 
 ### Phase 4: Testing & Verification
 - [x] Verify multiline input produces multiline SVG (unit test)
 - [ ] Verify layout across desktop/mobile breakpoints (requires local preview; sandbox blocks `next dev` from listening)
 - [x] Verify build/test passes
+- [x] Verify tiles/chips are always white (CSS update; needs deploy visual confirmation)
 - [x] Document test results in progress.md
 - **Status:** in_progress
 
@@ -46,8 +59,8 @@ Phase 4
 
 ## Key Questions
 1. Which files define the current braille app UI layout and styling?
-2. Which portions of `design-reference.html` define the tile/card styling?
-3. Should multiline input always force multiline output (even if liblouis wraps)?
+2. What additional risk flags are needed beyond the initial set?
+3. Should export gating apply to all copy actions or only SVG/download actions?
 
 ## Decisions Made
 | Decision | Rationale |

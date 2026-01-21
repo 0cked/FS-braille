@@ -8,6 +8,8 @@ describe("normalizeInput", () => {
   it("normalizes smart quotes and whitespace", () => {
     const result = normalizeInput("Room\u2019  101", {
       ...DEFAULT_NORMALIZATION_OPTIONS,
+      smartQuotes: true,
+      normalizeWhitespace: true,
       preserveLineBreaks: true
     });
     expect(result.normalized).toBe("Room' 101");
@@ -16,6 +18,7 @@ describe("normalizeInput", () => {
   it("preserves line breaks when enabled", () => {
     const result = normalizeInput("Line 1\nLine   2", {
       ...DEFAULT_NORMALIZATION_OPTIONS,
+      normalizeWhitespace: true,
       preserveLineBreaks: true
     });
     expect(result.normalized).toBe("Line 1\nLine 2");

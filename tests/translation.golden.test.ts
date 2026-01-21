@@ -1,7 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { getProfileById } from "../config/profiles";
-import { DEFAULT_NORMALIZATION_OPTIONS } from "../lib/normalization";
 import { translateText } from "../lib/translation.node";
 
 const loadGolden = (profileId: "en-us-g1" | "en-us-g2") => {
@@ -26,8 +25,7 @@ const runProfileTests = (profileId: "en-us-g1" | "en-us-g2") => {
     it(`${profileId} translates ${testCase.input}`, async () => {
       const result = await translateText(
         testCase.input,
-        profile,
-        DEFAULT_NORMALIZATION_OPTIONS
+        profile
       );
       expect(result.unicode_braille).toBe(testCase.unicode_braille);
       expect(result.cells.map((cell) => cell.bitstring)).toEqual(
