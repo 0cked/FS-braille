@@ -17,6 +17,7 @@ import { DEFAULT_PHRASE_GROUPS } from "../lib/phraseLibrary";
 const AUTO_TRANSLATE_DELAY = 350;
 const UNDO_LIMIT = 10;
 const LOCAL_STORAGE_KEY = "fastsigns_braille_phrases";
+const INPUT_PLACEHOLDER = ["RESTROOM", "ROOM 101", "EXIT", "SUITE 200"].join("\n");
 
 export default function HomePage() {
   const [input, setInput] = useState("");
@@ -210,7 +211,7 @@ export default function HomePage() {
                 id="input-text"
                 className="textarea"
                 value={input}
-                placeholder="RESTROOM\nROOM 101\nEXIT\nSUITE 200"
+                placeholder={INPUT_PLACEHOLDER}
                 onChange={(event) => setInput(event.target.value)}
               />
               <div className="row space-between">

@@ -273,6 +273,10 @@ label {
   resize: vertical;
 }
 
+.textarea::placeholder {
+  white-space: pre-line;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
