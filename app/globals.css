@@ -1,10 +1,11 @@
 :root {
   color-scheme: light;
-  --brand-blue: #1f3cff;
-  --brand-cyan: #00ccff;
-  --brand-blue-dark: #001de1;
-  --brand-blue-light: #5268ff;
-  --bg-base: #fafbfc;
+  --brand-blue: #002e97;
+  --brand-blue-light: #2b55b6;
+  --brand-blue-dark: #001f66;
+  --brand-red: #c81229;
+  --brand-red-light: #e11b35;
+  --bg-base: #f5f7fb;
   --bg-surface: #ffffff;
   --bg-elevated: #ffffff;
   --bg-overlay: #ffffff;
@@ -13,30 +14,17 @@
   --text-muted: #718096;
   --text-disabled: #a0aec0;
   --border-color: rgba(0, 0, 0, 0.06);
-  --tile-bg:
-    radial-gradient(
-      140% 140% at 18% 0%,
-      rgba(0, 204, 255, 0.09) 0%,
-      rgba(0, 204, 255, 0.03) 55%,
-      rgba(30, 144, 255, 0.02) 100%
-    ),
-    linear-gradient(135deg, rgba(0, 204, 255, 0.055), rgba(30, 144, 255, 0.04));
-  --tile-bg-muted:
-    radial-gradient(
-      140% 140% at 18% 0%,
-      rgba(0, 204, 255, 0.072) 0%,
-      rgba(0, 204, 255, 0.024) 55%,
-      rgba(30, 144, 255, 0.016) 100%
-    ),
-    linear-gradient(135deg, rgba(0, 204, 255, 0.044), rgba(30, 144, 255, 0.032));
+  --tile-bg: var(--bg-surface);
+  --tile-bg-muted: #f1f4fb;
   --primary: var(--brand-blue);
   --primary-dark: var(--brand-blue-dark);
   --primary-light: var(--brand-blue-light);
-  --primary-glow: rgba(31, 60, 255, 0.08);
-  --primary-glow-intense: rgba(31, 60, 255, 0.15);
-  --glow-subtle: rgba(31, 60, 255, 0.02);
-  --glow-default: rgba(31, 60, 255, 0.04);
-  --glow-strong: rgba(31, 60, 255, 0.08);
+  --primary-glow: rgba(0, 46, 151, 0.08);
+  --primary-glow-intense: rgba(0, 46, 151, 0.15);
+  --glow-subtle: rgba(0, 46, 151, 0.02);
+  --glow-default: rgba(0, 46, 151, 0.04);
+  --glow-strong: rgba(0, 46, 151, 0.08);
+  --accent: var(--brand-red);
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
@@ -68,10 +56,6 @@
   --space-9: 3rem;
   --max-content-width: 1200px;
   --content-gutter: clamp(1rem, 5vw, 3rem);
-  --skyline-image: url("https://storage.googleapis.com/resourcesite-publicassets-prod/townskyline.svg");
-  --skyline-opacity: 0.12;
-  --skyline-height: clamp(240px, 35vh, 520px);
-  --skyline-scale: 200%;
   font-family: var(--font-body), "IBM Plex Sans", sans-serif;
 }
 
@@ -96,27 +80,11 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(1400px 560px at 15% -10%, rgba(31, 60, 255, 0.12), transparent 72%),
-    radial-gradient(1400px 560px at 85% -12%, rgba(0, 204, 255, 0.09), transparent 74%),
-    linear-gradient(180deg, rgba(248, 250, 255, 0.96) 0%, rgba(243, 252, 255, 0.92) 100%);
+    radial-gradient(1200px 520px at 18% -12%, rgba(0, 46, 151, 0.12), transparent 72%),
+    radial-gradient(1200px 520px at 82% -16%, rgba(200, 18, 41, 0.09), transparent 74%),
+    linear-gradient(180deg, rgba(248, 250, 255, 0.98) 0%, rgba(244, 247, 252, 0.92) 100%);
   z-index: -2;
   pointer-events: none;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: var(--skyline-height);
-  background-image: var(--skyline-image);
-  background-repeat: repeat-x;
-  background-position: bottom center;
-  background-size: auto var(--skyline-scale);
-  opacity: var(--skyline-opacity);
-  pointer-events: none;
-  z-index: -1;
 }
 
 a {
@@ -147,6 +115,26 @@ label {
   gap: var(--space-2);
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.brandLogo {
+  display: block;
+  width: clamp(160px, 22vw, 240px);
+  height: auto;
+}
+
+.brandCopy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: min(520px, 100%);
+}
+
 .title {
   font-size: clamp(28px, 3vw, 40px);
   font-weight: 700;
@@ -169,7 +157,7 @@ label {
   background: var(--tile-bg);
   border-radius: var(--card-radius);
   border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-card), inset 0 1px 0 var(--glow-subtle);
+  box-shadow: var(--shadow-card);
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
@@ -186,11 +174,9 @@ label {
 
 .panel:hover {
   background: var(--bg-overlay);
-  color: var(--text-primary);
   transform: translateY(-3px);
-  border-color: rgba(31, 60, 255, 0.12);
-  box-shadow: 0 0 36px var(--primary-glow), var(--shadow-card-hover),
-    inset 0 1px 0 var(--glow-default);
+  border-color: rgba(0, 46, 151, 0.18);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1), var(--shadow-card-hover);
 }
 
 .panel.secondary {
@@ -226,8 +212,8 @@ label {
 .textarea:focus,
 .select:focus {
   outline: none;
-  border-color: rgba(31, 60, 255, 0.35);
-  box-shadow: 0 0 0 3px rgba(31, 60, 255, 0.12);
+  border-color: rgba(0, 46, 151, 0.38);
+  box-shadow: 0 0 0 3px rgba(0, 46, 151, 0.12);
 }
 
 .textarea {
@@ -265,23 +251,23 @@ label {
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
   color: #ffffff;
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-  box-shadow: 0 12px 24px rgba(31, 60, 255, 0.22);
+  box-shadow: 0 12px 24px rgba(0, 46, 151, 0.22);
 }
 
 .button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 18px 36px rgba(31, 60, 255, 0.28);
+  box-shadow: 0 18px 36px rgba(0, 46, 151, 0.28);
 }
 
 .button.secondary {
   background: var(--bg-surface);
   color: var(--primary);
-  border: 1px solid rgba(31, 60, 255, 0.2);
+  border: 1px solid rgba(0, 46, 151, 0.2);
   box-shadow: none;
 }
 
 .button.secondary:hover {
-  box-shadow: 0 12px 24px rgba(31, 60, 255, 0.1);
+  box-shadow: 0 12px 24px rgba(0, 46, 151, 0.1);
 }
 
 .button.ghost {
@@ -301,8 +287,8 @@ label {
   gap: 6px;
   font-size: 12px;
   color: var(--primary);
-  background: rgba(31, 60, 255, 0.08);
-  border: 1px solid rgba(31, 60, 255, 0.18);
+  background: rgba(0, 46, 151, 0.06);
+  border: 1px solid rgba(0, 46, 151, 0.16);
   border-radius: 999px;
   padding: 6px 10px;
   font-weight: 600;
@@ -351,7 +337,7 @@ details summary {
 .chip {
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(31, 60, 255, 0.08);
+  background: rgba(0, 46, 151, 0.06);
   color: var(--primary);
   font-size: 13px;
   font-weight: 600;
@@ -361,22 +347,23 @@ details summary {
 }
 
 .chip.secondary {
-  background: rgba(16, 185, 129, 0.12);
-  color: #0f766e;
+  background: rgba(200, 18, 41, 0.08);
+  color: var(--accent);
+  border-color: rgba(200, 18, 41, 0.14);
 }
 
 .chip:hover {
-  border-color: rgba(31, 60, 255, 0.3);
+  border-color: rgba(0, 46, 151, 0.28);
   transform: translateY(-1px);
 }
 
 .notice {
   padding: 10px 12px;
-  background: rgba(0, 204, 255, 0.12);
+  background: rgba(0, 46, 151, 0.07);
   color: var(--text-primary);
   border-radius: var(--radius-md);
   font-size: 13px;
-  border: 1px solid rgba(0, 204, 255, 0.2);
+  border: 1px solid rgba(0, 46, 151, 0.14);
 }
 
 .success {

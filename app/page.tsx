@@ -9,11 +9,10 @@ import {
 import {
   DEFAULT_NORMALIZATION_OPTIONS,
   NormalizationOptions,
-  normalizeInput
 } from "../lib/normalization";
 import { translateText, TranslationResult } from "../lib/translation";
 import { DEFAULT_SVG_LAYOUT, SvgLayout, renderBrailleSvg } from "../lib/svg";
-import { runAssist } from "../lib/assist";
+import { DEFAULT_PHRASE_GROUPS } from "../lib/phraseLibrary";
 
 const AUTO_TRANSLATE_DELAY = 350;
 const UNDO_LIMIT = 10;
@@ -27,8 +26,9 @@ export default function HomePage() {
   );
   const [result, setResult] = useState<TranslationResult | null>(null);
   const [isTranslating, setIsTranslating] = useState(false);
-  const [assistEnabled, setAssistEnabled] = useState(true);
   const [undoStack, setUndoStack] = useState<string[]>([]);
+  const [phraseQuery, setPhraseQuery] = useState("");
+  const [phraseGroupId, setPhraseGroupId] = useState<string>("all");
   const [myPhrases, setMyPhrases] = useState<string[]>([]);
   const [newPhrase, setNewPhrase] = useState("");
   const [importJson, setImportJson] = useState("");
@@ -51,6 +51,24 @@ export default function HomePage() {
   }, [myPhrases]);
 
   const profile = useMemo(() => getProfileById(profileId), [profileId]);
+
+  const visiblePhraseGroups = useMemo(() => {
+    const query = phraseQuery.trim().toLowerCase();
+    const groups =
+      phraseGroupId === "all"
+        ? DEFAULT_PHRASE_GROUPS
+        : DEFAULT_PHRASE_GROUPS.filter((group) => group.id === phraseGroupId);
+
+    const matches = (phrase: string) =>
+      !query || phrase.toLowerCase().includes(query);
+
+    return groups
+      .map((group) => ({
+        ...group,
+        phrases: group.phrases.filter(matches)
+      }))
+      .filter((group) => group.phrases.length);
+  }, [phraseGroupId, phraseQuery]);
 
   const applyWithUndo = (nextText: string) => {
     setUndoStack((prev) => [input, ...prev].slice(0, UNDO_LIMIT));
@@ -91,14 +109,6 @@ export default function HomePage() {
     return () => window.clearTimeout(handle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input, profileId, options]);
-
-  const assist = useMemo(() => {
-    if (!assistEnabled) {
-      return null;
-    }
-    const normalization = result?.normalization ?? normalizeInput(input, options);
-    return runAssist(input, normalization, profileId);
-  }, [assistEnabled, input, options, profileId, result]);
 
   const bitPatternString = useMemo(() => {
     if (!result) {
@@ -165,27 +175,36 @@ export default function HomePage() {
   };
 
   const handlePhraseInsert = (phrase: string) => {
-    const next = input ? `${input} ${phrase}` : phrase;
+    const trimmed = phrase.trim();
+    if (!trimmed) {
+      return;
+    }
+    const base = input.trimEnd();
+    const next = base ? `${base}\n${trimmed}` : trimmed;
     applyWithUndo(next);
   };
 
   return (
     <main className="page">
       <header className="header">
-        <span className="badge">FASTSIGNS Braille Translator</span>
-        <h1 className="title">Deterministic braille translation for signage teams</h1>
-        <p className="subtitle">
-          Powered by liblouis tables, with clear outputs for designers and
-          production teams. Assist suggestions are advisory only and never change
-          braille output automatically.
-        </p>
+        <div className="brand">
+          <img className="brandLogo" src="/fastsigns-logo.svg" alt="FASTSIGNS" />
+          <div className="brandCopy">
+            <span className="badge">Braille Translator</span>
+            <h1 className="title">Deterministic braille translation</h1>
+            <p className="subtitle">
+              Enter sign text, choose a profile, then copy outputs for design and
+              production.
+            </p>
+          </div>
+        </div>
       </header>
 
       <section className="grid">
         <div className="panel">
           <h2>Input</h2>
           <div className="field">
-            <label htmlFor="input-text">Sign text</label>
+            <label htmlFor="input-text">Sign text (one line per sign line)</label>
             <textarea
               id="input-text"
               className="textarea"
@@ -197,6 +216,13 @@ export default function HomePage() {
               <div className="row">
                 <button className="button" onClick={handleTranslate}>
                   {isTranslating ? "Translating..." : "Translate"}
+                </button>
+                <button
+                  className="button secondary"
+                  onClick={() => applyWithUndo("")}
+                  disabled={!input.length}
+                >
+                  Clear
                 </button>
                 <button
                   className="button secondary"
@@ -229,80 +255,189 @@ export default function HomePage() {
             <span className="muted">{profile.description}</span>
           </div>
 
-          <div className="field">
-            <label>Normalization</label>
-            <div className="row">
-              <label className="toggle">
-                <input
-                  type="checkbox"
-                  checked={options.normalizeWhitespace}
-                  onChange={(event) =>
-                    setOptions((prev) => ({
-                      ...prev,
-                      normalizeWhitespace: event.target.checked
-                    }))
-                  }
-                />
-                Normalize whitespace
-              </label>
-              <label className="toggle">
-                <input
-                  type="checkbox"
-                  checked={options.smartQuotes}
-                  onChange={(event) =>
-                    setOptions((prev) => ({
-                      ...prev,
-                      smartQuotes: event.target.checked
-                    }))
-                  }
-                />
-                Smart quotes to ASCII
-              </label>
-              <label className="toggle">
-                <input
-                  type="checkbox"
-                  checked={options.preserveLineBreaks}
-                  onChange={(event) =>
-                    setOptions((prev) => ({
-                      ...prev,
-                      preserveLineBreaks: event.target.checked
-                    }))
-                  }
-                />
-                Preserve line breaks
-              </label>
+          <details>
+            <summary>Options</summary>
+            <div className="field">
+              <label>Normalization</label>
+              <div className="row">
+                <label className="toggle">
+                  <input
+                    type="checkbox"
+                    checked={options.normalizeWhitespace}
+                    onChange={(event) =>
+                      setOptions((prev) => ({
+                        ...prev,
+                        normalizeWhitespace: event.target.checked
+                      }))
+                    }
+                  />
+                  Normalize whitespace
+                </label>
+                <label className="toggle">
+                  <input
+                    type="checkbox"
+                    checked={options.smartQuotes}
+                    onChange={(event) =>
+                      setOptions((prev) => ({
+                        ...prev,
+                        smartQuotes: event.target.checked
+                      }))
+                    }
+                  />
+                  Smart quotes to ASCII
+                </label>
+                <label className="toggle">
+                  <input
+                    type="checkbox"
+                    checked={options.preserveLineBreaks}
+                    onChange={(event) =>
+                      setOptions((prev) => ({
+                        ...prev,
+                        preserveLineBreaks: event.target.checked
+                      }))
+                    }
+                  />
+                  Preserve line breaks
+                </label>
+              </div>
+              <div className="row">
+                <label className="toggle">
+                  <input
+                    type="radio"
+                    name="unsupported"
+                    checked={options.unsupportedHandling === "replace"}
+                    onChange={() =>
+                      setOptions((prev) => ({
+                        ...prev,
+                        unsupportedHandling: "replace"
+                      }))
+                    }
+                  />
+                  Replace unsupported with ?
+                </label>
+                <label className="toggle">
+                  <input
+                    type="radio"
+                    name="unsupported"
+                    checked={options.unsupportedHandling === "remove"}
+                    onChange={() =>
+                      setOptions((prev) => ({
+                        ...prev,
+                        unsupportedHandling: "remove"
+                      }))
+                    }
+                  />
+                  Remove unsupported
+                </label>
+              </div>
             </div>
-            <div className="row">
-              <label className="toggle">
-                <input
-                  type="radio"
-                  name="unsupported"
-                  checked={options.unsupportedHandling === "replace"}
-                  onChange={() =>
-                    setOptions((prev) => ({
-                      ...prev,
-                      unsupportedHandling: "replace"
-                    }))
-                  }
-                />
-                Replace unsupported with ?
-              </label>
-              <label className="toggle">
-                <input
-                  type="radio"
-                  name="unsupported"
-                  checked={options.unsupportedHandling === "remove"}
-                  onChange={() =>
-                    setOptions((prev) => ({
-                      ...prev,
-                      unsupportedHandling: "remove"
-                    }))
-                  }
-                />
-                Remove unsupported
-              </label>
-            </div>
+          </details>
+        </div>
+
+        <div className="panel">
+          <h2>Phrase Library</h2>
+          <p className="muted">Click a phrase to insert it as a new line.</p>
+
+          <div className="row">
+            <input
+              className="input"
+              value={phraseQuery}
+              onChange={(event) => setPhraseQuery(event.target.value)}
+              placeholder="Search phrases"
+            />
+            <select
+              className="select"
+              value={phraseGroupId}
+              onChange={(event) => setPhraseGroupId(event.target.value)}
+            >
+              <option value="all">All categories</option>
+              {DEFAULT_PHRASE_GROUPS.map((group) => (
+                <option key={group.id} value={group.id}>
+                  {group.label}
+                </option>
+              ))}
+            </select>
           </div>
+
+          {visiblePhraseGroups.length ? (
+            visiblePhraseGroups.map((group) => (
+              <div key={group.id} className="field">
+                <label>{group.label}</label>
+                <div className="chips">
+                  {group.phrases.map((phrase) => (
+                    <button
+                      key={phrase}
+                      className="chip"
+                      onClick={() => handlePhraseInsert(phrase)}
+                    >
+                      {phrase}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="muted">No matching phrases.</div>
+          )}
+
+          <div className="field">
+            <label>My Phrases</label>
+            <div className="row">
+              <input
+                className="input"
+                value={newPhrase}
+                onChange={(event) => setNewPhrase(event.target.value)}
+                placeholder="Add custom phrase"
+              />
+              <button className="button secondary" onClick={handleAddPhrase}>
+                Add
+              </button>
+            </div>
+            {myPhrases.length ? (
+              <div className="chips">
+                {myPhrases.map((phrase) => (
+                  <button
+                    key={phrase}
+                    className="chip secondary"
+                    onClick={() => handlePhraseInsert(phrase)}
+                  >
+                    {phrase}
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="muted">No custom phrases yet.</div>
+            )}
+          </div>
+
+          <details>
+            <summary>Import / Export</summary>
+            <div className="field">
+              <label>Paste JSON array of phrases</label>
+              <textarea
+                className="textarea"
+                value={importJson}
+                onChange={(event) => setImportJson(event.target.value)}
+                placeholder='["ROOM","SUITE 200","EXIT"]'
+              />
+              <div className="row">
+                <button
+                  className="button secondary"
+                  onClick={handleImportPhrases}
+                >
+                  Import JSON
+                </button>
+                <button
+                  className="button secondary"
+                  onClick={() =>
+                    copyToClipboard("phrases", JSON.stringify(myPhrases, null, 2))
+                  }
+                >
+                  {copiedId === "phrases" ? "Copied" : "Copy JSON"}
+                </button>
+              </div>
+            </div>
+          </details>
         </div>
 
         <div className="panel">
@@ -416,162 +551,9 @@ export default function HomePage() {
       </section>
 
       <section className="panel secondary">
-        <div className="row space-between">
-          <h2>Assist (advisory)</h2>
-          <label className="toggle">
-            <input
-              type="checkbox"
-              checked={assistEnabled}
-              onChange={(event) => setAssistEnabled(event.target.checked)}
-            />
-            Enable Assist (beta)
-          </label>
-        </div>
-        <p className="muted">
-          Assist suggestions never change braille output automatically and are
-          not ADA compliance determinations.
-        </p>
-
-        {assist ? (
+        <details>
+          <summary>Advanced SVG layout</summary>
           <div className="grid">
-            <div className="panel">
-              <h3>Sign Text Coach</h3>
-              {assist.suggestions.length ? (
-                assist.suggestions.map((suggestion) => (
-                  <div key={suggestion.id} className="field">
-                    <strong>{suggestion.title}</strong>
-                    <span className="muted">{suggestion.reason}</span>
-                    <div className="output">{suggestion.after}</div>
-                    <button
-                      className="button secondary"
-                      onClick={() => applyWithUndo(suggestion.after)}
-                    >
-                      Apply suggestion
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <span className="muted">No suggestions right now.</span>
-              )}
-            </div>
-
-            <div className="panel">
-              <h3>Profile Recommendation</h3>
-              <div className="output">
-                Recommended: {assist.recommendation.profileId}
-                {"\n"}
-                {assist.recommendation.reason}
-              </div>
-              {assist.recommendation.profileId !== profileId && (
-                <button
-                  className="button secondary"
-                  onClick={() => setProfileId(assist.recommendation.profileId)}
-                >
-                  Switch profile
-                </button>
-              )}
-              <h3>Risk Flags</h3>
-              {assist.flags.length ? (
-                assist.flags.map((flag) => (
-                  <div key={flag.id} className="notice">
-                    {flag.message}
-                  </div>
-                ))
-              ) : (
-                <div className="notice success">No risk flags detected.</div>
-              )}
-            </div>
-
-            <div className="panel">
-              <h3>Phrase Library</h3>
-              <div className="chips">
-                {assist.phrases.map((phrase) => (
-                  <button
-                    key={phrase}
-                    className="chip"
-                    onClick={() => handlePhraseInsert(phrase)}
-                  >
-                    {phrase}
-                  </button>
-                ))}
-              </div>
-              <h4>My Phrases</h4>
-              <div className="row">
-                <input
-                  className="input"
-                  value={newPhrase}
-                  onChange={(event) => setNewPhrase(event.target.value)}
-                  placeholder="Add custom phrase"
-                />
-                <button className="button secondary" onClick={handleAddPhrase}>
-                  Add
-                </button>
-              </div>
-              <div className="chips">
-                {myPhrases.map((phrase) => (
-                  <button
-                    key={phrase}
-                    className="chip secondary"
-                    onClick={() => handlePhraseInsert(phrase)}
-                  >
-                    {phrase}
-                  </button>
-                ))}
-              </div>
-              <div className="field">
-                <label>Import / Export</label>
-                <textarea
-                  className="textarea"
-                  value={importJson}
-                  onChange={(event) => setImportJson(event.target.value)}
-                  placeholder="Paste JSON array of phrases"
-                />
-                <div className="row">
-                  <button
-                    className="button secondary"
-                    onClick={handleImportPhrases}
-                  >
-                    Import JSON
-                  </button>
-                  <button
-                    className="button secondary"
-                    onClick={() =>
-                      copyToClipboard("phrases", JSON.stringify(myPhrases, null, 2))
-                    }
-                  >
-                    {copiedId === "phrases" ? "Copied" : "Copy JSON"}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div className="panel">
-              <h3>How your input was interpreted</h3>
-              <div className="output">
-                {assist.explanation.length
-                  ? assist.explanation.join("\n")
-                  : "Estimated interpretation unavailable."}
-              </div>
-              {result?.normalization.diff ? (
-                <div className="field">
-                  <strong>What changed?</strong>
-                  <div className="output">
-                    Before:\n{result.normalization.diff.before}\n\nAfter:\n{result.normalization.diff.after}
-                  </div>
-                </div>
-              ) : (
-                <span className="muted">No normalization changes.</span>
-              )}
-            </div>
-          </div>
-        ) : (
-          <div className="muted">Assist is disabled.</div>
-        )}
-      </section>
-
-      <section className="panel">
-        <h2>Advanced SVG layout</h2>
-        <div className="grid">
           <div className="field">
             <label>Cell width (mm)</label>
             <input
@@ -698,7 +680,8 @@ export default function HomePage() {
               }
             />
           </div>
-        </div>
+          </div>
+        </details>
       </section>
     </main>
   );

@@ -36,12 +36,32 @@
 ## Test Results
 | Test | Input | Expected | Actual | Status |
 |------|-------|----------|--------|--------|
-|      |       |          |        |        |
+| npm test | vitest | Pass | Pass (stderr noise about missing tables) | ✅ |
+| npm run build | next build | Pass | Pass | ✅ |
+| npm run lint | next lint | Non-interactive lint run | Prompted to configure ESLint | ⚠️ |
 
 ## Error Log
 | Timestamp | Error | Attempt | Resolution |
 |-----------|-------|---------|------------|
 | 2026-01-21 00:00 | session-catchup script missing at `${CLAUDE_PLUGIN_ROOT}` | 1 | Used known template path under `/home/jacob/.codex/skills/planning-with-files` |
+| 2026-01-21 10:13 | `npm run lint` prompts for ESLint setup | 1 | Skipped; build + tests still pass |
+
+### FASTSIGNS Branding Refresh (New Work)
+- **Status:** in_progress
+- Actions taken:
+  - Confirmed Assist panel and Phrase Library are currently coupled in `app/page.tsx`.
+  - Downloaded official FASTSIGNS logo SVG into `public/fastsigns-logo.svg` (required escalated permissions due to network restrictions).
+  - Updated global styling so tiles/panels render as white surfaces.
+  - Added FASTSIGNS logo to the header for consistent branding.
+  - Removed the Assist panel and refactored Phrase Library into a standalone panel with categories + search.
+  - Improved UX by adding a Clear button and moving advanced options into collapsible sections.
+  - Files created/modified:
+  - app/globals.css (updated)
+  - app/page.tsx (updated)
+  - lib/phraseLibrary.ts (added)
+  - public/fastsigns-logo.svg (added)
+  - Notes:
+    - `npm ci` reports dependency vulnerabilities (from audit output); not addressed as part of this UI change.
 
 ## 5-Question Reboot Check
 | Question | Answer |

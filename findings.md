@@ -5,12 +5,17 @@
   WHEN: Update after ANY discovery, especially after 2 view/browser/search operations (2-Action Rule).
 -->
 
-## Requirements
-- Match the design language from `thehub-designreference`.
-- Exclude any sidebar elements from the reference.
-- Apply tiles, colors, background, and overall visual style to the braille app UI.
+## Requirements (Current)
+- Tiles/panels should be white (not blue gradient tiles).
+- Use the official FASTSIGNS logo in the UI for branding.
+- Remove the "Assist" section/panel.
+- Keep Phrase Library, and expand it.
+- Overall UX should be more intuitive/easy for FASTSIGNS franchisees.
 
 ## Research Findings
+- "Assist" is implemented in `app/page.tsx` via `runAssist()` from `lib/assist.ts`, and the Phrase Library currently lives inside the Assist section.
+- Phrase Library defaults come from `COMMON_PHRASES` in `lib/assist.ts` (currently a short list of common signage phrases).
+- Official FASTSIGNS logo SVG contains brand red `rgb(200,18,41)` and brand blue `rgb(0,46,151)` (from the downloaded SVG).
 - Located planning templates at `/home/jacob/.codex/skills/planning-with-files/templates` due to missing `CLAUDE_PLUGIN_ROOT` env var.
 - `homepage-static.html` defines design tokens and tile styles (gradients, border radii, shadows, hover lift).
 - `department_operations.html` repeats the same base palette and adds a skyline overlay layer at the bottom of the page.
@@ -20,15 +25,15 @@
 ## Technical Decisions
 | Decision | Rationale |
 |----------|-----------|
-| Use file-based plan/logs (task_plan.md/findings.md/progress.md) | Required by planning-with-files skill |
-| Re-skin existing classes in `app/globals.css` rather than changing markup | Faster alignment with reference while keeping app layout intact |
-| Apply thehub gradients and tile backgrounds to core containers | Matches requested tiles/colors/background without adding a sidebar |
-| Add skyline overlay via `body::after` | Matches reference atmosphere without changing layout structure |
+| Keep Phrase Library independent of Assist | Allows removing the Assist panel without losing the core phrase workflow |
+| Store the FASTSIGNS logo in `public/fastsigns-logo.svg` | Avoids runtime network dependency and ensures consistent branding |
+| Insert phrases as new lines | Better matches franchise sign workflows (one line per sign line) |
 
 ## Issues Encountered
 | Issue | Resolution |
 |-------|------------|
 | session-catchup script path failed because `CLAUDE_PLUGIN_ROOT` is empty | Used known template path under `/home/jacob/.codex/skills/planning-with-files` |
+| Network blocked when fetching logo | Re-ran `curl` with escalated permissions to download the SVG |
 
 ## Resources
 - `thehub-designreference` (design files to inspect)

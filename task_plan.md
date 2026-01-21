@@ -1,4 +1,4 @@
-# Task Plan: Align Braille App UI With thehub Design Reference
+# Task Plan: FASTSIGNS-Branded Braille App Refresh
 <!-- 
   WHAT: This is your roadmap for the entire task. Think of it as your "working memory on disk."
   WHY: After 50+ tool calls, your original goals can get forgotten. This file keeps them fresh.
@@ -6,48 +6,53 @@
 -->
 
 ## Goal
-Update the braille app UI to match the design language in `thehub-designreference` (tiles, colors, background, overall look) while excluding the sidebar.
+Make the braille app more intuitive for FASTSIGNS franchisees:
+- Tiles should be white (not blue/gradient tiles).
+- Use the official FASTSIGNS logo for branding.
+- Remove the "Assist" section.
+- Keep and expand the Phrase Library.
 
 ## Current Phase
-Phase 3
+Phase 5
 
 ## Phases
 
 ### Phase 1: Requirements & Discovery
-- [x] Understand user intent
-- [x] Identify constraints and requirements
-- [x] Inspect design reference files and app UI structure
-- [x] Document findings in findings.md
+- [x] Confirm what "tiles" map to in UI (CSS + components)
+- [x] Identify where the Assist panel is rendered
+- [x] Identify where Phrase Library data comes from
 - **Status:** complete
 
 ### Phase 2: Planning & Structure
-- [x] Define UI changes and mapping from reference to app components
-- [x] Identify files/components/styles to update
-- [x] Document decisions with rationale
+- [x] Decide how to keep Phrase Library without Assist
+- [x] Decide where/how to render the FASTSIGNS logo
+- [x] Decide minimal UX improvements for franchisees
 - **Status:** complete
 
 ### Phase 3: Implementation
-- [x] Update styles/components to match reference design language
-- [ ] Ensure responsiveness and usability
-- [x] Keep sidebar excluded
-- **Status:** in_progress
+- [x] Update styles so panels/tiles are white
+- [x] Add FASTSIGNS logo asset + header layout
+- [x] Remove Assist section and any unused logic
+- [x] Expand Phrase Library content and UI
+- **Status:** complete
 
 ### Phase 4: Testing & Verification
-- [ ] Verify updated UI matches reference (tiles, colors, background)
-- [ ] Check desktop and mobile rendering
-- [ ] Document test results in progress.md
-- **Status:** pending
+- [x] Verify tile backgrounds are white and readable
+- [x] Verify phrase insertion behavior is correct
+- [x] Verify build/test passes
+- [x] Document test results in progress.md
+- **Status:** complete
 
 ### Phase 5: Delivery
-- [ ] Review modified files
-- [ ] Summarize changes for user
-- [ ] Provide next steps if needed
-- **Status:** pending
+- [x] Review modified files
+- [x] Summarize changes for user
+- [x] Provide next steps if needed
+- **Status:** complete
 
 ## Key Questions
 1. Which files define the current braille app UI layout and styling?
-2. What specific colors/spacing/typography/tiles are shown in the reference files?
-3. Are there any constraints in the existing design system we must preserve?
+2. What does "more intuitive for franchisees" mean in this app (workflow)?
+3. What should Phrase Library include by default for FASTSIGNS use cases?
 
 ## Decisions Made
 | Decision | Rationale |
@@ -63,3 +68,6 @@ Phase 3
 - Update phase status as you progress: pending → in_progress → complete
 - Re-read this plan before major decisions (attention manipulation)
 - Log ALL errors - they help avoid repetition
+
+## Archived Context
+- Previous plan focused on aligning the UI to `thehub-designreference`. This task supersedes that effort with a simpler, FASTSIGNS-branded UI update.
