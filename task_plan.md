@@ -33,7 +33,7 @@ Phase 4
 
 ### Phase 4: Testing & Verification
 - [x] Verify multiline input produces multiline SVG (unit test)
-- [ ] Verify layout across desktop/mobile breakpoints (needs visual check in browser)
+- [ ] Verify layout across desktop/mobile breakpoints (requires local preview; sandbox blocks `next dev` from listening)
 - [x] Verify build/test passes
 - [x] Document test results in progress.md
 - **Status:** in_progress

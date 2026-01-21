@@ -45,6 +45,7 @@
 |-----------|-------|---------|------------|
 | 2026-01-21 00:00 | session-catchup script missing at `${CLAUDE_PLUGIN_ROOT}` | 1 | Used known template path under `/home/jacob/.codex/skills/planning-with-files` |
 | 2026-01-21 10:13 | `npm run lint` prompts for ESLint setup | 1 | Skipped; build + tests still pass |
+| 2026-01-21 10:41 | `npm run dev` fails with `listen EPERM` | 1 | Cannot run local server in sandbox; rely on CSS + deploy preview |
 
 ### FASTSIGNS Branding Refresh (New Work)
 - **Status:** in_progress
@@ -71,6 +72,7 @@
   - Updated translation logic to translate line-by-line when preserving line breaks so SVG lines match input lines.
   - Updated page layout to a 2-column stack and re-aligned global styling to match `design-reference.html` (background, skyline overlay, tile gradients, shadows, borders).
   - Added a test to lock in multiline behavior.
+  - Updated tiles so they are always white (no hover-to-white shift) while keeping a subtle lift and shadow on hover.
 - Files created/modified:
   - app/page.tsx (updated)
   - app/globals.css (updated)

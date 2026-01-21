@@ -203,10 +203,10 @@ label {
 }
 
 .panel {
-  background: var(--tile-bg), var(--bg-surface);
+  background: var(--bg-surface);
   border-radius: var(--card-radius);
   border: 1px solid var(--card-border);
-  box-shadow: var(--shadow-card), inset 0 1px 0 var(--glow-subtle);
+  box-shadow: var(--shadow-card);
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
@@ -222,16 +222,15 @@ label {
 }
 
 .panel:hover {
-  background: var(--bg-overlay);
-  transform: translateY(-3px);
+  background: var(--bg-surface);
+  transform: translateY(-4px);
   border-color: rgba(31, 60, 255, 0.12);
-  box-shadow: 0 0 36px var(--primary-glow), var(--shadow-card-hover),
-    inset 0 1px 0 var(--glow-default);
+  box-shadow: var(--shadow-card-hover);
 }
 
 .panel.secondary {
-  background: var(--tile-bg-muted), var(--bg-surface);
-  box-shadow: var(--shadow-subtle);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-card);
 }
 
 .panel h2 {
