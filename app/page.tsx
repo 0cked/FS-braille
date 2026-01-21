@@ -9,7 +9,7 @@ import {
 import { translateText, TranslationResult } from "../lib/translation";
 import { DEFAULT_SVG_LAYOUT, SvgLayout, renderBrailleSvg } from "../lib/svg";
 import { DEFAULT_PHRASE_GROUPS } from "../lib/phraseLibrary";
-import { complianceCheck, decideGrade, COMPLIANCE_DOCUMENTATION } from "../lib/compliance";
+import { complianceCheck, COMPLIANCE_DOCUMENTATION } from "../lib/compliance";
 import { fnv1a32 } from "../lib/hash";
 import { normalizeTypography } from "../lib/typography";
 import { resetLiblouis } from "../lib/louis";
@@ -22,8 +22,7 @@ SUITE 200`;
 
 export default function HomePage() {
   const [input, setInput] = useState("");
-  const [manualProfileId, setManualProfileId] = useState(DEFAULT_PROFILE_ID);
-  const [smartSelectEnabled, setSmartSelectEnabled] = useState(true);
+  const [profileId, setProfileId] = useState(DEFAULT_PROFILE_ID);
   const [result, setResult] = useState<TranslationResult | null>(null);
   const [isTranslating, setIsTranslating] = useState(false);
   const [lastGeneratedAt, setLastGeneratedAt] = useState<string | null>(null);
@@ -34,26 +33,18 @@ export default function HomePage() {
   const [normalizeModalOpen, setNormalizeModalOpen] = useState(false);
   const [translateError, setTranslateError] = useState<string | null>(null);
 
-  const smartSelectDecision = useMemo(() => decideGrade(input), [input]);
-  const effectiveProfileId = smartSelectEnabled
-    ? smartSelectDecision.grade === "grade2"
-      ? "en-us-g2"
-      : "en-us-g1"
-    : manualProfileId;
   const profile = useMemo(
-    () => getProfileById(effectiveProfileId),
-    [effectiveProfileId]
+    () => getProfileById(profileId),
+    [profileId]
   );
 
   const compliance = useMemo(
     () =>
       complianceCheck({
         text: input,
-        profileId: effectiveProfileId,
-        smartSelectEnabled,
-        smartSelectDecision
+        profileId: profileId
       }),
-    [effectiveProfileId, input, smartSelectDecision, smartSelectEnabled]
+    [profileId, input]
   );
 
   const inputHash = useMemo(() => fnv1a32(input), [input]);
@@ -147,15 +138,7 @@ export default function HomePage() {
     () => ({
       generated_at: lastGeneratedAt,
       input_hash: inputHash,
-      profile_used: effectiveProfileId,
-      smart_select: smartSelectEnabled
-        ? {
-            enabled: true,
-            grade: smartSelectDecision.grade,
-            rule_id: smartSelectDecision.ruleId,
-            reason: smartSelectDecision.reason
-          }
-        : { enabled: false },
+      profile_used: profileId,
       compliance: {
         level: compliance.level,
         flags: compliance.flags.map((flag) => ({
@@ -167,13 +150,9 @@ export default function HomePage() {
     [
       compliance.flags,
       compliance.level,
-      effectiveProfileId,
+      profileId,
       inputHash,
-      lastGeneratedAt,
-      smartSelectDecision.grade,
-      smartSelectDecision.reason,
-      smartSelectDecision.ruleId,
-      smartSelectEnabled
+      lastGeneratedAt
     ]
   );
 
@@ -202,13 +181,6 @@ export default function HomePage() {
     lines.push(
       `Profile used: ${profile.grade === "g1" ? "Grade 1 (Uncontracted)" : "Grade 2 (Contracted)"}`
     );
-    lines.push(
-      `Smart Select Grade (Conservative): ${smartSelectEnabled ? "ON" : "OFF"}`
-    );
-    if (smartSelectEnabled) {
-      lines.push(`Smart Select rule: ${smartSelectDecision.ruleId}`);
-      lines.push(`Smart Select reason: ${smartSelectDecision.reason}`);
-    }
     lines.push(`Compliance Check: ${compliance.level}`);
     if (compliance.flags.length) {
       compliance.flags.forEach((flag) => {
@@ -238,10 +210,7 @@ export default function HomePage() {
     inputHash,
     lastGeneratedAt,
     profile.grade,
-    result,
-    smartSelectDecision.reason,
-    smartSelectDecision.ruleId,
-    smartSelectEnabled
+    result
   ]);
 
   const copyToClipboard = async (id: string, value: string) => {
@@ -330,59 +299,36 @@ export default function HomePage() {
             </div>
 
             <div className="field">
-              <label htmlFor="profile">Grade selection</label>
-              <div className="row space-between">
-                <label className="switch">
-                  <input
-                    type="checkbox"
-                    checked={smartSelectEnabled}
-                    onChange={(event) => setSmartSelectEnabled(event.target.checked)}
-                  />
-                  <span className="switchTrack" aria-hidden="true">
-                    <span className="switchThumb" />
-                  </span>
-                  <span>Smart Select Grade (Conservative)</span>
-                </label>
-                <span className="badge">
-                  Used: {profile.grade === "g1" ? "Grade 1" : "Grade 2"}
-                </span>
-              </div>
-              <span className="muted">
-                Chooses Grade 1 for short/technical labels; Grade 2 for sentence-like
-                text. Always verify.
-              </span>
+              <label htmlFor="profile">Braille grade</label>
               <select
                 id="profile"
                 className="select"
-                value={smartSelectEnabled ? "auto" : manualProfileId}
-                disabled={smartSelectEnabled}
-                onChange={(event) => {
-                  const next = event.target.value;
-                  if (next === "auto") {
-                    setSmartSelectEnabled(true);
-                    return;
-                  }
-                  setSmartSelectEnabled(false);
-                  setManualProfileId(next as typeof manualProfileId);
-                }}
+                value={profileId}
+                onChange={(event) => setProfileId(event.target.value as typeof profileId)}
               >
-                <option value="auto">Auto (Smart Select)</option>
                 {BRAILLE_PROFILES.map((profileOption) => (
                   <option key={profileOption.id} value={profileOption.id}>
                     {profileOption.label}
                   </option>
                 ))}
               </select>
-              <span className="muted">{profile.description}</span>
-              {smartSelectEnabled ? (
-                <details>
-                  <summary>Why this grade?</summary>
-                  <div className="output">
-                    {smartSelectDecision.reason}
-                    {"\n"}Rule: {smartSelectDecision.ruleId}
-                  </div>
-                </details>
-              ) : null}
+
+              <div className="gradeExplanation">
+                <div className="gradeExplanationItem">
+                  <strong>Grade 1 (Uncontracted)</strong>
+                  <p className="muted">
+                    Best for: Room numbers, short labels, technical content (URLs, emails, codes), abbreviations.
+                    Each letter and symbol is transcribed individually without contractions.
+                  </p>
+                </div>
+                <div className="gradeExplanationItem">
+                  <strong>Grade 2 (Contracted)</strong>
+                  <p className="muted">
+                    Best for: Full sentences, longer descriptive text, paragraphs.
+                    Uses contractions and abbreviations to save space and increase reading speed.
+                  </p>
+                </div>
+              </div>
             </div>
 
             <details>
@@ -463,14 +409,6 @@ export default function HomePage() {
 	                    {profile.grade === "g1"
 	                      ? "Grade 1 (Uncontracted)"
 	                      : "Grade 2 (Contracted)"}
-	                  </div>
-	                </div>
-	                <div className="summaryItem">
-	                  <div className="muted">Smart Select</div>
-	                  <div>
-	                    {smartSelectEnabled
-	                      ? `ON (${smartSelectDecision.ruleId})`
-	                      : "OFF"}
 	                  </div>
 	                </div>
 	                <div className="summaryItem">
@@ -638,8 +576,6 @@ export default function HomePage() {
               <div className="output">
                 Tables: {result?.metadata.table_names.join(", ") || "—"}
                 {"\n"}Input hash: {inputHash}
-                {"\n"}Smart Select: {smartSelectEnabled ? "ON" : "OFF"}
-                {smartSelectEnabled ? `\nRule: ${smartSelectDecision.ruleId}` : ""}
                 {"\n"}Compliance Check: {compliance.level}
               </div>
               {result?.warnings.length ? (
@@ -830,8 +766,8 @@ export default function HomePage() {
                 <div className="muted">
                   Grade choice depends on context. Short labels, codes, and
                   technical strings often require Grade 1. Sentence-like text may
-                  be more readable in Grade 2. Smart Select is a conservative helper
-                  and must be verified.
+                  be more readable in Grade 2. Always verify your grade selection
+                  is appropriate for the sign content.
                 </div>
               </div>
 

@@ -389,8 +389,6 @@ export type ComplianceReport = {
 type ComplianceInput = {
   text: string;
   profileId: "en-us-g1" | "en-us-g2";
-  smartSelectEnabled: boolean;
-  smartSelectDecision?: GradeDecision;
 };
 
 const hasEmojiOrPictograph = (text: string) => {
@@ -573,15 +571,14 @@ export const complianceCheck = (input: ComplianceInput): ComplianceReport => {
   }
 
   if (
-    input.smartSelectEnabled &&
-    input.smartSelectDecision?.grade === "grade2" &&
+    input.profileId === "en-us-g2" &&
     trimmed.length <= 25
   ) {
     flags.push({
       code: "grade2_short_label_risk",
       level: "WARN",
       message:
-        "Smart Select chose Grade 2 for a short label. Verify grade choice; Grade 1 is often safer for short labels."
+        "Grade 2 selected for a short label. Verify grade choice; Grade 1 is often safer for short labels."
     });
   }
 
