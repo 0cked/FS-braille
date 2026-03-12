@@ -1,0 +1,156 @@
+# Agent Status
+
+## Status Legend
+- `TODO`: not started
+- `DOING`: currently in progress (max one)
+- `DONE`: completed and validated
+- `BLOCKED`: cannot proceed without external unblock
+
+## Execution Cursor
+- `mode`: linear
+- `last_completed_id`: ADA-006
+- `next_id`: ADA-007
+- `last_updated_utc`: 2026-02-12
+
+## Commit Convention
+- Use: `ADA-XXX: short description`
+
+## Session Handoff Template
+- Completed:
+- Validation run:
+- Files changed:
+- Decisions:
+- Next ID:
+- Blockers:
+
+## Backlog Status
+- [DONE] ADA-001: Create `/Users/jacob/Projects/FS-braille/docs/agent-plan.md` with all IDs.
+- [DONE] ADA-002: Create `/Users/jacob/Projects/FS-braille/docs/agent-status.md` with status legend (`TODO/DOING/DONE/BLOCKED`).
+- [DONE] ADA-003: Create `/Users/jacob/Projects/FS-braille/docs/decision-log.md` template.
+- [DONE] ADA-004: Add session handoff template to `agent-status.md`.
+- [DONE] ADA-005: Add commit naming convention: `ADA-XXX: short description`.
+- [DONE] ADA-006: Add ADR index file at `/Users/jacob/Projects/FS-braille/docs/adr/README.md`.
+- [TODO] ADA-007: Write ADR-001 current architecture baseline.
+- [TODO] ADA-008: Write ADR-002 target architecture (multi-tenant ADA platform).
+- [TODO] ADA-009: Add environment variable matrix doc.
+- [TODO] ADA-010: Add CI baseline job for build and tests.
+- [TODO] ADA-011: Create standards source registry doc with canonical URLs.
+- [TODO] ADA-012: Add ADA scoping requirement list with requirement IDs.
+- [TODO] ADA-013: Add ADA technical signage/braille requirement list with IDs.
+- [TODO] ADA-014: Add BANA signage guidance requirement list with IDs.
+- [TODO] ADA-015: Add WCAG 2.2 AA requirements for the app UI.
+- [TODO] ADA-016: Create requirement schema (`REQ-ID`, source, severity, citation, test).
+- [TODO] ADA-017: Build requirement-to-rule mapping table.
+- [TODO] ADA-018: Create FASTSIGNS sign taxonomy (types, contexts, exclusions).
+- [TODO] ADA-019: Create jurisdiction overlay model (federal/state/local/AHJ).
+- [TODO] ADA-020: Create role matrix (CSR, Designer, Proofreader, Production, Installer, Manager, Admin).
+- [TODO] ADA-021: Create workflow stage definitions and gate rules.
+- [TODO] ADA-022: Create exception/waiver policy model and approval matrix.
+- [TODO] ADA-023: Create audit/retention policy doc for job artifacts.
+- [TODO] ADA-024: Freeze v1 requirements baseline in `decision-log.md`.
+- [TODO] ADA-025: Add PostgreSQL local/dev setup.
+- [TODO] ADA-026: Add ORM/migration tooling setup.
+- [TODO] ADA-027: Create migration: `organizations`.
+- [TODO] ADA-028: Create migration: `franchises` and `locations`.
+- [TODO] ADA-029: Create migration: `users`.
+- [TODO] ADA-030: Create migration: `memberships`.
+- [TODO] ADA-031: Create migration: `roles` and `permissions`.
+- [TODO] ADA-032: Seed default roles and permissions.
+- [TODO] ADA-033: Integrate authentication provider.
+- [TODO] ADA-034: Build session-to-user resolver middleware.
+- [TODO] ADA-035: Build tenant context resolver middleware.
+- [TODO] ADA-036: Build RBAC authorization guard utility.
+- [TODO] ADA-037: Create migration: `audit_events` (append-only).
+- [TODO] ADA-038: Implement centralized audit writer service.
+- [TODO] ADA-039: Create migration: `projects`.
+- [TODO] ADA-040: Create migration: `jobs`.
+- [TODO] ADA-041: Create migration: `signs`.
+- [TODO] ADA-042: Create migration: `sign_revisions`.
+- [TODO] ADA-043: Create migration: `artifacts`.
+- [TODO] ADA-044: Create migration: `workflow_events`.
+- [TODO] ADA-045: Create migration: `notifications`.
+- [TODO] ADA-046: Implement repository/data-access layer for core entities.
+- [TODO] ADA-047: Implement API error envelope and validation helpers.
+- [TODO] ADA-048: Add health/readiness endpoints.
+- [TODO] ADA-049: Add auth + tenancy boundary integration tests.
+- [TODO] ADA-050: Add seed script for demo org/franchise/users.
+- [TODO] ADA-051: Add app shell for multi-page workflow.
+- [TODO] ADA-052: Add organization/location switcher UI.
+- [TODO] ADA-053: Build projects list + create page.
+- [TODO] ADA-054: Build jobs list + create page.
+- [TODO] ADA-055: Build job detail page with sign table.
+- [TODO] ADA-056: Build sign create/edit form.
+- [TODO] ADA-057: Extract current braille translation logic into service module.
+- [TODO] ADA-058: Add translation API endpoint backed by service module.
+- [TODO] ADA-059: Persist translation output + metadata hash per revision.
+- [TODO] ADA-060: Add autosave for sign editing.
+- [TODO] ADA-061: Add optimistic concurrency conflict handling.
+- [TODO] ADA-062: Add revision timeline API.
+- [TODO] ADA-063: Add revision diff UI.
+- [TODO] ADA-064: Add intake completeness checklist model/API.
+- [TODO] ADA-065: Add intake checklist UI with gating hints.
+- [TODO] ADA-066: Create template library tables and CRUD API.
+- [TODO] ADA-067: Build template library UI and apply-to-sign flow.
+- [TODO] ADA-068: Add search/filter/sort across projects/jobs/signs.
+- [TODO] ADA-069: Add in-app notification center.
+- [TODO] ADA-070: Add end-to-end test: create job -> add sign -> translate -> save revision.
+- [TODO] ADA-071: Define rule engine interface (input/output/trace contract).
+- [TODO] ADA-072: Implement evaluator runtime with deterministic ordering.
+- [TODO] ADA-073: Implement rule-pack loader (versioned packs).
+- [TODO] ADA-074: Encode ADA scoping rules pack v1.
+- [TODO] ADA-075: Encode ADA technical signage/braille rules pack v1.
+- [TODO] ADA-076: Encode BANA advisory rules pack v1.
+- [TODO] ADA-077: Implement jurisdiction overlay loading and merge rules.
+- [TODO] ADA-078: Implement finding citation schema and storage.
+- [TODO] ADA-079: Implement deterministic trace payload persistence.
+- [TODO] ADA-080: Add compliance evaluation API.
+- [TODO] ADA-081: Run evaluation automatically on sign save and translation.
+- [TODO] ADA-082: Enforce BLOCK findings as workflow gate.
+- [TODO] ADA-083: Add remediation hint generator service.
+- [TODO] ADA-084: Create override request table/API.
+- [TODO] ADA-085: Create override approval table/API.
+- [TODO] ADA-086: Build findings + remediation + override UI.
+- [TODO] ADA-087: Add regression fixtures for rule outcomes.
+- [TODO] ADA-088: Add snapshot tests for deterministic traces.
+- [TODO] ADA-089: Pin and tag rule pack version `v1.0.0`.
+- [TODO] ADA-090: Compliance module signoff checkpoint.
+- [TODO] ADA-091: Create proof packet domain model and storage.
+- [TODO] ADA-092: Add packet generation worker queue.
+- [TODO] ADA-093: Implement SVG packet template v2 with embedded metadata.
+- [TODO] ADA-094: Implement PDF proof packet template.
+- [TODO] ADA-095: Implement JSON machine-readable proof artifact.
+- [TODO] ADA-096: Add packet generation API endpoint.
+- [TODO] ADA-097: Add dual-proofread assignment model.
+- [TODO] ADA-098: Build proofread/signoff UI.
+- [TODO] ADA-099: Implement workflow state machine transitions.
+- [TODO] ADA-100: Implement SLA timers + escalation notifications.
+- [TODO] ADA-101: Enforce unresolved finding gate before production-ready.
+- [TODO] ADA-102: Build audit/exception export (CSV/PDF/JSON).
+- [TODO] ADA-103: Run end-to-end approval UAT script.
+- [TODO] ADA-104: Create fabrication preset model/API.
+- [TODO] ADA-105: Build fabrication preset management UI.
+- [TODO] ADA-106: Implement production traveler generator.
+- [TODO] ADA-107: Implement vendor batch export adapters.
+- [TODO] ADA-108: Create install checklist model/API.
+- [TODO] ADA-109: Build mobile-friendly install checklist UI.
+- [TODO] ADA-110: Implement photo evidence upload/storage.
+- [TODO] ADA-111: Run post-install compliance verification.
+- [TODO] ADA-112: Implement reopen/rework loop.
+- [TODO] ADA-113: Generate installation closeout report artifact.
+- [TODO] ADA-114: Instrument lifecycle events (intake, fail/pass, overrides, rework, install).
+- [TODO] ADA-115: Build analytics ETL/job aggregation.
+- [TODO] ADA-116: Build KPI API (first-pass, rework, SLA, override rate).
+- [TODO] ADA-117: Build franchise dashboard UI.
+- [TODO] ADA-118: Build corporate/region dashboard UI.
+- [TODO] ADA-119: Build root-cause analytics for defects/rework.
+- [TODO] ADA-120: Run security threat model and remediate critical/high items.
+- [TODO] ADA-121: Implement backup/restore automation and run drill.
+- [TODO] ADA-122: Run load/performance tests on critical workflows.
+- [TODO] ADA-123: Run app accessibility audit and remediate P1/P2 issues.
+- [TODO] ADA-124: Prepare pilot tenant onboarding package.
+- [TODO] ADA-125: Launch pilot wave 1 (3-5 franchises).
+- [TODO] ADA-126: Collect pilot findings and triage defects.
+- [TODO] ADA-127: Execute remediation sprint.
+- [TODO] ADA-128: Launch pilot wave 2.
+- [TODO] ADA-129: Execute GA checklist and production cutover.
+- [TODO] ADA-130: Run 30-day stabilization review and publish v1 closeout report.

@@ -4,13 +4,64 @@ Deterministic braille translation for signage teams, powered by liblouis tables.
 
 **Core rule:** liblouis is the single source of truth for braille output. Assist features are advisory only and never modify braille patterns automatically.
 
-## Deploy to Vercel
+## Static Export / Bucket Hosting
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=YOUR_REPO_URL)
+This app can be deployed as a plain static site. There is no server-side
+translation path; liblouis runs entirely in the browser and loads its assets
+from `public/`.
 
-1. Push this repo to GitHub.
-2. Click the button above and connect the repo in Vercel.
-3. Deploy (no extra configuration required).
+Build the export:
+
+```bash
+npm install
+npm run build
+```
+
+Upload the contents of `out/` to your bucket or CDN origin.
+
+Common examples:
+
+- Amazon S3 static website hosting
+- Cloudflare R2 + custom domain
+- Google Cloud Storage static website hosting
+- Any CDN/origin that can serve `index.html`, JS, CSS, SVG, and the
+  `liblouis` table files
+
+For local preview after building:
+
+```bash
+npm start
+```
+
+### Single-file HTML export
+
+To generate one self-contained HTML file:
+
+```bash
+npm run build:standalone
+```
+
+The output file is:
+
+- `dist/fs-braille-standalone.html`
+
+That file embeds the UI, CSS, fonts, FASTSIGNS logo, liblouis browser build,
+and required table files into a single HTML document.
+
+### Optional subpath hosting
+
+By default, the export assumes the site is served from the domain root, such as
+`https://example.com/`.
+
+If you need to host it under a subpath such as
+`https://example.com/tools/braille/`, build with `NEXT_PUBLIC_BASE_PATH`:
+
+```bash
+NEXT_PUBLIC_BASE_PATH=/tools/braille npm run build
+```
+
+Then publish the exported files at that same URL prefix, or configure your CDN
+or origin to mount the `out/` directory there.
 
 ## Why Browser Build (and not serverless native)
 

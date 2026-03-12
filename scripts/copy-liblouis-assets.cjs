@@ -151,6 +151,37 @@ const patchEasyApi = (source) => {
     );
   }
 
+  // Allow absolute/blob/data URLs for async worker script paths. The upstream
+  // wrapper prefixes everything with `window.location.origin`, which breaks
+  // self-contained builds that load liblouis from blob URLs.
+  if (!patched.includes("SAFE_ABSOLUTE_WORKER_PATHS")) {
+    patched = patched.replace(
+      /\n\tthis\.worker\.postMessage\(\{/,
+      [
+        "",
+        "\tvar resolveWorkerPath = function(workerPath) {",
+        "\t\tif(/^[a-z]+:/i.test(workerPath)) {",
+        "\t\t\treturn workerPath;",
+        "\t\t}",
+        "\t\treturn prefix + workerPath;",
+        "\t};",
+        "\t// SAFE_ABSOLUTE_WORKER_PATHS",
+        "",
+        "\tthis.worker.postMessage({"
+      ].join("\n")
+    );
+
+    patched = patched.replace(
+      "capi: prefix + opts.capi,",
+      "capi: resolveWorkerPath(opts.capi),"
+    );
+
+    patched = patched.replace(
+      "easyapi: prefix + opts.easyapi",
+      "easyapi: resolveWorkerPath(opts.easyapi)"
+    );
+  }
+
   return patched;
 };
 

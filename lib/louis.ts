@@ -22,6 +22,7 @@ const ASSET_BASE = "liblouis";
 const CAPI_PATH = `${ASSET_BASE}/build-no-tables-utf16.js`;
 const EASY_API_PATH = `${ASSET_BASE}/easy-api.js`;
 const TABLES_PATH = `${ASSET_BASE}/`;
+const BASE_PATH = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/+$/, "");
 
 const REQUIRED_TABLE_FILES = [
   "en-us-g2.ctb",
@@ -35,13 +36,18 @@ const REQUIRED_TABLE_FILES = [
 
 let cachedEngine: Promise<LouisEngine> | null = null;
 
+const withBasePath = (path: string) => {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${BASE_PATH}${normalizedPath}`;
+};
+
 export const resetLiblouis = () => {
   cachedEngine = null;
 };
 
 const loadScript = (src: string) =>
   new Promise<void>((resolve, reject) => {
-    const normalizedSrc = src.startsWith("/") ? src : `/${src}`;
+    const normalizedSrc = withBasePath(src);
     const existing = document.querySelector(`script[src="${normalizedSrc}"]`);
     if (existing) {
       resolve();
@@ -74,7 +80,10 @@ const loadBrowserEngine = async (): Promise<LouisEngine> => {
 
     await Promise.all(
       required.map(async (file) => {
-        const url = new URL(`${ASSET_BASE}/${file}`, window.location.origin);
+        const url = new URL(
+          withBasePath(`/${ASSET_BASE}/${file}`),
+          window.location.origin
+        );
         try {
           const res = await fetch(url, { cache: "no-store" });
           // eslint-disable-next-line no-console
@@ -106,7 +115,7 @@ const loadBrowserEngine = async (): Promise<LouisEngine> => {
 
     const entries = await Promise.all(
       REQUIRED_TABLE_FILES.map(async (name) => {
-        const res = await fetch(`/${ASSET_BASE}/${name}`);
+        const res = await fetch(withBasePath(`/${ASSET_BASE}/${name}`));
         if (!res.ok) {
           throw new Error(
             `[liblouis] Failed to fetch required table file ${name} (${res.status})`
